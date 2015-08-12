@@ -52,17 +52,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_URLPrefix) as? String {
             // print("lupa_URLPrefix: \(letTheString)")
             
-            if !searchField.stringValue.isEmpty {
-                let searchURLString : String = letTheString + searchField.stringValue
-                let theURL : NSURL? = NSURL (string: searchURLString)
-                // print("Searching: \(searchURLString)")
-                
-                // Let's go rock and roll
-                NSWorkspace.sharedWorkspace().openURL(theURL!)
+            if !letTheString.isEmpty {
+                if !searchField.stringValue.isEmpty {
+                    let searchURLString : String = letTheString + searchField.stringValue
+                    let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+                    let theURL : NSURL? = NSURL (string: myUrlString)
+
+                    // print("Searching: \(searchURLString)")
+                    // Let's go rock and roll
+                    NSWorkspace.sharedWorkspace().openURL(theURL!)
+                } else {
+                    // print ("Search string empty, ignore it...")
+                }
             } else {
-                // print ("Search string empty, ignore it...")
+                // print ("URL Prefix is empty, call doDefaults...")
+                doLupaDefaults(self)
             }
-            
         } else {
             // print("Prefix is not an string object, ignore it....")
         }

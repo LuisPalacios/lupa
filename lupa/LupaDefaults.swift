@@ -97,8 +97,9 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     // Function to set some sample text when textView is empty
     //
     func setSampleDefault() {
-        // Set a sample value
-        let thePrefix : String = "http://www.sample.com/query.cgi?user="
+        // Set a sample value or empty
+        // let thePrefix : String = "http://www.sample.com/query.cgi?user="
+        let thePrefix : String = ""
         // print("OK, saving URL Prefix: \(thePrefix)")
         let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
         userDefaults.setObject(thePrefix, forKey: LUPADefaults.lupa_URLPrefix)
