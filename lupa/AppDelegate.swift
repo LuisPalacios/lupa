@@ -26,8 +26,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Controllers
     /// Note I'm using Implicitly Unwrapped Optional(!) so no need to initialize them here
     ///
-    var lupaDefaultsController  : LupaDefaults!      // Preferences -
     var statusbarController     : statusBarCtrl!
+    
+    // --------------------------------------------------------------------------------
+    // MARK: IBActions
+    
+    ///
+    /// Show the preferences screen Program->Preferences or just CMD+","
+    ///
+    /// Connect MainMenu.xib->Program->Preferences w/ FirstResponder->"showPreferences:"
+    /// so when the user selects "Preferences" it will go through the First Responder
+    /// chain till it finds someone implementing this method. Notice that you don't
+    /// have to connect to this method itself, do it thorugh First Responder.
+    //
+    @IBAction func showPreferences(sender : AnyObject) {
+        statusbarController.showPreferences()
+    }
     
     
     // ------------------------------------------------------------------
@@ -36,9 +50,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
 
-        // Initialize the defaults preferences and window controller
-        self.lupaDefaultsController = LupaDefaults(windowNibName: "LupaDefaults")
-        
         // Activo mi clase menubarController para controlar el statusBar
         self.statusbarController = statusBarCtrl(statusMenu)
 
@@ -71,20 +82,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             } else {
                 // print ("URL Prefix is empty, call doDefaults...")
-                doLupaDefaults(self)
+                statusbarController.showPreferences()
             }
         } else {
             // print("Prefix is not an string object, ignore it....")
-        }
-    }
-
-    // Open the preferences (Defaults) window
-    //
-    @IBAction func doLupaDefaults(sender: AnyObject) {
-        if let window = self.lupaDefaultsController.window {
-            window.makeKeyAndOrderFront(self)
-            window.makeFirstResponder(self.lupaDefaultsController.window)
-            window.center()
         }
     }
 }

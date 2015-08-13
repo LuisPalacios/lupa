@@ -18,7 +18,7 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
     //  For the following attributes I'm using Implicitly Unwrapped Optional (!) so
     //  they are optionals and do not need to initialize them here, will do later.
 
-    //var lupaDefaultsController  : LupaDefaults!      // Preferences -
+    var lupaDefaultsController  : LupaDefaults!      // Preferences -
 
     var statusItem              : NSStatusItem!
     var statusItemAction        : LUPAStatusItemType!
@@ -30,6 +30,7 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
     var statusImageOnNeg        : NSImage!
     var statusImageOffNeg       : NSImage!
 
+    var timerShowMenu           : NSTimer!          //!< Timer para mostrar el Menu right-click
 
     /// --------------------------------------------------------------------------------
     //  MARK: Init
@@ -68,7 +69,9 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
         
         // 4. Bind the custom menu I've been given through the init, 
         // ISSUE: If I use this method then I cannot separate left/right clicks, 
-        //        the *new* 10.10 API does not resolve it, so I've implemented my own mouse event handling
+        //        the *new* 10.10 API does not resolve it, so I've implemented my 
+        //        own mouse event handling
+        //
         //statusMenu.delegate = self              // Set myself as delegate
         //self.statusItem.menu = statusMenu       // Assign the menu
         
@@ -110,27 +113,13 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
         } else if (secondaryDown) {
             self.statusItemAction = LUPAStatusItemType.LUPAStatusItemActionSecondary;
 
-            // Find out the Screen Coordinates of the NSStatusItem Frame and generate
-            // a right-click MENU.
-            let rectInWindow : NSRect = self.button.convertRect(self.button.bounds, toView: nil)
-            if let letButtonWindow = self.button.window {
-                
-                let buttonWindow = letButtonWindow
-                let screenRect : NSRect = buttonWindow.convertRectToScreen(rectInWindow)
-                let point : NSPoint = NSMakePoint(screenRect.origin.x, screenRect.origin.y - 3.0)
-                // print("screenRect: \(screenRect)   point: \(point)")
-                
-                // Start the menu
-                self.statusItemMenu.popUpMenuPositioningItem(nil, atLocation: point, inView: nil)
-                
-                // There is one issue with this Solution: the status item stays highlighted after
-                // an option is choosen in the right-click menu. The highlight goes away as soon 
-                // as you interact with something else; so I'm simulating it programatically by
-                // generating a "click" :)
-                self.button.performClick(self)
-                
-            }
-            
+            // Start the menu
+            // NOTE: There is one issue with the right click. If I call the menu right away
+            // then the status item stays highlighted after an option is choosen in the menu
+            // so what I'm doing is leting it be called through a timer, after I exit this 
+            // function
+            startTimerMenu()
+        
         } else {
 
             self.statusItemAction = LUPAStatusItemType.LUPAStatusItemActionNone;
@@ -148,13 +137,65 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
     
 
     // Open the preferences (Defaults) window
-//    //
-//    func doLupaDefaults(sender: AnyObject) {
-//        if let window = self.lupaDefaultsController.window {
-//            window.makeKeyAndOrderFront(self)
-//            window.makeFirstResponder(self.lupaDefaultsController.window)
-//            window.center()
-//        }
-//    }
+    //
+    func showPreferences() {
+        if let window = self.lupaDefaultsController.window {
+            window.makeKeyAndOrderFront(self)
+            window.makeFirstResponder(self.lupaDefaultsController.window)
+            window.center()
+        }
+    }
+    
+    
+    /// --------------------------------------------------------------------------------
+    //  MARK: Timer to show the Menu
+    /// --------------------------------------------------------------------------------
+    
+    
+    // Start a timer to show the Menu
+    //
+    func startTimerMenu() {
+        
+        timerShowMenu = NSTimer.scheduledTimerWithTimeInterval(0.0,
+            target: self,
+            selector: Selector("actionTimerMenu"),
+            userInfo: nil,
+            repeats: false)
+        
+    }
+    
+    // Stop the timer (not used, but comes with my template :-))
+    //
+    func stopTimerMenu() {
+        if ( timerShowMenu != nil ) {
+            if (  timerShowMenu.valid ) {
+                timerShowMenu.invalidate()
+            }
+            timerShowMenu = nil
+        }
+    }
+    
+    // Action to execute when the timer finishes
+    //
+    func actionTimerMenu() {
+        
+        // Start the menu
+        // print("Launching the menu")
+
+        // Find out the Screen Coordinates of the NSStatusItem Frame and generate
+        // a right-click MENU.
+        let rectInWindow : NSRect = self.button.convertRect(self.button.bounds, toView: nil)
+        if let letButtonWindow = self.button.window {
+            
+            let buttonWindow = letButtonWindow
+            let screenRect : NSRect = buttonWindow.convertRectToScreen(rectInWindow)
+            let point : NSPoint = NSMakePoint(screenRect.origin.x, screenRect.origin.y - 3.0)
+            print("screenRect: \(screenRect)   point: \(point)")
+            
+            self.statusItemMenu.popUpMenuPositioningItem(nil, atLocation: point, inView: nil)
+        }
+
+    }
+    
 
 }

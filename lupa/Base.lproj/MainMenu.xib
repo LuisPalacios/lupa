@@ -32,7 +32,11 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
+                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
+                                <connections>
+                                    <action selector="showPreferences:" target="-1" id="COl-he-vVR"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -698,9 +702,6 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
-                        <connections>
-                            <action selector="doLupaDefaults:" target="Voe-Tx-rLC" id="5Es-gP-lbw"/>
-                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -712,7 +713,7 @@
                 </constraints>
                 <animations/>
             </view>
-            <point key="canvasLocation" x="149.5" y="-498"/>
+            <point key="canvasLocation" x="-135.5" y="-732"/>
         </window>
         <menu id="tgk-nP-Cyf" userLabel="Status Menu">
             <items>
@@ -721,6 +722,11 @@
                 </menuItem>
                 <menuItem title="Window mode" id="Rfl-pv-Xkj">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Preferences…" keyEquivalent="," id="umj-LT-tdF">
+                    <connections>
+                        <action selector="showPreferences:" target="-1" id="sBB-1Z-fy0"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="etV-dZ-Vce"/>
                 <menuItem title="Help" keyEquivalent="?" id="x7H-EM-hBH">
@@ -734,7 +740,7 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-220.5" y="-413.5"/>
+            <point key="canvasLocation" x="-181" y="-491.5"/>
         </menu>
     </objects>
 </document>
