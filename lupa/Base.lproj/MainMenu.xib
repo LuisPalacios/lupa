@@ -723,14 +723,18 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="etV-dZ-Vce"/>
-                <menuItem title="Help" id="eIz-uf-xeb">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Help" keyEquivalent="?" id="x7H-EM-hBH">
+                    <connections>
+                        <action selector="showHelp:" target="-1" id="H4z-WJ-HPs"/>
+                    </connections>
                 </menuItem>
-                <menuItem title="Quit" id="1nw-Zm-eNh">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Quit" keyEquivalent="q" id="1nw-Zm-eNh">
+                    <connections>
+                        <action selector="terminate:" target="-1" id="RMn-AA-rAC"/>
+                    </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="96" y="-346.5"/>
+            <point key="canvasLocation" x="-220.5" y="-413.5"/>
         </menu>
     </objects>
 </document>

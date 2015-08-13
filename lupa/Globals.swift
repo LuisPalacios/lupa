@@ -25,3 +25,10 @@ struct LUPADefaults {
     static let lupa_StatusBarMode = "lupa_StatusBarMode"
 }
 
+// Type of Mouse Action
+//
+enum LUPAStatusItemType: Int {
+    case LUPAStatusItemActionNone = 0
+    case LUPAStatusItemActionPrimary
+    case LUPAStatusItemActionSecondary
+}

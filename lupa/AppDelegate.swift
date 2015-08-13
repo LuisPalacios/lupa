@@ -87,7 +87,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             window.center()
         }
     }
-
-    
 }
 
