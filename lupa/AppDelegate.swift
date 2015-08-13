@@ -17,16 +17,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var searchField: NSTextField!
+    @IBOutlet weak var statusMenu: NSMenu!
     
     // ------------------------------------------------------------------
     // MARK: Attributes
     // ------------------------------------------------------------------
     
-    /// Controller for the independent window used for the preferences
-    /// Implicitly Unwrapped Optional(!) so no need to initialize it here
+    /// Controllers
+    /// Note I'm using Implicitly Unwrapped Optional(!) so no need to initialize them here
     ///
-    var lupaDefaultsController : LupaDefaults!
-
+    var lupaDefaultsController  : LupaDefaults!      // Preferences -
+    var statusbarController     : statusBarCtrl!
+    
     
     // ------------------------------------------------------------------
     // MARK: Main 
@@ -36,6 +38,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Initialize the defaults preferences and window controller
         self.lupaDefaultsController = LupaDefaults(windowNibName: "LupaDefaults")
+        
+        // Activo mi clase menubarController para controlar el statusBar
+        self.statusbarController = statusBarCtrl(statusMenu)
 
     }
     

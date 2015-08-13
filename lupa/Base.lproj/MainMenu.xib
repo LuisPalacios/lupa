@@ -14,6 +14,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="lupa" customModuleProvider="target">
             <connections>
                 <outlet property="searchField" destination="8yI-ZL-sxe" id="wfz-lF-3hY"/>
+                <outlet property="statusMenu" destination="tgk-nP-Cyf" id="rZC-Lq-DTh"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -713,5 +714,23 @@
             </view>
             <point key="canvasLocation" x="149.5" y="-498"/>
         </window>
+        <menu id="tgk-nP-Cyf" userLabel="Status Menu">
+            <items>
+                <menuItem title="Search" id="27C-8V-cmM">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Window mode" id="Rfl-pv-Xkj">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="etV-dZ-Vce"/>
+                <menuItem title="Help" id="eIz-uf-xeb">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Quit" id="1nw-Zm-eNh">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="96" y="-346.5"/>
+        </menu>
     </objects>
 </document>
