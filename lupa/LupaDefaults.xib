@@ -55,24 +55,8 @@
                                         <binding destination="KaX-9D-HyX" name="value" keyPath="values.lupa_TestMode" id="h8I-zA-6Sa"/>
                                     </connections>
                                 </button>
-                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="xnT-NL-0AR" customClass="MASShortcutView">
-                                    <rect key="frame" x="20" y="107" width="158" height="19"/>
-                                    <animations/>
-                                </customView>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6il-l3-tLH">
-                                    <rect key="frame" x="18" y="134" width="111" height="17"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="107" id="ePP-1k-MV3"/>
-                                    </constraints>
-                                    <animations/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Custom shortcut:" id="noy-mB-rD5">
-                                        <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="pek-vk-TcG">
-                                    <rect key="frame" x="18" y="83" width="169" height="18"/>
+                                    <rect key="frame" x="18" y="129" width="169" height="18"/>
                                     <animations/>
                                     <buttonCell key="cell" type="check" title="Enable custom shortcut" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0Q3-0m-tCR">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -85,32 +69,60 @@
                                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="NVG-6B-ZeX">
                                     <rect key="frame" x="20" y="67" width="202" height="4"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" id="Cj3-0m-Arr"/>
+                                        <constraint firstAttribute="height" id="ZEj-gc-f5z"/>
                                     </constraints>
                                     <animations/>
                                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <font key="titleFont" metaFont="system"/>
                                 </box>
+                                <box title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="O64-WD-3KU">
+                                    <rect key="frame" x="17" y="73" width="203" height="52"/>
+                                    <view key="contentView" id="rc2-Td-oLs">
+                                        <rect key="frame" x="1" y="1" width="201" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="xnT-NL-0AR" customClass="MASShortcutView">
+                                                <rect key="frame" x="20" y="16" width="161" height="19"/>
+                                                <animations/>
+                                                <connections>
+                                                    <binding destination="KaX-9D-HyX" name="hidden" keyPath="values.lupa_HotkeyEnabled" id="cW3-8c-Lkg">
+                                                        <dictionary key="options">
+                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                        </dictionary>
+                                                    </binding>
+                                                </connections>
+                                            </customView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="xnT-NL-0AR" firstAttribute="top" secondItem="rc2-Td-oLs" secondAttribute="top" constant="15" id="Fpa-7J-efr"/>
+                                            <constraint firstAttribute="trailing" secondItem="xnT-NL-0AR" secondAttribute="trailing" constant="20" symbolic="YES" id="WlE-kz-dgw"/>
+                                            <constraint firstItem="xnT-NL-0AR" firstAttribute="leading" secondItem="rc2-Td-oLs" secondAttribute="leading" constant="20" symbolic="YES" id="vbc-Hk-DDr"/>
+                                            <constraint firstItem="xnT-NL-0AR" firstAttribute="centerY" secondItem="rc2-Td-oLs" secondAttribute="centerY" id="voH-ZZ-lSt"/>
+                                        </constraints>
+                                        <animations/>
+                                    </view>
+                                    <animations/>
+                                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </box>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="kjX-NR-sB8" firstAttribute="leading" secondItem="vft-xK-LQ6" secondAttribute="leading" id="0cw-dl-8FD"/>
-                                <constraint firstItem="vft-xK-LQ6" firstAttribute="top" secondItem="kjX-NR-sB8" secondAttribute="bottom" constant="6" symbolic="YES" id="2vu-Km-llN"/>
-                                <constraint firstAttribute="trailing" secondItem="NVG-6B-ZeX" secondAttribute="trailing" constant="24" id="7Ss-bH-2ol"/>
-                                <constraint firstItem="pek-vk-TcG" firstAttribute="leading" secondItem="xnT-NL-0AR" secondAttribute="leading" id="9m4-g8-qP5"/>
-                                <constraint firstItem="pek-vk-TcG" firstAttribute="top" secondItem="xnT-NL-0AR" secondAttribute="bottom" constant="8" symbolic="YES" id="Evl-6p-t12"/>
-                                <constraint firstItem="xnT-NL-0AR" firstAttribute="top" secondItem="6il-l3-tLH" secondAttribute="bottom" constant="8" symbolic="YES" id="IrU-rZ-Trj"/>
-                                <constraint firstAttribute="bottom" secondItem="vft-xK-LQ6" secondAttribute="bottom" constant="20" symbolic="YES" id="Qtt-vX-Bz4"/>
-                                <constraint firstItem="NVG-6B-ZeX" firstAttribute="top" secondItem="pek-vk-TcG" secondAttribute="bottom" constant="16" id="RtY-vU-wyq"/>
-                                <constraint firstItem="6il-l3-tLH" firstAttribute="leading" secondItem="xnT-NL-0AR" secondAttribute="leading" id="SNh-dT-s6t"/>
-                                <constraint firstItem="kjX-NR-sB8" firstAttribute="trailing" secondItem="vft-xK-LQ6" secondAttribute="trailing" id="Sa5-OM-0H7"/>
-                                <constraint firstItem="6il-l3-tLH" firstAttribute="top" secondItem="z9P-hJ-XtZ" secondAttribute="top" constant="14" id="bRP-eC-Qje"/>
-                                <constraint firstItem="NVG-6B-ZeX" firstAttribute="leading" secondItem="kjX-NR-sB8" secondAttribute="leading" id="cxg-yW-kCg"/>
-                                <constraint firstItem="6il-l3-tLH" firstAttribute="leading" secondItem="z9P-hJ-XtZ" secondAttribute="leading" constant="20" symbolic="YES" id="dIo-Fo-rhJ"/>
-                                <constraint firstAttribute="trailing" secondItem="xnT-NL-0AR" secondAttribute="trailing" constant="68" id="fB4-SD-GML"/>
-                                <constraint firstItem="kjX-NR-sB8" firstAttribute="top" secondItem="NVG-6B-ZeX" secondAttribute="bottom" constant="15" id="qWj-ZN-Mwj"/>
-                                <constraint firstItem="NVG-6B-ZeX" firstAttribute="leading" secondItem="pek-vk-TcG" secondAttribute="leading" id="rHq-1L-7bW"/>
-                                <constraint firstAttribute="trailing" secondItem="pek-vk-TcG" secondAttribute="trailing" constant="61" id="szV-YO-vQB"/>
+                                <constraint firstItem="O64-WD-3KU" firstAttribute="leading" secondItem="NVG-6B-ZeX" secondAttribute="leading" id="0Rk-Ui-0gt"/>
+                                <constraint firstItem="O64-WD-3KU" firstAttribute="top" secondItem="pek-vk-TcG" secondAttribute="bottom" constant="8" symbolic="YES" id="2Yq-ki-8N2"/>
+                                <constraint firstItem="kjX-NR-sB8" firstAttribute="trailing" secondItem="vft-xK-LQ6" secondAttribute="trailing" id="9TC-Ie-Xnr"/>
+                                <constraint firstAttribute="trailing" secondItem="pek-vk-TcG" secondAttribute="trailing" constant="61" id="JMQ-Wo-sdX"/>
+                                <constraint firstAttribute="trailing" secondItem="NVG-6B-ZeX" secondAttribute="trailing" constant="24" id="OVJ-A1-UVv"/>
+                                <constraint firstItem="kjX-NR-sB8" firstAttribute="top" secondItem="NVG-6B-ZeX" secondAttribute="bottom" constant="15" id="Q5d-Al-L1c"/>
+                                <constraint firstItem="vft-xK-LQ6" firstAttribute="leading" secondItem="kjX-NR-sB8" secondAttribute="leading" id="S7j-J8-OUf"/>
+                                <constraint firstItem="pek-vk-TcG" firstAttribute="top" secondItem="z9P-hJ-XtZ" secondAttribute="top" constant="20" symbolic="YES" id="Tp6-ct-4gx"/>
+                                <constraint firstItem="NVG-6B-ZeX" firstAttribute="leading" secondItem="kjX-NR-sB8" secondAttribute="leading" id="Vft-XR-Bn5"/>
+                                <constraint firstAttribute="bottom" secondItem="vft-xK-LQ6" secondAttribute="bottom" constant="20" symbolic="YES" id="XBb-Hy-ZXa"/>
+                                <constraint firstItem="pek-vk-TcG" firstAttribute="leading" secondItem="O64-WD-3KU" secondAttribute="leading" id="bjr-qe-jQu"/>
+                                <constraint firstItem="pek-vk-TcG" firstAttribute="leading" secondItem="z9P-hJ-XtZ" secondAttribute="leading" constant="20" symbolic="YES" id="cq1-ga-hrc"/>
+                                <constraint firstItem="NVG-6B-ZeX" firstAttribute="top" secondItem="O64-WD-3KU" secondAttribute="bottom" constant="8" symbolic="YES" id="iRA-fw-ysM"/>
+                                <constraint firstItem="vft-xK-LQ6" firstAttribute="top" secondItem="kjX-NR-sB8" secondAttribute="bottom" constant="6" symbolic="YES" id="km7-bT-FQn"/>
+                                <constraint firstAttribute="trailing" secondItem="O64-WD-3KU" secondAttribute="trailing" constant="29" id="q7L-qo-OZY"/>
                             </constraints>
                             <animations/>
                         </view>
@@ -154,7 +166,7 @@
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="trd-l3-efK">
                         <rect key="frame" x="210" y="24" width="58" height="32"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="46" id="tEm-eP-W4d"/>
+                            <constraint firstAttribute="width" constant="46" id="hNU-pt-dKs"/>
                         </constraints>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Ok" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kNN-AZ-wVV">
@@ -168,7 +180,7 @@
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qHD-JY-Jg0">
                         <rect key="frame" x="127" y="24" width="83" height="32"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="71" id="QZ4-fM-BpB"/>
+                            <constraint firstAttribute="width" constant="71" id="TV2-Cf-tYC"/>
                         </constraints>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IzA-cq-ZVP">
@@ -223,10 +235,10 @@ Gw
                                 </scrollView>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="8bs-mx-X4L" firstAttribute="leading" secondItem="E49-PF-dVJ" secondAttribute="leading" constant="20" symbolic="YES" id="94A-Vj-nOG"/>
-                                <constraint firstAttribute="trailing" secondItem="8bs-mx-X4L" secondAttribute="trailing" constant="20" symbolic="YES" id="IxH-FP-elH"/>
-                                <constraint firstItem="8bs-mx-X4L" firstAttribute="top" secondItem="E49-PF-dVJ" secondAttribute="top" constant="20" symbolic="YES" id="VCB-Aj-xsA"/>
-                                <constraint firstAttribute="bottom" secondItem="8bs-mx-X4L" secondAttribute="bottom" constant="20" symbolic="YES" id="Xth-Dt-3ai"/>
+                                <constraint firstItem="8bs-mx-X4L" firstAttribute="top" secondItem="E49-PF-dVJ" secondAttribute="top" constant="20" symbolic="YES" id="FUS-Ur-rgg"/>
+                                <constraint firstItem="8bs-mx-X4L" firstAttribute="leading" secondItem="E49-PF-dVJ" secondAttribute="leading" constant="20" symbolic="YES" id="FVO-Tl-WVw"/>
+                                <constraint firstAttribute="trailing" secondItem="8bs-mx-X4L" secondAttribute="trailing" constant="20" symbolic="YES" id="Trz-MZ-3El"/>
+                                <constraint firstAttribute="bottom" secondItem="8bs-mx-X4L" secondAttribute="bottom" constant="20" symbolic="YES" id="wS7-wu-7b3"/>
                             </constraints>
                             <animations/>
                         </view>
@@ -236,22 +248,22 @@ Gw
                     </box>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="trd-l3-efK" firstAttribute="baseline" secondItem="qHD-JY-Jg0" secondAttribute="baseline" id="F37-gX-e3e"/>
-                    <constraint firstItem="5mv-wD-Rej" firstAttribute="top" secondItem="YRr-Zk-YGb" secondAttribute="bottom" constant="8" symbolic="YES" id="JtI-wh-pW3"/>
-                    <constraint firstItem="Voe-kO-g2W" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="Ks3-OO-l5a"/>
-                    <constraint firstAttribute="trailing" secondItem="Voe-kO-g2W" secondAttribute="trailing" constant="20" symbolic="YES" id="NBN-Zn-bWl"/>
-                    <constraint firstItem="trd-l3-efK" firstAttribute="leading" secondItem="qHD-JY-Jg0" secondAttribute="trailing" constant="12" symbolic="YES" id="QZS-Em-AHQ"/>
-                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="trailing" secondItem="5mv-wD-Rej" secondAttribute="trailing" id="Rz8-ii-LmV"/>
-                    <constraint firstItem="Voe-kO-g2W" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="T5R-40-dZf"/>
-                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="trailing" secondItem="Voe-kO-g2W" secondAttribute="trailing" id="Xj5-jm-z7l"/>
-                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="205" id="b9e-fp-gIe"/>
-                    <constraint firstItem="trd-l3-efK" firstAttribute="trailing" secondItem="5mv-wD-Rej" secondAttribute="trailing" id="bQ6-an-Wbv"/>
-                    <constraint firstItem="qHD-JY-Jg0" firstAttribute="top" secondItem="5mv-wD-Rej" secondAttribute="bottom" constant="20" symbolic="YES" id="f8f-kk-biJ"/>
-                    <constraint firstItem="5mv-wD-Rej" firstAttribute="leading" secondItem="YRr-Zk-YGb" secondAttribute="leading" id="fFR-BO-axm"/>
-                    <constraint firstItem="Voe-kO-g2W" firstAttribute="leading" secondItem="YRr-Zk-YGb" secondAttribute="leading" id="fMm-W9-QZK"/>
-                    <constraint firstAttribute="bottom" secondItem="qHD-JY-Jg0" secondAttribute="bottom" constant="31" id="t99-oA-dDB"/>
-                    <constraint firstItem="5mv-wD-Rej" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="342" id="wud-Va-nJ2"/>
-                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="top" secondItem="Voe-kO-g2W" secondAttribute="bottom" constant="8" symbolic="YES" id="yHA-jq-czE"/>
+                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="leading" secondItem="Voe-kO-g2W" secondAttribute="leading" id="4Pa-gd-ocy"/>
+                    <constraint firstItem="5mv-wD-Rej" firstAttribute="leading" secondItem="YRr-Zk-YGb" secondAttribute="leading" id="HxP-N0-Pbq"/>
+                    <constraint firstItem="5mv-wD-Rej" firstAttribute="trailing" secondItem="YRr-Zk-YGb" secondAttribute="trailing" id="IFj-Zp-WSe"/>
+                    <constraint firstAttribute="bottom" secondItem="qHD-JY-Jg0" secondAttribute="bottom" constant="31" id="M4h-7n-x7u"/>
+                    <constraint firstItem="5mv-wD-Rej" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="342" id="MTc-Dk-pfa"/>
+                    <constraint firstItem="Voe-kO-g2W" firstAttribute="trailing" secondItem="YRr-Zk-YGb" secondAttribute="trailing" id="NLn-Xv-f95"/>
+                    <constraint firstItem="Voe-kO-g2W" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="PGp-ih-JGL"/>
+                    <constraint firstAttribute="trailing" secondItem="Voe-kO-g2W" secondAttribute="trailing" constant="20" symbolic="YES" id="UIj-jl-DwE"/>
+                    <constraint firstItem="qHD-JY-Jg0" firstAttribute="top" secondItem="5mv-wD-Rej" secondAttribute="bottom" constant="20" symbolic="YES" id="aSB-6Q-jCE"/>
+                    <constraint firstItem="trd-l3-efK" firstAttribute="leading" secondItem="qHD-JY-Jg0" secondAttribute="trailing" constant="12" symbolic="YES" id="cUd-eu-kwj"/>
+                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="205" id="iFO-dC-0jh"/>
+                    <constraint firstItem="5mv-wD-Rej" firstAttribute="top" secondItem="YRr-Zk-YGb" secondAttribute="bottom" constant="8" symbolic="YES" id="kBu-Wv-waf"/>
+                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="top" secondItem="Voe-kO-g2W" secondAttribute="bottom" constant="8" symbolic="YES" id="rq6-CI-QuM"/>
+                    <constraint firstItem="Voe-kO-g2W" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="tUf-ot-roV"/>
+                    <constraint firstItem="trd-l3-efK" firstAttribute="baseline" secondItem="qHD-JY-Jg0" secondAttribute="baseline" id="zA8-sc-iWs"/>
+                    <constraint firstItem="trd-l3-efK" firstAttribute="trailing" secondItem="5mv-wD-Rej" secondAttribute="trailing" id="zeQ-hd-tPh"/>
                 </constraints>
                 <animations/>
             </view>
@@ -261,5 +273,6 @@ Gw
             <point key="canvasLocation" x="-575" y="160.5"/>
         </window>
         <userDefaultsController id="KaX-9D-HyX"/>
+        <userDefaultsController representsSharedInstance="YES" id="1ne-3g-Fyf"/>
     </objects>
 </document>

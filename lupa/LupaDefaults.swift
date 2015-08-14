@@ -25,6 +25,14 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         // in user defaults.
         customShortcutView.setAssociatedUserDefaultsKey(LUPADefaults.lupa_Hotkey, withTransformerName: NSKeyedUnarchiveFromDataTransformerName)
         
+
+        
+        
+        
+        
+        
+        
+        
         
         // Clean the URL scrollview background
         urlScroll.backgroundColor = NSColor.clearColor()
