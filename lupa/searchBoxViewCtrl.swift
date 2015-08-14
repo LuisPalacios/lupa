@@ -85,9 +85,9 @@ class searchBoxViewCtrl: NSViewController {
                     print("Searching: \(searchURLString)")
                     
                     // Let's go rock and roll
-//                    let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-//                    let theURL : NSURL? = NSURL (string: myUrlString)
-//                    NSWorkspace.sharedWorkspace().openURL(theURL!)
+                    let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+                    let theURL : NSURL? = NSURL (string: myUrlString)
+                    NSWorkspace.sharedWorkspace().openURL(theURL!)
                     
                 } else {
                     // print ("Search string empty, ignore it...")

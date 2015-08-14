@@ -103,6 +103,7 @@ extension NSView {
             // Añado la nueva vista al contentView para que no haya problemas al
             // añadirle las constraints
             contentView.addSubview(newView)
+        
             
             // Traspaso las constraints
             for constraint in contentViewConstraints {
