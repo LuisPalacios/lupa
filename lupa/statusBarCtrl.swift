@@ -205,13 +205,7 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
     func showSearchBox() {
         if let window = self.searchBoxWindow.window {
             window.makeKeyAndOrderFront(self)
-//            window.styleMask = NSBorderlessWindowMask
-//            window.level = Int(CGWindowLevelForKey(CGWindowLevelKey.MaximumWindowLevelKey))
-//            window.styleMask = NSBorderlessWindowMask
-//            window.acceptsMouseMovedEvents = true
-//            window.movableByWindowBackground = true
-//            window.level = Int(CGWindowLevelForKey(CGWindowLevelKey.NormalWindowLevelKey))
-            
+
             // Find out the Screen Coordinates of the NSStatusItem Frame and generate
             // a right-click MENU.
             let rectInWindow : NSRect = self.button.convertRect(self.button.bounds, toView: nil)

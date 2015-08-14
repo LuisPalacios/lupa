@@ -41,7 +41,22 @@
 		A0B4BA681B7B400500069614 /* dir_512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B4BA5E1B7B400500069614 /* dir_512x512.png */; };
 		A0B4BA691B7B400500069614 /* dir_512x512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B4BA5F1B7B400500069614 /* dir_512x512@2x.png */; };
 		A0B4BA6B1B7B417C00069614 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A0B4BA6A1B7B417C00069614 /* README.rtf */; };
+		A0E44B691B7E6BE100D0D5FA /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0E44B681B7E6BE100D0D5FA /* MASShortcut.framework */; };
+		A0E44B6E1B7E6DDD00D0D5FA /* MASShortcut.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A0E44B681B7E6BE100D0D5FA /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A0E44B6D1B7E6DCB00D0D5FA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A0E44B6E1B7E6DDD00D0D5FA /* MASShortcut.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A059EFB61B7D186B0038268D /* searchBoxViewCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchBoxViewCtrl.swift; sourceTree = "<group>"; };
@@ -80,6 +95,8 @@
 		A0B4BA5E1B7B400500069614 /* dir_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dir_512x512.png; path = resources/dir_512x512.png; sourceTree = "<group>"; };
 		A0B4BA5F1B7B400500069614 /* dir_512x512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dir_512x512@2x.png"; path = "resources/dir_512x512@2x.png"; sourceTree = "<group>"; };
 		A0B4BA6A1B7B417C00069614 /* README.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
+		A0E44B681B7E6BE100D0D5FA /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = Frameworks/MASShortcut.framework; sourceTree = "<group>"; };
+		A0E44B6B1B7E6CF700D0D5FA /* lupa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "lupa-Bridging-Header.h"; path = "lupa/lupa-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0E44B691B7E6BE100D0D5FA /* MASShortcut.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,8 +114,10 @@
 		A05EDABB1B7A4466001B3F3C = {
 			isa = PBXGroup;
 			children = (
+				A0E44B6A1B7E6CBD00D0D5FA /* lupa-bridge */,
 				A05EDAC61B7A4466001B3F3C /* lupa */,
 				A08557191B7E582600B1D1C5 /* LPStatusItem */,
+				A0E44B671B7E6BD000D0D5FA /* Frameworks */,
 				A05EDAC51B7A4466001B3F3C /* Products */,
 				A0B4BA551B7B3F9500069614 /* Resources */,
 			);
@@ -167,6 +187,22 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		A0E44B671B7E6BD000D0D5FA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A0E44B681B7E6BE100D0D5FA /* MASShortcut.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A0E44B6A1B7E6CBD00D0D5FA /* lupa-bridge */ = {
+			isa = PBXGroup;
+			children = (
+				A0E44B6B1B7E6CF700D0D5FA /* lupa-Bridging-Header.h */,
+			);
+			name = "lupa-bridge";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -177,6 +213,7 @@
 				A05EDAC01B7A4466001B3F3C /* Sources */,
 				A05EDAC11B7A4466001B3F3C /* Frameworks */,
 				A05EDAC21B7A4466001B3F3C /* Resources */,
+				A0E44B6D1B7E6DCB00D0D5FA /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -372,10 +409,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = NO;
+				DEFINES_MODULE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = lupa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = parchis.org.lupa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "lupa/lupa-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -385,10 +428,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = NO;
+				DEFINES_MODULE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = lupa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = parchis.org.lupa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "lupa/lupa-Bridging-Header.h";
 			};
 			name = Release;
 		};

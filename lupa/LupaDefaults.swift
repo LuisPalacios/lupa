@@ -15,9 +15,17 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     @IBOutlet var urlView: NSTextView!
     @IBOutlet weak var statusBarMode: NSButton!
     
+    @IBOutlet weak var customShortcutView: MASShortcutView!
+    
     override func windowDidLoad() {
         super.windowDidLoad()
 
+        // Bind the shortcut recorder view’s value to user defaults.
+        // Run “defaults read parchis.org.lupa” to see what’s stored
+        // in user defaults.
+        customShortcutView.setAssociatedUserDefaultsKey(LUPADefaults.lupa_Hotkey, withTransformerName: NSKeyedUnarchiveFromDataTransformerName)
+        
+        
         // Clean the URL scrollview background
         urlScroll.backgroundColor = NSColor.clearColor()
         urlScroll.drawsBackground = false
