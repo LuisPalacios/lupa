@@ -19,6 +19,7 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
     //  they are optionals and do not need to initialize them here, will do later.
 
     var lupaDefaultsController  : LupaDefaults!      // Preferences -
+    var searchBoxWindow         : searchBoxWinCtrl!  // Windowed search Box -
 
     var statusItem              : NSStatusItem!
     var statusItemAction        : LUPAStatusItemType!
@@ -48,8 +49,11 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
     convenience init(_ statusMenu: NSMenu) {
         self.init()
         
-        // Initialize the defaults preferences and window controller
+        // Initialize the defaults preferences & controller
         self.lupaDefaultsController = LupaDefaults(windowNibName: "LupaDefaults")
+        
+        // Initialize the search box windowed controller
+        self.searchBoxWindow = searchBoxWinCtrl(windowNibName: "searchBoxWinCtrl")
         
         // Have the "image" objetcs prepared to be able to set the right icon
         // based on status (On/Off) and Clicked (pressed=Negative/Unpressed=Normal)
@@ -106,9 +110,8 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
         if (primaryDown) {
             self.statusItemAction = LUPAStatusItemType.LUPAStatusItemActionPrimary;
 
-            // Setup here actions for a Left-Click
-            
-            print ("Left clicked")
+            // Call the searchBox
+            showSearchBox()
             
         } else if (secondaryDown) {
             self.statusItemAction = LUPAStatusItemType.LUPAStatusItemActionSecondary;
@@ -130,22 +133,6 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
         // print("handleStatusItemActions, buttonMask: \(buttonMask). primaryDown: \(primaryDown). secondaryDown: \(secondaryDown). statusItemAction: \(self.statusItemAction)")
         
     }
-    
-    /// --------------------------------------------------------------------------------
-    //  MARK: Defaults (preferences) handling
-    /// --------------------------------------------------------------------------------
-    
-
-    // Open the preferences (Defaults) window
-    //
-    func showPreferences() {
-        if let window = self.lupaDefaultsController.window {
-            window.makeKeyAndOrderFront(self)
-            window.makeFirstResponder(self.lupaDefaultsController.window)
-            window.center()
-        }
-    }
-    
     
     /// --------------------------------------------------------------------------------
     //  MARK: Timer to show the Menu
@@ -190,12 +177,40 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
             let buttonWindow = letButtonWindow
             let screenRect : NSRect = buttonWindow.convertRectToScreen(rectInWindow)
             let point : NSPoint = NSMakePoint(screenRect.origin.x, screenRect.origin.y - 3.0)
-            print("screenRect: \(screenRect)   point: \(point)")
-            
+            // print("screenRect: \(screenRect)   point: \(point)")
             self.statusItemMenu.popUpMenuPositioningItem(nil, atLocation: point, inView: nil)
         }
-
+    }
+        
+    
+    /// --------------------------------------------------------------------------------
+    //  MARK: Defaults (preferences) handling
+    /// --------------------------------------------------------------------------------
+    
+    
+    // Open the preferences (Defaults) window
+    //
+    func showPreferences() {
+        if let window = self.lupaDefaultsController.window {
+            window.makeKeyAndOrderFront(self)
+            window.center()
+        }
     }
     
+    /// --------------------------------------------------------------------------------
+    //  MARK: Defaults (preferences) handling
+    /// --------------------------------------------------------------------------------
+    
+    
+    // Open the preferences (Defaults) window
+    //
+    func showSearchBox() {
+        if let window = self.searchBoxWindow.window {
+            window.makeKeyAndOrderFront(self)
+            window.center()
+        }
+    }
+    
+
 
 }

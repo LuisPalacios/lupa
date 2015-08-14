@@ -13,9 +13,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="lupa" customModuleProvider="target">
             <connections>
-                <outlet property="searchField" destination="8yI-ZL-sxe" id="wfz-lF-3hY"/>
                 <outlet property="statusMenu" destination="tgk-nP-Cyf" id="rZC-Lq-DTh"/>
-                <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -648,6 +646,12 @@
                                     <action selector="performZoom:" target="-1" id="DIl-cC-cCs"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Show Main" id="aYO-Ms-VZL">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showDefaultWindow:" target="-1" id="onV-aM-7kd"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>
                             <menuItem title="Bring All to Front" id="LE2-aR-0XJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -672,53 +676,12 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="lupa" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="200" y="800" width="207" height="62"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <value key="minSize" type="size" width="207" height="62"/>
-            <value key="maxSize" type="size" width="207" height="62"/>
-            <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="207" height="62"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8yI-ZL-sxe">
-                        <rect key="frame" x="20" y="20" width="138" height="22"/>
-                        <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="rdY-MO-ZOP">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <action selector="doSearch:" target="Voe-Tx-rLC" id="97h-na-k52"/>
-                        </connections>
-                    </textField>
-                    <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HTP-9N-LPp">
-                        <rect key="frame" x="164" y="17" width="25" height="25"/>
-                        <animations/>
-                        <buttonCell key="cell" type="help" bezelStyle="helpButton" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sIf-PP-E8H">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
-                </subviews>
-                <constraints>
-                    <constraint firstItem="8yI-ZL-sxe" firstAttribute="bottom" secondItem="HTP-9N-LPp" secondAttribute="bottom" id="AXM-NO-ouw"/>
-                    <constraint firstItem="8yI-ZL-sxe" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="Pyo-P1-0En"/>
-                    <constraint firstItem="8yI-ZL-sxe" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="WjI-cP-OtC"/>
-                    <constraint firstItem="HTP-9N-LPp" firstAttribute="leading" secondItem="8yI-ZL-sxe" secondAttribute="trailing" constant="8" symbolic="YES" id="fEg-mV-t2j"/>
-                    <constraint firstAttribute="trailing" secondItem="HTP-9N-LPp" secondAttribute="trailing" constant="20" symbolic="YES" id="p0B-W3-0ou"/>
-                </constraints>
-                <animations/>
-            </view>
-            <point key="canvasLocation" x="-135.5" y="-732"/>
-        </window>
         <menu id="tgk-nP-Cyf" userLabel="Status Menu">
             <items>
-                <menuItem title="Search" id="27C-8V-cmM">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Find" keyEquivalent="f" id="27C-8V-cmM">
+                    <connections>
+                        <action selector="showSearchBox:" target="-1" id="kgL-qi-e6M"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Window mode" id="Rfl-pv-Xkj">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -740,7 +703,19 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-181" y="-491.5"/>
+            <point key="canvasLocation" x="-128" y="-792.5"/>
         </menu>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="xAR-hM-auK">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="283" y="305" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="38i-hr-XDz">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <animations/>
+            </view>
+            <point key="canvasLocation" x="-343" y="-514"/>
+        </window>
     </objects>
 </document>

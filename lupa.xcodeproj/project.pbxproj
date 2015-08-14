@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A059EFB81B7D186B0038268D /* searchBoxViewCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A059EFB61B7D186B0038268D /* searchBoxViewCtrl.swift */; };
+		A059EFB91B7D186B0038268D /* searchBoxViewCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = A059EFB71B7D186B0038268D /* searchBoxViewCtrl.xib */; };
+		A059EFBC1B7D1F3E0038268D /* searchBoxWinCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A059EFBA1B7D1F3E0038268D /* searchBoxWinCtrl.swift */; };
+		A059EFBD1B7D1F3E0038268D /* searchBoxWinCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = A059EFBB1B7D1F3E0038268D /* searchBoxWinCtrl.xib */; };
 		A05EDAC81B7A4466001B3F3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05EDAC71B7A4466001B3F3C /* AppDelegate.swift */; };
 		A05EDACA1B7A4466001B3F3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A05EDAC91B7A4466001B3F3C /* Assets.xcassets */; };
 		A05EDACD1B7A4466001B3F3C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A05EDACB1B7A4466001B3F3C /* MainMenu.xib */; };
@@ -37,6 +41,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A059EFB61B7D186B0038268D /* searchBoxViewCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchBoxViewCtrl.swift; sourceTree = "<group>"; };
+		A059EFB71B7D186B0038268D /* searchBoxViewCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = searchBoxViewCtrl.xib; sourceTree = "<group>"; };
+		A059EFBA1B7D1F3E0038268D /* searchBoxWinCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchBoxWinCtrl.swift; sourceTree = "<group>"; };
+		A059EFBB1B7D1F3E0038268D /* searchBoxWinCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = searchBoxWinCtrl.xib; sourceTree = "<group>"; };
 		A05EDAC41B7A4466001B3F3C /* lupa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lupa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A05EDAC71B7A4466001B3F3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A05EDAC91B7A4466001B3F3C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -109,6 +117,10 @@
 				A0B4BA6A1B7B417C00069614 /* README.rtf */,
 				A06537201B7BC156006277CE /* statusBarCtrl.swift */,
 				A0603AA41B7BD5FD0059578E /* statusBarView.swift */,
+				A059EFB61B7D186B0038268D /* searchBoxViewCtrl.swift */,
+				A059EFB71B7D186B0038268D /* searchBoxViewCtrl.xib */,
+				A059EFBA1B7D1F3E0038268D /* searchBoxWinCtrl.swift */,
+				A059EFBB1B7D1F3E0038268D /* searchBoxWinCtrl.xib */,
 			);
 			path = lupa;
 			sourceTree = "<group>";
@@ -197,6 +209,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0603AA11B7BD2CE0059578E /* LupaOn_18x18@2x.png in Resources */,
+				A059EFBD1B7D1F3E0038268D /* searchBoxWinCtrl.xib in Resources */,
 				A0B4BA621B7B400500069614 /* dir_32x32.png in Resources */,
 				A0B4BA671B7B400500069614 /* dir_256x256@2x.png in Resources */,
 				A0603AA21B7BD2CE0059578E /* LupaOnNeg_18x18.png in Resources */,
@@ -216,6 +229,7 @@
 				A0B4BA641B7B400500069614 /* dir_128x128.png in Resources */,
 				A0B4BA611B7B400500069614 /* dir_16x16@2x.png in Resources */,
 				A0603AA31B7BD2CE0059578E /* LupaOnNeg_18x18@2x.png in Resources */,
+				A059EFB91B7D186B0038268D /* searchBoxViewCtrl.xib in Resources */,
 				A0B4BA6B1B7B417C00069614 /* README.rtf in Resources */,
 				A0B4BA691B7B400500069614 /* dir_512x512@2x.png in Resources */,
 			);
@@ -229,7 +243,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A06537211B7BC156006277CE /* statusBarCtrl.swift in Sources */,
+				A059EFB81B7D186B0038268D /* searchBoxViewCtrl.swift in Sources */,
 				A05EDAC81B7A4466001B3F3C /* AppDelegate.swift in Sources */,
+				A059EFBC1B7D1F3E0038268D /* searchBoxWinCtrl.swift in Sources */,
 				A0603AA51B7BD5FD0059578E /* statusBarView.swift in Sources */,
 				A0B4BA511B7A647F00069614 /* LupaDefaults.swift in Sources */,
 				A0B4BA541B7A672900069614 /* Globals.swift in Sources */,

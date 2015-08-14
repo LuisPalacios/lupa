@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8173.3" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8173.3"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="searchBoxViewCtrl" customModule="lupa" customModuleProvider="target">
+            <connections>
+                <outlet property="searchField" destination="v9z-rI-k0a" id="ae3-BH-S1n"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="213" height="22"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="v9z-rI-k0a">
+                    <rect key="frame" x="0.0" y="0.0" width="213" height="22"/>
+                    <animations/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="5PZ-Kf-4cr">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="doSearch:" target="-2" id="Gsh-Jp-ceY"/>
+                    </connections>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="v9z-rI-k0a" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="6zH-ha-9c5"/>
+                <constraint firstAttribute="bottom" secondItem="v9z-rI-k0a" secondAttribute="bottom" id="GTk-vB-Thn"/>
+                <constraint firstItem="v9z-rI-k0a" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="cfp-5L-DIV"/>
+                <constraint firstAttribute="trailing" secondItem="v9z-rI-k0a" secondAttribute="trailing" id="lTm-dc-EXv"/>
+            </constraints>
+            <animations/>
+            <point key="canvasLocation" x="-207.5" y="121"/>
+        </customView>
+    </objects>
+</document>
