@@ -89,7 +89,6 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
         // 5. Store the Menu in my attribute
         self.statusItemMenu = statusMenu
         
-        
     }
 
     
@@ -105,7 +104,6 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
         let buttonMask = NSEvent.pressedMouseButtons()
         let primaryDown : Bool = ((buttonMask & (1 << 0)) != 0);
         let secondaryDown : Bool = ((buttonMask & (1 << 1)) != 0);
-
 
         if (primaryDown) {
             self.statusItemAction = LUPAStatusItemType.LUPAStatusItemActionPrimary;
@@ -208,6 +206,8 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
         if let window = self.searchBoxWindow.window {
             window.makeKeyAndOrderFront(self)
 //            window.styleMask = NSBorderlessWindowMask
+//            window.level = Int(CGWindowLevelForKey(CGWindowLevelKey.MaximumWindowLevelKey))
+//            window.styleMask = NSBorderlessWindowMask
 //            window.acceptsMouseMovedEvents = true
 //            window.movableByWindowBackground = true
 //            window.level = Int(CGWindowLevelForKey(CGWindowLevelKey.NormalWindowLevelKey))
@@ -220,6 +220,7 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
                 let screenRect : NSRect = buttonWindow.convertRectToScreen(rectInWindow)
                 window.setFrame(NSMakeRect(screenRect.origin.x, screenRect.origin.y - 3.0, window.frame.width, window.frame.height), display: true)
             }
+
         }
     }
 }

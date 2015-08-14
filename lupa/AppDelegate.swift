@@ -69,6 +69,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Activo mi clase menubarController para controlar el statusBar
         self.statusbarController = statusBarCtrl(statusMenu)
+        
+        // Activo la nueva clase
+//        // configure the status item
+//        CCNStatusItem *sharedItem = [CCNStatusItem sharedInstance];
+//        sharedItem.windowConfiguration.presentationTransition = CCNPresentationTransitionSlideAndFade;
+//        sharedItem.proximityDragDetectionHandler = [self proximityDragDetectionHandler];
+//        [sharedItem presentStatusItemWithImage:[NSImage imageNamed:@"statusbar-icon"]
+//            contentViewController:[ContentViewController viewController]
+//            dropHandler:nil];
+        
+        print("lpStatusItem name: \(lpStatusItem.name)")
     }
     
     func applicationWillTerminate(aNotification: NSNotification) {

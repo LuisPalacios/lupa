@@ -19,20 +19,20 @@
         <window title="Defaults" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="282" height="355"/>
+            <rect key="contentRect" x="196" y="240" width="282" height="377"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="282" height="355"/>
+                <rect key="frame" x="0.0" y="0.0" width="282" height="377"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box title="Lupa preferences" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="Voe-kO-g2W">
-                        <rect key="frame" x="17" y="263" width="248" height="72"/>
+                        <rect key="frame" x="17" y="263" width="248" height="94"/>
                         <view key="contentView" id="z9P-hJ-XtZ">
-                            <rect key="frame" x="1" y="1" width="246" height="56"/>
+                            <rect key="frame" x="1" y="1" width="246" height="78"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="kjX-NR-sB8">
-                                    <rect key="frame" x="18" y="20" width="123" height="18"/>
+                                    <rect key="frame" x="18" y="42" width="123" height="18"/>
                                     <animations/>
                                     <buttonCell key="cell" type="check" title="Status bar mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="oGa-3N-9iO">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -43,11 +43,25 @@
                                         <binding destination="KaX-9D-HyX" name="value" keyPath="values.lupa_StatusBarMode" id="0py-Rv-qOB"/>
                                     </connections>
                                 </button>
+                                <button toolTip="Doesn't call the Browser, just logs the URL" translatesAutoresizingMaskIntoConstraints="NO" id="vft-xK-LQ6">
+                                    <rect key="frame" x="18" y="22" width="123" height="18"/>
+                                    <animations/>
+                                    <buttonCell key="cell" type="check" title="Test mode" bezelStyle="regularSquare" imagePosition="left" inset="2" id="wC2-pC-QHW">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="KaX-9D-HyX" name="value" keyPath="values.lupa_TestMode" id="h8I-zA-6Sa"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="kjX-NR-sB8" firstAttribute="leading" secondItem="z9P-hJ-XtZ" secondAttribute="leading" constant="20" symbolic="YES" id="4Kq-pc-lbL"/>
-                                <constraint firstAttribute="bottom" secondItem="kjX-NR-sB8" secondAttribute="bottom" constant="22" id="Afn-hC-aRg"/>
-                                <constraint firstItem="kjX-NR-sB8" firstAttribute="top" secondItem="z9P-hJ-XtZ" secondAttribute="top" constant="20" symbolic="YES" id="YYD-Xs-4hD"/>
+                                <constraint firstItem="kjX-NR-sB8" firstAttribute="top" secondItem="z9P-hJ-XtZ" secondAttribute="top" constant="20" symbolic="YES" id="2tV-pP-Mn7"/>
+                                <constraint firstItem="kjX-NR-sB8" firstAttribute="leading" secondItem="z9P-hJ-XtZ" secondAttribute="leading" constant="20" symbolic="YES" id="IEj-s3-cBv"/>
+                                <constraint firstItem="kjX-NR-sB8" firstAttribute="trailing" secondItem="vft-xK-LQ6" secondAttribute="trailing" id="RTh-zm-wG3"/>
+                                <constraint firstAttribute="bottom" secondItem="vft-xK-LQ6" secondAttribute="bottom" constant="24" id="aXz-3e-7Ub"/>
+                                <constraint firstItem="vft-xK-LQ6" firstAttribute="leading" secondItem="kjX-NR-sB8" secondAttribute="leading" id="eMh-ca-u7H"/>
+                                <constraint firstItem="vft-xK-LQ6" firstAttribute="top" secondItem="kjX-NR-sB8" secondAttribute="bottom" constant="6" symbolic="YES" id="gs6-Pu-rKa"/>
                             </constraints>
                             <animations/>
                         </view>
@@ -91,7 +105,7 @@
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="trd-l3-efK">
                         <rect key="frame" x="210" y="13" width="58" height="32"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="46" id="eJ2-OF-fVd"/>
+                            <constraint firstAttribute="width" constant="46" id="L75-bF-Ecv"/>
                         </constraints>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Ok" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kNN-AZ-wVV">
@@ -105,7 +119,7 @@
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qHD-JY-Jg0">
                         <rect key="frame" x="127" y="13" width="83" height="32"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="71" id="TOm-vm-0FF"/>
+                            <constraint firstAttribute="width" constant="71" id="wbd-pG-ijP"/>
                         </constraints>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IzA-cq-ZVP">
@@ -160,10 +174,10 @@ Gw
                                 </scrollView>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="8bs-mx-X4L" secondAttribute="bottom" constant="20" symbolic="YES" id="0eU-aB-aUa"/>
-                                <constraint firstItem="8bs-mx-X4L" firstAttribute="top" secondItem="E49-PF-dVJ" secondAttribute="top" constant="20" symbolic="YES" id="gWi-Ec-BEg"/>
-                                <constraint firstAttribute="trailing" secondItem="8bs-mx-X4L" secondAttribute="trailing" constant="20" symbolic="YES" id="nec-ng-9bM"/>
-                                <constraint firstItem="8bs-mx-X4L" firstAttribute="leading" secondItem="E49-PF-dVJ" secondAttribute="leading" constant="20" symbolic="YES" id="pht-9j-E5s"/>
+                                <constraint firstAttribute="bottom" secondItem="8bs-mx-X4L" secondAttribute="bottom" constant="20" symbolic="YES" id="Kud-rS-iht"/>
+                                <constraint firstItem="8bs-mx-X4L" firstAttribute="top" secondItem="E49-PF-dVJ" secondAttribute="top" constant="20" symbolic="YES" id="bgC-MP-fyp"/>
+                                <constraint firstAttribute="trailing" secondItem="8bs-mx-X4L" secondAttribute="trailing" constant="20" symbolic="YES" id="qPt-43-wcY"/>
+                                <constraint firstItem="8bs-mx-X4L" firstAttribute="leading" secondItem="E49-PF-dVJ" secondAttribute="leading" constant="20" symbolic="YES" id="twv-mX-2uO"/>
                             </constraints>
                             <animations/>
                         </view>
@@ -173,28 +187,28 @@ Gw
                     </box>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="qHD-JY-Jg0" secondAttribute="bottom" constant="20" symbolic="YES" id="1ei-LN-70i"/>
-                    <constraint firstItem="Voe-kO-g2W" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="9Fs-JS-iVZ"/>
-                    <constraint firstItem="Voe-kO-g2W" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="A5W-uj-G9h"/>
-                    <constraint firstItem="trd-l3-efK" firstAttribute="trailing" secondItem="5mv-wD-Rej" secondAttribute="trailing" id="D06-C2-gXf"/>
-                    <constraint firstAttribute="trailing" secondItem="Voe-kO-g2W" secondAttribute="trailing" constant="20" symbolic="YES" id="DY5-4j-5I1"/>
-                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="top" secondItem="Voe-kO-g2W" secondAttribute="bottom" constant="8" symbolic="YES" id="Glu-yS-SDb"/>
-                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="trailing" secondItem="5mv-wD-Rej" secondAttribute="trailing" id="H5g-zD-Fua"/>
-                    <constraint firstItem="trd-l3-efK" firstAttribute="baseline" secondItem="qHD-JY-Jg0" secondAttribute="baseline" id="H7V-Zt-61r"/>
-                    <constraint firstItem="5mv-wD-Rej" firstAttribute="top" secondItem="YRr-Zk-YGb" secondAttribute="bottom" constant="8" symbolic="YES" id="IiC-nL-bAv"/>
-                    <constraint firstItem="trd-l3-efK" firstAttribute="leading" secondItem="qHD-JY-Jg0" secondAttribute="trailing" constant="12" symbolic="YES" id="PHH-UQ-iam"/>
-                    <constraint firstItem="Voe-kO-g2W" firstAttribute="leading" secondItem="YRr-Zk-YGb" secondAttribute="leading" id="XXE-Ha-knc"/>
-                    <constraint firstItem="5mv-wD-Rej" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="233" id="dI0-t9-DAs"/>
-                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="trailing" secondItem="Voe-kO-g2W" secondAttribute="trailing" id="g65-EC-5CJ"/>
-                    <constraint firstItem="qHD-JY-Jg0" firstAttribute="top" secondItem="5mv-wD-Rej" secondAttribute="bottom" constant="20" symbolic="YES" id="roZ-FE-pc0"/>
-                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="leading" secondItem="5mv-wD-Rej" secondAttribute="leading" id="tlm-Vg-iHi"/>
+                    <constraint firstItem="trd-l3-efK" firstAttribute="trailing" secondItem="5mv-wD-Rej" secondAttribute="trailing" id="0f8-5B-QHJ"/>
+                    <constraint firstItem="trd-l3-efK" firstAttribute="leading" secondItem="qHD-JY-Jg0" secondAttribute="trailing" constant="12" symbolic="YES" id="2Lz-M9-An1"/>
+                    <constraint firstItem="5mv-wD-Rej" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="255" id="3HG-x8-Jz0"/>
+                    <constraint firstAttribute="trailing" secondItem="Voe-kO-g2W" secondAttribute="trailing" constant="20" symbolic="YES" id="703-6t-0zH"/>
+                    <constraint firstItem="5mv-wD-Rej" firstAttribute="top" secondItem="YRr-Zk-YGb" secondAttribute="bottom" constant="8" symbolic="YES" id="A4S-51-bSZ"/>
+                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="trailing" secondItem="Voe-kO-g2W" secondAttribute="trailing" id="OvF-eh-9PX"/>
+                    <constraint firstAttribute="bottom" secondItem="qHD-JY-Jg0" secondAttribute="bottom" constant="20" symbolic="YES" id="P1e-vb-fYD"/>
+                    <constraint firstItem="Voe-kO-g2W" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="bwg-9M-5gJ"/>
+                    <constraint firstItem="qHD-JY-Jg0" firstAttribute="top" secondItem="5mv-wD-Rej" secondAttribute="bottom" constant="20" symbolic="YES" id="fVC-oM-vts"/>
+                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="trailing" secondItem="5mv-wD-Rej" secondAttribute="trailing" id="fbD-3z-cqw"/>
+                    <constraint firstItem="Voe-kO-g2W" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="i33-8P-JZx"/>
+                    <constraint firstItem="5mv-wD-Rej" firstAttribute="leading" secondItem="YRr-Zk-YGb" secondAttribute="leading" id="l5j-wp-a71"/>
+                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="leading" secondItem="Voe-kO-g2W" secondAttribute="leading" id="n9j-NP-Tmy"/>
+                    <constraint firstItem="trd-l3-efK" firstAttribute="baseline" secondItem="qHD-JY-Jg0" secondAttribute="baseline" id="qAq-E8-bWx"/>
+                    <constraint firstItem="YRr-Zk-YGb" firstAttribute="top" secondItem="Voe-kO-g2W" secondAttribute="bottom" constant="8" symbolic="YES" id="uAY-Y0-HeO"/>
                 </constraints>
                 <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="-362" y="91.5"/>
+            <point key="canvasLocation" x="-575" y="111.5"/>
         </window>
         <userDefaultsController id="KaX-9D-HyX"/>
     </objects>

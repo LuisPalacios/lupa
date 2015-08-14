@@ -21,8 +21,9 @@ import AppKit
 // LupaDefaults: Key's for storing User defaults
 // 
 struct LUPADefaults {
-    static let lupa_URLPrefix     = "lupa_URLPrefix"
-    static let lupa_StatusBarMode = "lupa_StatusBarMode"
+    static let lupa_URLPrefix       = "lupa_URLPrefix"
+    static let lupa_StatusBarMode   = "lupa_StatusBarMode"
+    static let lupa_TestMode        = "lupa_TestMode"       // Doesn't call the Browser, just logs the URL
 }
 
 // Type of Mouse Action

@@ -82,13 +82,22 @@ class searchBoxViewCtrl: NSViewController {
             if !letTheString.isEmpty {
                 if !searchField.stringValue.isEmpty {
                     let searchURLString : String = letTheString + searchField.stringValue
-                    print("Searching: \(searchURLString)")
                     
                     // Let's go rock and roll
-                    let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-                    let theURL : NSURL? = NSURL (string: myUrlString)
-                    NSWorkspace.sharedWorkspace().openURL(theURL!)
-                    
+                    // Read userDefaults (String)
+                    let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+                    if let letTestMode = userDefaults.objectForKey(LUPADefaults.lupa_TestMode) as? Bool {
+                        let testMode = letTestMode
+                        if ( testMode ) {
+                            // Test, developer mode
+                            print("Browser URL: \(searchURLString)")
+                        } else {
+                            // Production mode
+                            let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+                            let theURL : NSURL? = NSURL (string: myUrlString)
+                            NSWorkspace.sharedWorkspace().openURL(theURL!)
+                        }
+                    }
                 } else {
                     // print ("Search string empty, ignore it...")
                 }
@@ -98,6 +107,10 @@ class searchBoxViewCtrl: NSViewController {
             }
         } else {
             // print("Prefix is not an string object, ignore it....")
+        }
+        
+        if let window = self.view.window {
+            window.close()
         }
     }
 
