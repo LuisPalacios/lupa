@@ -117,7 +117,12 @@ class searchBoxViewCtrl: NSViewController {
                     let searchURLString : String = letURLString + searchString
                     
                     // Let's go rock and roll
-                    // Read userDefaults (String)
+                    // 
+                    // Note: I'm leaving here a way to activate a "Testing" mode logging into screen instead
+                    // of launching the default browser. To activate it though, needs to be done from Terminal: 
+                    //
+                    //  $ defaults write parchis.org.lupa lupa_TestMode -bool YES
+                    //
                     if let letTestMode = self.userDefaults.objectForKey(LUPADefaults.lupa_TestMode) as? Bool {
                         let testMode = letTestMode
                         if ( testMode ) {

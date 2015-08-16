@@ -683,40 +683,20 @@
                         <action selector="showSearchBox:" target="-1" id="kgL-qi-e6M"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Window mode" id="Rfl-pv-Xkj">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
                 <menuItem title="Preferences…" keyEquivalent="," id="umj-LT-tdF">
                     <connections>
                         <action selector="showPreferences:" target="-1" id="sBB-1Z-fy0"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="etV-dZ-Vce"/>
-                <menuItem title="Help" keyEquivalent="?" id="x7H-EM-hBH">
-                    <connections>
-                        <action selector="showHelp:" target="-1" id="H4z-WJ-HPs"/>
-                    </connections>
-                </menuItem>
                 <menuItem title="Quit" keyEquivalent="q" id="1nw-Zm-eNh">
                     <connections>
                         <action selector="terminate:" target="-1" id="RMn-AA-rAC"/>
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-128" y="-792.5"/>
+            <point key="canvasLocation" x="-670" y="-1111.5"/>
         </menu>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="xAR-hM-auK">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="283" y="305" width="480" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <view key="contentView" id="38i-hr-XDz">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <animations/>
-            </view>
-            <point key="canvasLocation" x="-343" y="-514"/>
-        </window>
         <customObject id="9lb-TX-afV"/>
     </objects>
 </document>

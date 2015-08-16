@@ -41,18 +41,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
 
+        // NOTE: In order for the Icon disapear from the Dock and also disapear 
+        //       from the CMD-ALT list you need to do the following: 
+        //
+        // Modify your info.plist file and add the following:
+        //
+        //      Application is agent (UIElement) -> YES
+        //
+        
+        /// Prepare windows
+        // Close the default window, in case you didn't delete it from MainMenu.xib :)
+        defaultWindow = NSApplication.sharedApplication().windows.first
+        if defaultWindow != nil {
+            defaultWindow.close()
+        }
+
+        /// Program name
         // Store my program name.
         self.programName = programLongName()
-        
         // Log
-        print("\(self.programName)")
-        
+        // print("\(self.programName)")
 
-        /// Prepare windows
-        // Close the default window
-        defaultWindow = NSApplication.sharedApplication().windows.first
-        defaultWindow.close()
-        
         /// HotKey
         // Register default values to be used for the first app start
         // The first time I would access the propertys for the Hotkey
@@ -72,6 +81,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // In the future I'll move to a Singleton...
         // print("lpStatusItem name: \(lpStatusItem.name)")
         
+        // Change to background mode
+        // self.setWindowMode(false)
     }
     
     func applicationWillTerminate(aNotification: NSNotification) {
@@ -210,8 +221,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }
     }
-    
-    
     
     /// --------------------------------------------------------------------------------
     //  MARK: Hotkey actioning

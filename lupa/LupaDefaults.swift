@@ -22,7 +22,6 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     @IBOutlet weak var searchSeparator: NSTextField!
     @IBOutlet weak var urlScroll: NSScrollView!
     @IBOutlet var urlView: NSTextView!
-    @IBOutlet weak var statusBarMode: NSButton!
     @IBOutlet weak var version: NSTextField!
     
     @IBOutlet weak var customShortcutView: MASShortcutView!
@@ -144,16 +143,4 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         userDefaults.setObject(thePrefix, forKey: LUPADefaults.lupa_URLPrefix)
     }
 
-    // Note: NOT YET IMPLEMENTED. Future !!
-    //
-    @IBAction func doSwapStatusBarMode(sender: AnyObject) {
-        // Verifico que estoy en modo Window.
-        if statusBarMode.state == NSOnState {
-            print("Ponerme en modo Status Mode")
-        } else {
-            print("Ponerme en modo Window Mode")
-        }
-        
-        
-    }
 }
