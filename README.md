@@ -18,17 +18,28 @@ Configure the program by right clicking into the status bar icon and selecting p
 <div align="center">
 ![Screenshot of the preferences](resources/scr_menu.png?raw=true "This is menu")
 
+<div align="left">
+You only need to do this once to set the URL prefix, as this will be stored in your user's defaults.
+
+- Find, opens the search box.
+- Preferences, enters into the preferences window.
+- Help, so the help screen (not yet implemented)
+- Quit, quit the application
+
+<div align="center">
+
 ![Screenshot of the preferences](resources/scr_preferences.png?raw=true "This is the preferences window")
 <div align="left">
 
-#### URL Prefix
-
 You only need to do this once to set the URL prefix, as this will be stored in your user's defaults.
 
+- Set your customer Hostkey
+- If you need so, configure a character to be used as separator, some web sites need the search words separated by i.e. a plus sign.
+- Test mode is only usefull for developer mode
 - Set the URL search prefix 
    - Example 1: https://www.google.com/search?q=
    - Example 2: http://www.yourcompany.com/query.cgi?user=
-
+- Status bar mode is a future feature
 
 
 #### HotKey
@@ -39,14 +50,19 @@ You only need to do this once to set the URL prefix, as this will be stored in y
 
 ### Search
 
-Search: Click on the status bar icon on press the HotKey
-
-- Type the text in the "Search Field" and press Enter (or Cancel to dismiss)
-- If you press Enter will trigger the default browser towards the formed URL. 
+Search: Click on the status bar icon or press your custom HotKey
 
 
+<div align="center">
+![Screenshot of the preferences](resources/scr_search.png?raw=true "This is the search box")
+<div align="left">
 
-#### Credit MASShortcut.framework
+
+Type the text in the "Search Field" and press Enter (or Cancel to dismiss) which will trigger your OSX default browser towards the formed URL. 
+
+
+
+#### Credits
 
 
 This project uses the MASShortcut.framework (by [shpakovski/MASShortcut
