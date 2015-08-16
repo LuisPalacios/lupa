@@ -1,14 +1,10 @@
 ## Introduction
 
-Project 'lupa' (spanish word for magnifying glass), authored by Luis Palacios, 2015
+Project 'lupa' (spanish word for magnifying glass), created by me, Luis Palacios, during the summer of 2015 as an exersise to practice Swift during Xcode 7 and El Capitan betas. I choose something I was playing in the past but wanted to do again with Swift: create an status bar application.
 
+The objective of the App itself is extremely simple. It just offers a way of launching your default browser with a URL formed by concatenating a preset "Prefix" plus the contents of a "Search Field". The "Prefix" is stored under the OSX User Defaults. The "Search Field" is typed by the user. 
 
-Really simple App that offers a way of launching your default browser with a URL formed by concatenating a preset "Prefix" plus the contents of a "Search Field". The "Prefix" is stored under the OSX User Defaults. The "Search Field" is typed by the user. 
-
-
-### Use Case
-
-You can find probably dozen of use cases, some examples could be: Search in Google, search people in an enterprise Web Directory, etc.
+You can find probably dozen of use cases, some examples could be: Search in Google, search people in an enterprise Web Directory, etc. My personal use case is searching in my company's directory, reducing significantly the number of keystrokes and mouse movements :-)
 
 
 ### Configuration 
