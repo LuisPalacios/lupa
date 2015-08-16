@@ -19,7 +19,7 @@ Preferences: Right click on the status bar and select preferences under the menu
 
 - Set the URL search prefix 
    - Example 1: https://www.google.es/?gws_rd=ssl#q=
-   - Example 2: http://yourcompany/query.cgi?user=
+   - Example 2: http://www.yourcompany.com/query.cgi?user=
 - This Prefix is stored in your user's defaults.
 - You only need to do this once. 
 
