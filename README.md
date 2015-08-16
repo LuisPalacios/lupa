@@ -49,15 +49,14 @@ You only need to do this once to set the URL prefix, as this will be stored in y
 
 ### Search
 
-Search: Click on the status bar icon or press your custom HotKey
+**Click on the status bar icon** or **press your custom HotKeys** used under Preferences. Once you see the search box type the words you want to use and press Enter to trigger your OSX default browser towards the formed URL. 
 
+If you press **ESCape** it will cancel and dismiss the search window. 
 
 <div align="center">
 ![Screenshot of the search box](resources/scr_search.png?raw=true "This is the search box")
 <div align="left">
 
-
-Type the text in the "Search Field" and press Enter (or Cancel to dismiss) which will trigger your OSX default browser towards the formed URL. 
 
 
 
