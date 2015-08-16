@@ -22,8 +22,10 @@ import AppKit
 // 
 struct LUPADefaults {
     static let lupa_URLPrefix       = "lupa_URLPrefix"
+    static let lupa_SearchSeparator = "lupa_SearchSeparator"                    // Character to use to separate te words in the search field (byDefault space)
+    static let lupa_SearchSeparatorEnabled = "lupa_SearchSeparatorEnabled"      // Use the separator
     static let lupa_StatusBarMode   = "lupa_StatusBarMode"
-    static let lupa_TestMode        = "lupa_TestMode"       // Doesn't call the Browser, just logs the URL
+    static let lupa_TestMode        = "lupa_TestMode"           // Doesn't call the Browser, just logs the URL
     static let lupa_Hotkey          = "lupa_Hotkey"
     static let lupa_HotkeyEnabled   = "lupa_HotkeyEnabled"
 }

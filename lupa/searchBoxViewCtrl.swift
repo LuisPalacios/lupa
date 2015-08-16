@@ -22,6 +22,9 @@ class searchBoxViewCtrl: NSViewController {
     @IBOutlet weak var searchField: NSTextField!
     @IBOutlet var viewToReplace: NSView!
     
+    //  In order to work with the user defaults
+    let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    
     
     // --------------------------------------------------------------------------------
     // MARK: Init
@@ -92,24 +95,36 @@ class searchBoxViewCtrl: NSViewController {
     @IBAction func doSearch(sender: AnyObject) {
     
         // Read userDefaults (String) and convert into NSURL
-        let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_URLPrefix) as? String {
-            // print("lupa_URLPrefix: \(letTheString)")
+        if let letURLString = self.userDefaults.objectForKey(LUPADefaults.lupa_URLPrefix) as? String {
+            // print("lupa_URLPrefix: \(letURLString)")
             
-            if !letTheString.isEmpty {
+            if !letURLString.isEmpty {
+                
                 if !searchField.stringValue.isEmpty {
-                    let searchURLString : String = letTheString + searchField.stringValue
+                    var searchString : String = searchField.stringValue
+                    
+                    if let letSearchSeparatorEnabled = self.userDefaults.objectForKey(LUPADefaults.lupa_SearchSeparatorEnabled) as? Bool {
+                        let searchSeparatorEnabled = letSearchSeparatorEnabled
+                        if ( searchSeparatorEnabled ) {
+                            if let letSearchSeparator = self.userDefaults.objectForKey(LUPADefaults.lupa_SearchSeparator) as? String {
+                                let searchSeparator = letSearchSeparator
+                                searchString = searchField.stringValue.stringByReplacingOccurrencesOfString(" ", withString: searchSeparator, options: NSStringCompareOptions.LiteralSearch, range: nil)
+                            }
+                        }
+                    }
+
+                    // Setup the final string
+                    let searchURLString : String = letURLString + searchString
                     
                     // Let's go rock and roll
                     // Read userDefaults (String)
-                    let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
-                    if let letTestMode = userDefaults.objectForKey(LUPADefaults.lupa_TestMode) as? Bool {
+                    if let letTestMode = self.userDefaults.objectForKey(LUPADefaults.lupa_TestMode) as? Bool {
                         let testMode = letTestMode
                         if ( testMode ) {
                             // Test, developer mode
                             print("Browser URL: \(searchURLString)")
                         } else {
-                            // Production mode
+                            // Production mode, fix spaces
                             let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
                             let theURL : NSURL? = NSURL (string: myUrlString)
                             NSWorkspace.sharedWorkspace().openURL(theURL!)

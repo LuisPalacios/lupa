@@ -190,6 +190,7 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
     //
     func showPreferences() {
         if let window = self.lupaDefaultsController.window {
+            NSApplication.sharedApplication().activateIgnoringOtherApps(true)
             window.makeKeyAndOrderFront(self)
             window.center()
         }

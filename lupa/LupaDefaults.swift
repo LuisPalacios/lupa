@@ -19,6 +19,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     
 
     @IBOutlet var textView: NSTextView!
+    @IBOutlet weak var searchSeparator: NSTextField!
     @IBOutlet weak var urlScroll: NSScrollView!
     @IBOutlet var urlView: NSTextView!
     @IBOutlet weak var statusBarMode: NSButton!
@@ -66,7 +67,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         syncURLView()
     }
     func syncURLView() {
-        let thePrefix : String = textView.textStorage!.string + "<search_field>"
+        let thePrefix : String = textView.textStorage!.string + "<search contents>"
         urlView.textStorage?.setAttributedString(NSAttributedString(string: thePrefix))
     }
     
