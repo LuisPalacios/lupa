@@ -23,6 +23,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     @IBOutlet weak var urlScroll: NSScrollView!
     @IBOutlet var urlView: NSTextView!
     @IBOutlet weak var statusBarMode: NSButton!
+    @IBOutlet weak var version: NSTextField!
     
     @IBOutlet weak var customShortcutView: MASShortcutView!
     
@@ -37,6 +38,11 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     override func windowDidLoad() {
         super.windowDidLoad()
 
+        // Set the version
+        
+        // programLongName
+        self.version.stringValue = programLongName()
+        
         // Bind the shortcut value (recorder view’s value) to user defaults.
         // Run “defaults read parchis.org.lupa” to see what’s stored
         customShortcutView.setAssociatedUserDefaultsKey(LUPADefaults.lupa_Hotkey, withTransformerName: NSKeyedUnarchiveFromDataTransformerName)

@@ -31,12 +31,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //  In order to work with the user defaults
     let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
+    // Class attributes
+    var programName : String    = ""
+
 
     /// --------------------------------------------------------------------------------
     //  MARK: Main
     /// --------------------------------------------------------------------------------
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
+
+        // Store my program name.
+        self.programName = programLongName()
+        
+        // Log
+        print("\(self.programName)")
+        
 
         /// Prepare windows
         // Close the default window

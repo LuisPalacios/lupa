@@ -39,6 +39,16 @@ enum LUPAStatusItemType: Int {
 }
 
 
+/// Returns the program long name, based on constans found in "AbacoVersion.swift"
+/// automatically generated from custom Xcode->Project->Build Phase script, which
+/// analises the GIT information and creates version information
+func programLongName() -> String
+{
+    let myProgramLongName : String = "Lupa \(skPROGRAM_DISPLAY_VERSION)-\(ikPROGRAM_VERSION)(\(skPROGRAM_BUILD))"
+    return myProgramLongName;
+}
+
+
 /// MARK: NSView Extensions
 
 /// Replace an NSView with another NSView
