@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="213" height="22"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="v9z-rI-k0a">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="v9z-rI-k0a" customClass="searchTextField" customModule="lupa" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="213" height="22"/>
                     <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="5PZ-Kf-4cr">
@@ -30,10 +30,9 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="v9z-rI-k0a" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="6zH-ha-9c5"/>
-                <constraint firstAttribute="bottom" secondItem="v9z-rI-k0a" secondAttribute="bottom" id="GTk-vB-Thn"/>
-                <constraint firstItem="v9z-rI-k0a" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="cfp-5L-DIV"/>
-                <constraint firstAttribute="trailing" secondItem="v9z-rI-k0a" secondAttribute="trailing" id="lTm-dc-EXv"/>
+                <constraint firstItem="v9z-rI-k0a" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="OBo-Qy-ruD"/>
+                <constraint firstItem="v9z-rI-k0a" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="cac-45-qzt"/>
+                <constraint firstAttribute="trailing" secondItem="v9z-rI-k0a" secondAttribute="trailing" id="rEt-xk-oT7"/>
             </constraints>
             <animations/>
             <point key="canvasLocation" x="-207.5" y="121"/>

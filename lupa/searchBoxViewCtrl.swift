@@ -57,6 +57,23 @@ class searchBoxViewCtrl: NSViewController {
         }
     }
     
+    /// --------------------------------------------------------------------------------
+    //  MARK: IBActions through First Responder
+    /// --------------------------------------------------------------------------------
+    
+    //
+    // Capture firstResponder "doCancelSearch:" command. 
+    //
+    // This is not connected through IBN but is a message sent from the 
+    // searchTextField subclass when user presse ESCAPE in the searchBox
+    //
+    @IBAction func doCancelSearch(sender: AnyObject) {
+        // Simply close the search box window
+        if let window = self.view.window {
+            window.close()
+        }
+    }
+
     
     // --------------------------------------------------------------------------------
     // MARK: Gestión del view load
@@ -109,6 +126,7 @@ class searchBoxViewCtrl: NSViewController {
             // print("Prefix is not an string object, ignore it....")
         }
         
+        // Close the Window
         if let window = self.view.window {
             window.close()
         }

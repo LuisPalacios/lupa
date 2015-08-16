@@ -143,4 +143,64 @@ class statusBarView: NSView {
         
         //self.normalImage.drawAtPoint(iconPoint, fromRect: dirtyRect, operation: NSCompositingOperation.CompositeSourceOver, fraction: 1.0)
     }
+    
+    override func keyDown(theEvent: NSEvent) {
+        Swift.print ("Key down")
+//        let s   =   theEvent.charactersIgnoringModifiers!
+//        let s1  =   s.unicodeScalars
+//        let s2  =   s1[s1.startIndex].value
+//        let s3  =   Int(s2)
+//        switch s3 {
+//        case NSUpArrowFunctionKey:
+//            wc1.navigateUp()
+//            return
+//        case NSDownArrowFunctionKey:
+//            wc1.navigateDown()
+//            return
+//        default:
+//            break
+//        }
+        super.keyDown(theEvent)
+    }
+    
+//    - (void)keyDown:(NSEvent *)theEvent
+//    {
+//    switch([theEvent keyCode]) {
+//    
+//    case 53: // Tecla de escape: ESC
+//    
+//    // Log
+//    // NSLog(@"ESC pulsado en el View ABHUDPopUpView");
+//    
+//    // Notifico al window controller que han pulsado ESC
+//    if ( [self hudPopUpWinCtrl]!=nil ) {
+//    
+//    
+//    // Callback to the window controller
+//    //
+//    // Notice that I was getting the WARNING "Undeclared selector 'processESCKey'" when I migrated to XCode6
+//    // So I'm using the same trick as when I changed to ARC and hitted the warning "performSelector may cause
+//    // a leak because its selector is unknown"
+//    // See: http://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
+//    //
+//    // The new warning (undeclared selector) appears when using the following:
+//    //
+//    //    if([[self hudPopUpWinCtrl] respondsToSelector:@selector(processESCKey)]) {
+//    //        [[self hudPopUpWinCtrl] performSelector:@selector(processESCKey)];
+//    //    }
+//    //
+//    SEL selector = NSSelectorFromString(@"processESCKey");
+//    IMP imp = [self.hudPopUpWinCtrl methodForSelector:selector];
+//    if ( imp ) {
+//    LPLog(@"");
+//    void (*func)(id, SEL, id) = (void *)imp;
+//    func(self.hudPopUpWinCtrl, selector, self);
+//    }
+//    }
+//    
+//    break;
+//    default:
+//    [super keyDown:theEvent];
+//    }
+//    }
 }

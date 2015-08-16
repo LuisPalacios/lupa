@@ -90,7 +90,7 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
         self.statusItemMenu = statusMenu
         
     }
-
+    
     
     /// --------------------------------------------------------------------------------
     //  MARK: StatusBar button handling
@@ -196,15 +196,18 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
     }
     
     /// --------------------------------------------------------------------------------
-    //  MARK: Defaults (preferences) handling
+    //  MARK: Show Search Box
     /// --------------------------------------------------------------------------------
     
-    
-    // Open the preferences (Defaults) window
+    // Open the Search box
     //
     func showSearchBox() {
         if let window = self.searchBoxWindow.window {
+            NSApplication.sharedApplication().activateIgnoringOtherApps(true)
             window.makeKeyAndOrderFront(self)
+//            if let window = self.searchBoxWindow.window {
+//                window.level = Int(CGWindowLevelForKey(CGWindowLevelKey.MaximumWindowLevelKey))
+//            }
 
             // Find out the Screen Coordinates of the NSStatusItem Frame and generate
             // a right-click MENU.

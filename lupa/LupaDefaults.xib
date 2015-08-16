@@ -63,7 +63,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="KaX-9D-HyX" name="value" keyPath="values.lupa_HotkeyEnabled" id="CL7-na-H0D"/>
+                                        <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_HotkeyEnabled" id="cgz-2C-YbK"/>
                                     </connections>
                                 </button>
                                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="NVG-6B-ZeX">
@@ -85,13 +85,6 @@
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="xnT-NL-0AR" customClass="MASShortcutView">
                                                 <rect key="frame" x="20" y="16" width="161" height="19"/>
                                                 <animations/>
-                                                <connections>
-                                                    <binding destination="KaX-9D-HyX" name="hidden" keyPath="values.lupa_HotkeyEnabled" id="cW3-8c-Lkg">
-                                                        <dictionary key="options">
-                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                        </dictionary>
-                                                    </binding>
-                                                </connections>
                                             </customView>
                                         </subviews>
                                         <constraints>
