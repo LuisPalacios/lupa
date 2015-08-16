@@ -7,7 +7,7 @@ The objective of the App itself is extremely simple. It just offers a way of lau
 You can find probably dozen of use cases, some examples could be: Search in Google, search people in an enterprise Web Directory, etc. My personal use case is searching in my company's directory, reducing significantly the number of keystrokes and mouse movements :-)
 
 
-> This program needs at least Yosemite as it's using the *new* `NSStatusBarButton` API introduce in OSX OSX 10.10.
+> Needs at least Yosemite, it's using *new* `NSStatusBarButton` API introduce in OSX 10.10.
 
 
 ### Configuration 
