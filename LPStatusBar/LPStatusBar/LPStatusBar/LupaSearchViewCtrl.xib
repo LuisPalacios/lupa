@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F25a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8173.3"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="LupaSearchViewCtrl" customModule="LPStatusBar" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="274" height="154"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iDK-4X-lE7">
+                    <rect key="frame" x="90" y="13" width="94" height="32"/>
+                    <buttonCell key="cell" type="push" title="Push me" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qeP-o0-0YK">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NuC-1a-wh4">
+                    <rect key="frame" x="-85" y="117" width="444" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Lupa Search View Controller" id="B8f-6a-VRX">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="NuC-1a-wh4" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="acc-1M-4Zr"/>
+                <constraint firstItem="NuC-1a-wh4" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="-83" id="cfz-kf-TLO"/>
+                <constraint firstItem="iDK-4X-lE7" firstAttribute="centerX" secondItem="NuC-1a-wh4" secondAttribute="centerX" id="m4T-xU-GIi"/>
+                <constraint firstAttribute="bottom" secondItem="iDK-4X-lE7" secondAttribute="bottom" constant="20" symbolic="YES" id="oZN-UW-NZf"/>
+                <constraint firstItem="NuC-1a-wh4" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="zA0-3b-hX3"/>
+            </constraints>
+            <point key="canvasLocation" x="260" y="192"/>
+        </customView>
+    </objects>
+</document>

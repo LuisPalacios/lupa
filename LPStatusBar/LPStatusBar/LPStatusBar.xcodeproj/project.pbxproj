@@ -7,14 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A04653801B83DFF900B80185 /* LPStatusItemWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A046537F1B83DFF900B80185 /* LPStatusItemWindow.swift */; };
 		A085D3161B81CC10007B9917 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A085D3151B81CC10007B9917 /* AppDelegate.swift */; };
 		A085D3181B81CC10007B9917 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A085D3171B81CC10007B9917 /* Assets.xcassets */; };
 		A085D31B1B81CC10007B9917 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A085D3191B81CC10007B9917 /* MainMenu.xib */; };
 		A085D3241B81CC6B007B9917 /* LPStatusItemGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A085D3231B81CC6B007B9917 /* LPStatusItemGlobals.swift */; };
 		A085D3261B81CC98007B9917 /* LPStatusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A085D3251B81CC98007B9917 /* LPStatusItem.swift */; };
+		A08B27D61B81DBC300CF889D /* LupaSearchViewCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08B27D41B81DBC300CF889D /* LupaSearchViewCtrl.swift */; };
+		A08B27D71B81DBC300CF889D /* LupaSearchViewCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = A08B27D51B81DBC300CF889D /* LupaSearchViewCtrl.xib */; };
+		A08B27DB1B81EA8F00CF889D /* LPStatusItemWindowCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08B27DA1B81EA8F00CF889D /* LPStatusItemWindowCtrl.swift */; };
+		A08B27DD1B81EDD600CF889D /* LPStatusItemWindowConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08B27DC1B81EDD600CF889D /* LPStatusItemWindowConfig.swift */; };
+		A0A24E491B8DCE2300F386D0 /* LPStatusItemBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A24E481B8DCE2300F386D0 /* LPStatusItemBackgroundView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A046537F1B83DFF900B80185 /* LPStatusItemWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindow.swift; path = LPStatusItem/LPStatusItemWindow.swift; sourceTree = SOURCE_ROOT; };
 		A085D3121B81CC10007B9917 /* LPStatusBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LPStatusBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A085D3151B81CC10007B9917 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A085D3171B81CC10007B9917 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -22,6 +29,12 @@
 		A085D31C1B81CC10007B9917 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A085D3231B81CC6B007B9917 /* LPStatusItemGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemGlobals.swift; path = LPStatusItem/LPStatusItemGlobals.swift; sourceTree = SOURCE_ROOT; };
 		A085D3251B81CC98007B9917 /* LPStatusItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItem.swift; path = LPStatusItem/LPStatusItem.swift; sourceTree = SOURCE_ROOT; };
+		A08B27D41B81DBC300CF889D /* LupaSearchViewCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LupaSearchViewCtrl.swift; sourceTree = "<group>"; };
+		A08B27D51B81DBC300CF889D /* LupaSearchViewCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LupaSearchViewCtrl.xib; sourceTree = "<group>"; };
+		A08B27DA1B81EA8F00CF889D /* LPStatusItemWindowCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindowCtrl.swift; path = LPStatusItem/LPStatusItemWindowCtrl.swift; sourceTree = SOURCE_ROOT; };
+		A08B27DC1B81EDD600CF889D /* LPStatusItemWindowConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindowConfig.swift; path = LPStatusItem/LPStatusItemWindowConfig.swift; sourceTree = SOURCE_ROOT; };
+		A0A24E481B8DCE2300F386D0 /* LPStatusItemBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemBackgroundView.swift; path = LPStatusItem/LPStatusItemBackgroundView.swift; sourceTree = SOURCE_ROOT; };
+		A0F2DFFE1B8C7D8900424B75 /* LPStatusBar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LPStatusBar-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +72,8 @@
 				A085D3171B81CC10007B9917 /* Assets.xcassets */,
 				A085D3191B81CC10007B9917 /* MainMenu.xib */,
 				A085D31C1B81CC10007B9917 /* Info.plist */,
+				A08B27D41B81DBC300CF889D /* LupaSearchViewCtrl.swift */,
+				A08B27D51B81DBC300CF889D /* LupaSearchViewCtrl.xib */,
 			);
 			path = LPStatusBar;
 			sourceTree = "<group>";
@@ -68,6 +83,11 @@
 			children = (
 				A085D3231B81CC6B007B9917 /* LPStatusItemGlobals.swift */,
 				A085D3251B81CC98007B9917 /* LPStatusItem.swift */,
+				A08B27DA1B81EA8F00CF889D /* LPStatusItemWindowCtrl.swift */,
+				A08B27DC1B81EDD600CF889D /* LPStatusItemWindowConfig.swift */,
+				A046537F1B83DFF900B80185 /* LPStatusItemWindow.swift */,
+				A0A24E481B8DCE2300F386D0 /* LPStatusItemBackgroundView.swift */,
+				A0F2DFFE1B8C7D8900424B75 /* LPStatusBar-Bridging-Header.h */,
 			);
 			name = LPStatusItem;
 			path = LPStatusBar;
@@ -99,6 +119,7 @@
 		A085D30A1B81CC10007B9917 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Luis Palacios";
 				TargetAttributes = {
@@ -131,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A085D3181B81CC10007B9917 /* Assets.xcassets in Resources */,
+				A08B27D71B81DBC300CF889D /* LupaSearchViewCtrl.xib in Resources */,
 				A085D31B1B81CC10007B9917 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,9 +164,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A04653801B83DFF900B80185 /* LPStatusItemWindow.swift in Sources */,
 				A085D3161B81CC10007B9917 /* AppDelegate.swift in Sources */,
+				A0A24E491B8DCE2300F386D0 /* LPStatusItemBackgroundView.swift in Sources */,
 				A085D3261B81CC98007B9917 /* LPStatusItem.swift in Sources */,
+				A08B27DB1B81EA8F00CF889D /* LPStatusItemWindowCtrl.swift in Sources */,
 				A085D3241B81CC6B007B9917 /* LPStatusItemGlobals.swift in Sources */,
+				A08B27DD1B81EDD600CF889D /* LPStatusItemWindowConfig.swift in Sources */,
+				A08B27D61B81DBC300CF889D /* LupaSearchViewCtrl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +225,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -236,7 +263,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -246,11 +273,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = LPStatusBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Parchis.LPStatusBar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LPStatusBar/LPStatusBar-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -258,11 +288,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = LPStatusBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Parchis.LPStatusBar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LPStatusBar/LPStatusBar-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -285,6 +317,7 @@
 				A085D3211B81CC10007B9917 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

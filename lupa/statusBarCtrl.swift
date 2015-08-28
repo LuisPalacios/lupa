@@ -128,7 +128,7 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
         }
         
         // Some logging
-        // print("handleStatusItemActions, buttonMask: \(buttonMask). primaryDown: \(primaryDown). secondaryDown: \(secondaryDown). statusItemAction: \(self.statusItemAction)")
+        print("handleStatusItemActions, buttonMask: \(buttonMask). primaryDown: \(primaryDown). secondaryDown: \(secondaryDown). statusItemAction: \(self.statusItemAction)")
         
     }
     
@@ -210,8 +210,7 @@ class statusBarCtrl: NSObject, NSMenuDelegate {
 //                window.level = Int(CGWindowLevelForKey(CGWindowLevelKey.MaximumWindowLevelKey))
 //            }
 
-            // Find out the Screen Coordinates of the NSStatusItem Frame and generate
-            // a right-click MENU.
+            // Find out the Screen Coordinates of the NSStatusItem Frame and show the search box window
             let rectInWindow : NSRect = self.button.convertRect(self.button.bounds, toView: nil)
             if let letButtonWindow = self.button.window {
                 let buttonWindow = letButtonWindow

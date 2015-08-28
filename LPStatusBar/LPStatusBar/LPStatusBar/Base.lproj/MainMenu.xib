@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6233" systemVersion="14A329f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F25a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6233"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8173.3"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -11,8 +11,9 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target">
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="LPStatusBar" customModuleProvider="target">
             <connections>
+                <outlet property="statusMenu" destination="Cf8-1C-vS1" id="T8K-Lw-Fvz"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -669,12 +670,43 @@
         <window title="LPStatusBar" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
+            <rect key="contentRect" x="335" y="390" width="371" height="225"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
+                <rect key="frame" x="0.0" y="0.0" width="371" height="225"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aE2-yH-wm5">
+                        <rect key="frame" x="144" y="95" width="82" height="32"/>
+                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uNK-n9-qPC">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                </subviews>
             </view>
+            <point key="canvasLocation" x="348.5" y="281.5"/>
         </window>
+        <menu id="Cf8-1C-vS1" userLabel="Status Menu">
+            <items>
+                <menuItem title="Find" keyEquivalent="f" id="hY3-JZ-EKX">
+                    <connections>
+                        <action selector="showSearchBox:" target="-1" id="gL5-VQ-v1f"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Preferences…" keyEquivalent="," id="nJ7-3n-Kpm">
+                    <connections>
+                        <action selector="showPreferences:" target="-1" id="tZs-5G-pgJ"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Cbp-eq-9ap"/>
+                <menuItem title="Quit" keyEquivalent="q" id="nMC-su-Nn2">
+                    <connections>
+                        <action selector="terminate:" target="-1" id="91y-T2-rbZ"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-645.5" y="-1049.5"/>
+        </menu>
     </objects>
 </document>

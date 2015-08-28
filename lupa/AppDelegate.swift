@@ -48,7 +48,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //
         //      Application is agent (UIElement) -> YES
         //
-        
+
         /// Prepare windows
         // Close the default window, in case you didn't delete it from MainMenu.xib :)
         defaultWindow = NSApplication.sharedApplication().windows.first

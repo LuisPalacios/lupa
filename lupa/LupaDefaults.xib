@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8173.3" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8173.3" systemVersion="14F25a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8173.3"/>
         <capability name="box content view" minToolsVersion="7.0"/>
@@ -22,7 +22,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="282" height="541"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="282" height="541"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -44,7 +44,7 @@
                                         <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_HotkeyEnabled" id="cgz-2C-YbK"/>
                                     </connections>
                                 </button>
-                                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="NVG-6B-ZeX">
+                                <box verticalHuggingPriority="750" misplaced="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="NVG-6B-ZeX">
                                     <rect key="frame" x="20" y="98" width="202" height="4"/>
                                     <constraints>
                                         <constraint firstAttribute="height" id="Mpc-Fj-6Rx"/>
@@ -54,13 +54,13 @@
                                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <font key="titleFont" metaFont="system"/>
                                 </box>
-                                <box title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="O64-WD-3KU">
+                                <box misplaced="YES" title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="O64-WD-3KU">
                                     <rect key="frame" x="17" y="104" width="203" height="52"/>
                                     <view key="contentView" id="rc2-Td-oLs">
                                         <rect key="frame" x="1" y="1" width="201" height="50"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="xnT-NL-0AR" customClass="MASShortcutView">
+                                            <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xnT-NL-0AR" customClass="MASShortcutView">
                                                 <rect key="frame" x="20" y="16" width="161" height="19"/>
                                                 <animations/>
                                             </customView>
@@ -77,13 +77,13 @@
                                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </box>
-                                <box title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="z0H-fh-tdD">
+                                <box misplaced="YES" title="Box" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="z0H-fh-tdD">
                                     <rect key="frame" x="17" y="19" width="203" height="53"/>
                                     <view key="contentView" id="jIy-Xz-5LB">
                                         <rect key="frame" x="1" y="1" width="201" height="51"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rlg-bO-s6p">
+                                            <textField focusRingType="none" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rlg-bO-s6p">
                                                 <rect key="frame" x="92" y="14" width="34" height="22"/>
                                                 <animations/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" focusRingType="none" drawsBackground="YES" usesSingleLineMode="YES" id="hf3-E9-X1G">
@@ -99,7 +99,7 @@
                                                     </binding>
                                                 </connections>
                                             </textField>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6WZ-H9-Rje">
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6WZ-H9-Rje">
                                                 <rect key="frame" x="18" y="17" width="68" height="17"/>
                                                 <animations/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Separator:" id="CrN-ti-wRg">
@@ -123,7 +123,7 @@
                                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </box>
-                                <button translatesAutoresizingMaskIntoConstraints="NO" id="jLf-Ga-Y3d">
+                                <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jLf-Ga-Y3d">
                                     <rect key="frame" x="18" y="76" width="175" height="18"/>
                                     <animations/>
                                     <buttonCell key="cell" type="check" title="Use the search separator" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8hN-6X-MtW">
