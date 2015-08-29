@@ -1,6 +1,6 @@
 ## Introduction
 
-Project 'lupa' (spanish word for magnifying glass), created during the summer of 2015 as an exersise to practice Swift during Xcode 7 and El Capitan betas. I choose something I was playing in the past but wanted to do again with Swift: create a status bar application.
+Project 'lupa' (spanish word for magnifying glass), created during the summer of 2015 as an exersise to practice Swift during Xcode 7 and El Capitan betas. I choose something I was playing with in the past but wanted to do again with Swift: create a status bar application.
 
 <div align="center">
 ![Lupa](resources/dir_128x128.png?raw=true "My lupa")
@@ -12,7 +12,7 @@ The objective of the App itself is extremely simple. It just offers a way of lau
 You can find probably dozen of use cases, some examples could be: Search in Google, search people in an enterprise Web Directory, etc. My personal use case is searching in my company's directory, reducing significantly the number of keystrokes and mouse movements :-)
 
 
-> Needs at least Yosemite, it's using *new* `NSStatusBarButton` API introduce in OSX 10.10.
+> Note: "lupa" needs OSX 10.10 or higher, it's using *new* `NSStatusBarButton` API introduce in Yosemite.
 
 
 ### Configuration 
@@ -34,7 +34,7 @@ You can access the Preferences to setup the App behaviour, only need to do this 
 ![Screenshot of the preferences](resources/scr_preferences.png?raw=true "This is the preferences window")
 <div align="left">
 
-- System shortcut: set your custom Hostkey
+- System shortcut: set your custom Hotkey
 - Search separator: configure a character to be used as separator, some web sites need the search words separated by i.e. a plus sign.
 - URL search prefix 
    - Example 1: https://www.google.com/search?q=
@@ -61,4 +61,4 @@ This project uses the MASShortcut.framework (by [shpakovski/MASShortcut
 
 #### Copyright
 
-MASShortcut is licensed under the 2-clause BSD license.
+lupa is licensed under the 2-clause BSD license.
