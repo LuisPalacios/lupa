@@ -36,6 +36,11 @@ import Cocoa
     var statusItemAction            : eMouseStatusItemAction!
     var windowConfig                : LPStatusItemWindowConfig!
 
+    // Menu
+    var statusMenu                  : NSMenu!
+    var timerShowMenu               : NSTimer!          //!< Timer para mostrar el Menu right-click
+    
+
     //  Singleton accessible from IB and Obj-C if needed
     //
     class var sharedInstance: LPStatusItem {
@@ -87,6 +92,9 @@ import Cocoa
         // Log
         //print("LPStatusItem - Activate my status item and present it in the bar")
         //print("    activateStatusItemWithImage (imageName : \(imageName), contentViewController: \(contentViewController)) ")
+        
+        // Store the Menu 
+        self.statusMenu = statusMenu
         
         /// Create Status Bar Item with an NSImage
         //
@@ -196,13 +204,12 @@ import Cocoa
             // Change my status
             self.statusItemAction = eMouseStatusItemAction.actionSecondary
             
-            // Do something here
-//            // Start the menu
-//            // NOTE: There is one issue with the right click. If I call the menu right away
-//            // then the status item stays highlighted after an option is choosen in the menu
-//            // so what I'm doing is leting it be called through a timer, after I exit this
-//            // function
-//            startTimerMenu()
+            // Start the menu
+            // NOTE: There is one issue with the right click. If I call the menu right away
+            // then the status item stays highlighted after an option is choosen in the menu
+            // so what I'm doing is leting it be called through a timer, after I exit this
+            // function
+            startTimerMenu()
             
         } else {
             
@@ -233,5 +240,53 @@ import Cocoa
         self.statusItemWindowController.dismissStatusItemWindow()
     }
     
+    
+    /// --------------------------------------------------------------------------------
+    //  MARK: Timer to show the Menu
+    /// --------------------------------------------------------------------------------
+    
+    // Start a timer to show the Menu
+    //
+    func startTimerMenu() {
+        
+        timerShowMenu = NSTimer.scheduledTimerWithTimeInterval(0.0,
+            target: self,
+            selector: Selector("actionTimerMenu"),
+            userInfo: nil,
+            repeats: false)
+        
+    }
+    
+    // Stop the timer (not used, but comes with my template :-))
+    //
+    func stopTimerMenu() {
+        if ( timerShowMenu != nil ) {
+            if (  timerShowMenu.valid ) {
+                timerShowMenu.invalidate()
+            }
+            timerShowMenu = nil
+        }
+    }
+    
+    // Action to execute when the timer finishes
+    //
+    func actionTimerMenu() {
+        
+        // Start the menu
+        // print("Launching the menu")
+        
+        // Find out the Screen Coordinates of the NSStatusItem Frame and generate
+        // a right-click MENU.
+        let rectInWindow : NSRect = self.button.convertRect(self.button.bounds, toView: nil)
+        
+        if let letButtonWindow = self.button.window {
+            
+            let buttonWindow = letButtonWindow
+            let screenRect : NSRect = buttonWindow.convertRectToScreen(rectInWindow)
+            let point : NSPoint = NSMakePoint(screenRect.origin.x, screenRect.origin.y - 3.0)
+            self.statusMenu.popUpMenuPositioningItem(nil, atLocation: point, inView: nil)
+        }
+    }
+
 }
 

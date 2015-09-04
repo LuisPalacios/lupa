@@ -126,9 +126,11 @@ class LupaSearchViewCtrl: NSViewController {
     
     @IBAction func doSearch(sender: AnyObject) {
         
+        print("doSearch")
+
         // Read userDefaults (String) and convert into NSURL
         if let letURLString = self.userDefaults.objectForKey(LUPADefaults.lupa_URLPrefix) as? String {
-            // print("lupa_URLPrefix: \(letURLString)")
+            print("lupa_URLPrefix: \(letURLString)")
             
             if !letURLString.isEmpty {
                 
@@ -147,6 +149,7 @@ class LupaSearchViewCtrl: NSViewController {
                     
                     // Setup the final string
                     let searchURLString : String = letURLString + searchString
+                    print("searchURLString: \(searchURLString)")
                     
                     // Let's go rock and roll
                     //
@@ -155,27 +158,30 @@ class LupaSearchViewCtrl: NSViewController {
                     //
                     //  $ defaults write parchis.org.lupa lupa_TestMode -bool YES
                     //
+                    var testMode: Bool = false
                     if let letTestMode = self.userDefaults.objectForKey(LUPADefaults.lupa_TestMode) as? Bool {
-                        let testMode = letTestMode
-                        if ( testMode ) {
-                            // Test, developer mode
-                            print("Browser URL: \(searchURLString)")
-                        } else {
-                            // Production mode, fix spaces
-                            let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-                            let theURL : NSURL? = NSURL (string: myUrlString)
-                            NSWorkspace.sharedWorkspace().openURL(theURL!)
-                        }
+                        testMode = letTestMode
                     }
+                    if ( testMode ) {
+                        print("TEST MODE - Browser URL: \(searchURLString)")
+                    } else {
+                        // Production mode, fix spaces
+                        let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+                        let theURL : NSURL? = NSURL (string: myUrlString)
+                        print("theURL: \(theURL?.path)")
+                        NSWorkspace.sharedWorkspace().openURL(theURL!)
+                    }
+
+                    
                 } else {
-                    // print ("Search string empty, ignore it...")
+                    print ("Search string empty, ignore it...")
                 }
             } else {
-                // print ("URL Prefix is empty, call doDefaults...")
+                print ("URL Prefix is empty, you should set something like doDefaults...")
                 // statusbarController.showPreferences()
             }
         } else {
-            // print("Prefix is not an string object, ignore it....")
+            print("Prefix is not an string object, ignore it....")
         }
         
         // Close the Window
@@ -183,5 +189,6 @@ class LupaSearchViewCtrl: NSViewController {
             window.close()
         }
     }
+
 
 }

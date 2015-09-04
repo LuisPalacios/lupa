@@ -111,7 +111,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // Activate status bar and make connections
     //
     func activateStatusBar () throws {
-        // Activate my (singleton) "Status Bar Item" with the custom view controller
+        //
+        // Activate my (singleton) "lpStatusItem" (Status Bar Item) passing:
+        //
+        //      the custom view controller
+        //      the custom icon
+        //
         if ( searchViewCtrl != nil ) {
             if let letItemImage = NSImage(named: "statusbar-icon") {
                 let itemImage = letItemImage

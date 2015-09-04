@@ -91,13 +91,13 @@ class LPStatusItemWindow: NSPanel {
     //
     override var contentView : NSView? {
         get {
-            Swift.print ("contentView GET")
-            //return super.contentView
+            // Log
+            //Swift.print ("contentView GET")
             return self.userContentView
         }
         set {
-            // Swift.print ("contentView SET - ENTRADA self.contentView : \(self.contentView)")
-            Swift.print ("contentView SET - ENTRADA newValue : \(newValue)")
+            // Log
+            //Swift.print ("contentView SET - ENTRADA newValue : \(newValue)")
             
             // if already using my userContentView return
             if ( self.userContentView == newValue ) {

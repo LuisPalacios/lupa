@@ -8,6 +8,24 @@
 
 import Cocoa
 
+// ErroType's
+enum skViewControllerNotReady: ErrorType {
+    case cannotActivate
+    case cannotCreate
+    case cannotAccessIconImage
+}
+extension skViewControllerNotReady: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case cannotActivate: return "Attention! can't activate the custom NSViewController"
+        case cannotCreate: return "Attention! can't create the custom NSViewController"
+        case cannotAccessIconImage : return "Attention! can't access the Icon Image"
+        }
+    }
+}
+
+//
+//
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
@@ -17,10 +35,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //  For the following attributes I'm using Implicitly Unwrapped Optional (!) so
     //  they are optionals and do not need to initialize them here, will do later.
-    
-    var defaultWindow           :   NSWindow!
-    var statusbarController     :   statusBarCtrl!
-    
+
+    var searchViewCtrl          : LupaSearchViewCtrl!
+    var lupaDefaultsController  : LupaDefaults!      // Preferences -
+
+    var defaultWindow           : NSWindow!
+    //var statusbarController     : statusBarCtrl!
+
     //  Key's to observe for the HotKeys
     var observableKeys_HotKey = [ LUPADefaults.lupa_HotkeyEnabled ]
 
@@ -67,20 +88,49 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // The first time I would access the propertys for the Hotkey
         // I would get nitl, false or 0, so instead of doing tests, 
         // I ship with some already predefined values for these keys.
-        self.userDefaults.registerDefaults([
-            LUPADefaults.lupa_HotkeyEnabled:true
-            ])
-        // Start observing changes in the user Defaults hotkey properties...
+        // Then, start observing changes in the user Defaults hotkey properties...
+        self.userDefaults.registerDefaults( [ LUPADefaults.lupa_HotkeyEnabled:true ] )
         self.loadKVO()
 
+        // Initialize the defaults preferences & controller
+        self.lupaDefaultsController = LupaDefaults(windowNibName: "LupaDefaults")
+        
         /// Menubar (Phase 1)
         // Activo mi clase menubarController para controlar el statusBar
-        self.statusbarController = statusBarCtrl(statusMenu)
+        // self.statusbarController = statusBarCtrl(statusMenu)
         
-        /// Menubar (Phase 2 = future, ToDo)
-        // In the future I'll move to a Singleton...
+        /// Menubar (Phase 2)
+        // Based on LPStatusItem framework singleton
         // print("lpStatusItem name: \(lpStatusItem.name)")
         
+        /// Create my custom View Controller
+        ///
+        var success: Bool = false
+        do {
+            try createCustomViewController()
+            do {
+                /// Activate the status bar and make all connections
+                ///
+                try activateStatusBar()
+                success = true
+            } catch let error as skViewControllerNotReady {
+                print(error.description)
+            } catch {
+                print ("Undefinded error")
+            }
+        } catch let error as skViewControllerNotReady {
+            print(error.description)
+        } catch {
+            print ("Undefinded error")
+        }
+        
+        // Show result
+        if success {
+            print("AppDelegate: Everything WENT WELL!!!")
+        } else {
+            print("AppDelegate: VAYA CAGADA!!!!!")
+        }
+
         // Change to background mode
         // self.setWindowMode(false)
     }
@@ -104,7 +154,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // Connect MainMenu.xib->Program->Preferences with FirstResponder->"showPreferences:"
     //
     @IBAction func showPreferences(sender : AnyObject) {
-        statusbarController.showPreferences()
+
+        // Open the preferences (Defaults) window
+        //
+        if let window = self.lupaDefaultsController.window {
+            NSApplication.sharedApplication().activateIgnoringOtherApps(true)
+            window.makeKeyAndOrderFront(self)
+            window.center()
+        }
+        
     }
     
     //
@@ -113,7 +171,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // Connect with FirstResponder->"showSearchBox:"
     //
     @IBAction func showSearchBox(sender : AnyObject) {
-        statusbarController.showSearchBox()
+        
+        lpStatusItem.showStatusItemWindow()
+        
+//        if let window = self.searchBoxWindow.window {
+//            NSApplication.sharedApplication().activateIgnoringOtherApps(true)
+//            window.makeKeyAndOrderFront(self)
+//            //            if let window = self.searchBoxWindow.window {
+//            //                window.level = Int(CGWindowLevelForKey(CGWindowLevelKey.MaximumWindowLevelKey))
+//            //            }
+//            
+//            // Find out the Screen Coordinates of the NSStatusItem Frame and show the search box window
+//            let rectInWindow : NSRect = self.button.convertRect(self.button.bounds, toView: nil)
+//            if let letButtonWindow = self.button.window {
+//                let buttonWindow = letButtonWindow
+//                let screenRect : NSRect = buttonWindow.convertRectToScreen(rectInWindow)
+//                window.setFrame(NSMakeRect(screenRect.origin.x, screenRect.origin.y - 3.0, window.frame.width, window.frame.height), display: true)
+//            }
+//            
+//        }
+
     }
     
     //
@@ -125,6 +202,48 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         defaultWindow.makeKeyAndOrderFront(nil)
     }
     
+    
+    /// --------------------------------------------------------------------------------
+    //  MARK: Handling of the custom view controller and status bar
+    /// --------------------------------------------------------------------------------
+    
+    // Create my custom View Controller
+    //
+    func createCustomViewController () throws {
+        
+        // Prepare the name of the NIB = name of the class
+        let sNibName = NSStringFromClass(LupaSearchViewCtrl).componentsSeparatedByString(".").last!
+        
+        // Create custom View Controller
+        if let letSearchViewCtrl = LupaSearchViewCtrl(nibName: sNibName, bundle: nil) {
+            searchViewCtrl = letSearchViewCtrl
+            
+        } else {
+            throw skViewControllerNotReady.cannotCreate
+        }
+    }
+    
+    // Activate status bar and make connections
+    //
+    func activateStatusBar () throws {
+        //
+        // Activate my (singleton) "lpStatusItem" (Status Bar Item) passing:
+        //
+        //      the custom view controller
+        //      the custom icon
+        //
+        if ( searchViewCtrl != nil ) {  //LupaOn_18x18   statusbar-icon
+            if let letItemImage = NSImage(named: "LupaOn_18x18") {
+                let itemImage = letItemImage
+                lpStatusItem.activateStatusItemWithImage(self.statusMenu, itemImage: itemImage, contentViewController: searchViewCtrl)
+            } else {
+                throw skViewControllerNotReady.cannotAccessIconImage
+            }
+            
+        } else {
+            throw skViewControllerNotReady.cannotActivate
+        }
+    }
     
     /// --------------------------------------------------------------------------------
     //  MARK: KVO

@@ -5,8 +5,9 @@
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="LupaSearchViewCtrl" customModule="LPStatusBar" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="LupaSearchViewCtrl" customModule="lupa" customModuleProvider="target">
             <connections>
+                <outlet property="searchField" destination="vVZ-ip-9hD" id="87K-E3-2w8"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -16,13 +17,13 @@
             <rect key="frame" x="0.0" y="0.0" width="300" height="115"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <box title="Find" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="m3J-ke-4la">
+                <box title="Lupa" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="m3J-ke-4la">
                     <rect key="frame" x="18" y="15" width="265" height="80"/>
                     <view key="contentView" id="OLY-KU-OmL">
                         <rect key="frame" x="1" y="1" width="263" height="64"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vVZ-ip-9hD" customClass="LupaSearchTextField" customModule="LPStatusBar" customModuleProvider="target">
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vVZ-ip-9hD" customClass="LupaSearchTextField" customModule="lupa" customModuleProvider="target">
                                 <rect key="frame" x="20" y="22" width="223" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="VgV-yB-Wah">
                                     <font key="font" metaFont="system"/>
@@ -50,7 +51,7 @@
                 <constraint firstAttribute="trailing" secondItem="m3J-ke-4la" secondAttribute="trailing" constant="20" symbolic="YES" id="kN3-58-e6W"/>
                 <constraint firstItem="m3J-ke-4la" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="xIU-8p-Gji"/>
             </constraints>
-            <point key="canvasLocation" x="204" y="103.5"/>
+            <point key="canvasLocation" x="-4" y="130.5"/>
         </customView>
     </objects>
 </document>
