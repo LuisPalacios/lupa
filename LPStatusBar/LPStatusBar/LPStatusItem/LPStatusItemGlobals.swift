@@ -16,7 +16,7 @@ import Foundation
 /// by default in Swift.
 //
 /// Reference it from SWIFT:
-///  var reference : LPStatusItem = lpStatusItem
+///  let lpStatusItem : LPStatusItem = LPStatusItem()
 ///  lpStatusItem.someMethod()
 ///
 ///

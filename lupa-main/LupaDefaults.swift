@@ -14,9 +14,9 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     //  MARK: Attributes
     /// --------------------------------------------------------------------------------
     
-    //  For the following attributes I'm using Implicitly Unwrapped Optional (!) so
-    //  they are optionals and do not need to initialize them here, will do later.
-    
+    //  For the following attributes I'm using Implicitly Unwrapped Optional (!)
+    //  they are optionals and no need to initialize them here, will do later.
+
 
     @IBOutlet var textView: NSTextView!
     @IBOutlet weak var searchSeparator: NSTextField!
@@ -26,7 +26,9 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     
     @IBOutlet weak var customShortcutView: MASShortcutView!
     
-    //  In order to work with the user defaults
+    //  In order to work with the user defaults, stored under:
+    //  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
+    //  $ defaults read parchis.org.XX.plist
     let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
     
@@ -38,12 +40,9 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         super.windowDidLoad()
 
         // Set the version
-        
-        // programLongName
         self.version.stringValue = programLongName()
         
-        // Bind the shortcut value (recorder view’s value) to user defaults.
-        // Run “defaults read parchis.org.lupa” to see what’s stored
+        // Bind the shortcut hotkey to user defaults.
         customShortcutView.setAssociatedUserDefaultsKey(LUPADefaults.lupa_Hotkey, withTransformerName: NSKeyedUnarchiveFromDataTransformerName)
         
         // Enable or disable the view according to checkbox state

@@ -11,9 +11,8 @@ import Cocoa
 
 /// Singleton LPStatusItem
 ///
-/// Global (Singleton) variable of my Swift LPStatusItem. This just calls
-/// my default init and is threat safedue to all global variables are dispatch_once
-/// by default in Swift.
+/// Class that allows to install and activate a custom window in the status bar. I've 
+/// prepared it as a singleton.
 ///
 /// Reference it from SWIFT:
 ///  var reference : LPStatusItem = lpStatusItem
@@ -127,9 +126,9 @@ import Cocoa
         
         // Show result
         if success {
-            print("statusItemWindowController: WENT WELL!!!")
+            // print("activateStatusItemWithImage: you're all set!!!")
         } else {
-            print("statusItemWindowController: VAYA CAGADA!!!!!")
+            print("activateStatusItemWithImage: Something really bad hapenned !!!!!")
         }
     }
     
@@ -153,7 +152,6 @@ import Cocoa
 
         // 4. Assign the custom icon image passed from AppDelegate
         self.button.image = itemImage
-        //self.button.alternateImage = self.statusImageOnNeg
         
         // 5. Setup myself as actions target
         button.target = self;
@@ -166,7 +164,7 @@ import Cocoa
         // 6. Save mouse press status
         self.statusItemAction = eMouseStatusItemAction.actionNone
         
-        // 7. Store the Menu in my attribute
+        // 7. Store the Menu I should show when right-clicked
         self.statusItemMenu = statusMenu
 
     }
@@ -184,7 +182,7 @@ import Cocoa
         if (primaryDown) {
             
             // Log
-            print("actionPrimary")
+            // print("actionPrimary")
             
             // Change my status
             self.statusItemAction = eMouseStatusItemAction.actionPrimary
@@ -199,7 +197,7 @@ import Cocoa
         } else if (secondaryDown) {
             
             // Log
-            print("actionSecondary")
+            // print("actionSecondary")
             
             // Change my status
             self.statusItemAction = eMouseStatusItemAction.actionSecondary
@@ -214,14 +212,14 @@ import Cocoa
         } else {
             
             // Log
-            print("actionNone")
+            // print("actionNone")
             
             // Change my status
             self.statusItemAction = eMouseStatusItemAction.actionNone
         }
         
         // Some logging
-        print("handleStatusItemActions, buttonMask: \(buttonMask). primaryDown: \(primaryDown). secondaryDown: \(secondaryDown). statusItemAction: \(self.statusItemAction)")
+        // print("handleStatusItemActions, buttonMask: \(buttonMask). primaryDown: \(primaryDown). secondaryDown: \(secondaryDown). statusItemAction: \(self.statusItemAction)")
     }
     
     /// --------------------------------------------------------------------------------

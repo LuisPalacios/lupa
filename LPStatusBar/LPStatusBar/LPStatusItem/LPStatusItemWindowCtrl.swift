@@ -138,9 +138,8 @@ class LPStatusItemWindowCtrl: NSWindowController {
         }
     }
     
+    // LUIS - ToDo !!!!
     //
-    //
-    
     func handleAppleInterfaceThemeChangedNotification (note : NSNotification) {
 //        [[NSNotificationCenter defaultCenter] postNotificationName:CCNSystemInterfaceThemeChangedNotification object:nil];
         print("handleAppleInterfaceThemeChangedNotification")
@@ -169,7 +168,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
     // Dismiss the status item window
     //
     func dismissStatusItemWindow() {
-        // TODO
+        // TODO Review
         //if (self.animationIsRunning) return;
 
         // Dismiss the Window fading out...
@@ -178,7 +177,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
     }
     
     
-    // Place the Window in the right place in screen
+    // Locate the Window in the right place in screen
     //
     func updateWindowFrame () {
         if let letButton = self.statusItem.statusItem.button {
@@ -196,19 +195,6 @@ class LPStatusItemWindowCtrl: NSWindowController {
                     window.setFrame(windowFrame, display: true)
                     window.appearance = NSAppearance.currentAppearance()
                 }
-                
-                // Option 2
-                //            let statusItemRect : NSRect = (button.window?.frame)!
-                //            print("statusItemRect \(statusItemRect)")
-                //            let rectInWindow : NSRect = button.convertRect(button.bounds, toView: nil)
-                //            print("rectInWindow \(rectInWindow)")
-                //            if let letButtonWindow = button.window {
-                //                let buttonWindow = letButtonWindow
-                //                let screenRect : NSRect = buttonWindow.convertRectToScreen(rectInWindow)
-                //                if let window = self.window {
-                //                    window.setFrame(NSMakeRect(screenRect.origin.x, screenRect.origin.y - 3.0, window.frame.width, window.frame.height), display: true)
-                //
-                //                }
             }
         }
     }
@@ -219,6 +205,8 @@ class LPStatusItemWindowCtrl: NSWindowController {
     //  MARK: Window Animation
     /// --------------------------------------------------------------------------------
     
+    // Start the animnation
+    //
     func animateWindow ( window: LPStatusItemWindow, fadeDirection: eFadeDirection ) {
         switch self.windowConfig.presentationTransition {
         
@@ -234,8 +222,9 @@ class LPStatusItemWindowCtrl: NSWindowController {
     }
 
     
+    // Start the animnation
+    //
     func animateWindow ( window: LPStatusItemWindow, fadeTransitionUsingfadeDirection: eFadeDirection ) {
-        print("Animo con fadeTransitionUsingfadeDirection")
         
         let notificationName : String = ( fadeTransitionUsingfadeDirection == eFadeDirection.fadeIn ? skStatusItemWindowWillShowNotification : skStatusItemWindowWillDismissNotification)
         NSNotificationCenter.defaultCenter().postNotificationName(notificationName, object: window)
@@ -253,8 +242,11 @@ class LPStatusItemWindowCtrl: NSWindowController {
         })
     }
     
+    // Start the animnation
+    //
     func animateWindow ( window: LPStatusItemWindow, slideAndFadeTransitionUsingfadeDirection: eFadeDirection ) {
-        print("Animo con slideAndFadeTransitionUsingfadeDirection")
+        // ToDO
+        // print("Animate using slideAndFadeTransitionUsingfadeDirection")
     }
     
     
@@ -310,9 +302,9 @@ class LPStatusItemWindowCtrl: NSWindowController {
     }
 
 */
-    
+    // End the animantion
+    //
     func animationCompletionForWindow ( window: LPStatusItemWindow, fadeDirection: eFadeDirection ) {
-        print("Termino la animación")
         // let nc : NSNotificationCenter = NSNotificationCenter.defaultCenter()
         if ( fadeDirection == eFadeDirection.fadeIn ) {
             // window.makeKeyAndOrderFront(self)

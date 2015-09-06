@@ -73,9 +73,8 @@ class LPStatusItemBackgroundView: NSView {
     // Draw
     //
     override func drawRect(dirtyRect: NSRect) {
-        //super.drawRect(dirtyRect)
 
-        // Drawing code here.
+        // Own drawing code...
         
         let arrowHeight         = LPStatusItem_DefaultArrowHeight
         let arrowWidth          = LPStatusItem_DefaultArrowWidth

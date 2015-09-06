@@ -18,11 +18,9 @@ class LupaSearchViewCtrl: NSViewController {
     //  they are optionals and do not need to initialize them here, will do later.
     @IBOutlet weak var searchField: LupaSearchTextField!
     
-    //  In order to work with the user defaults
-    //  /Users/<your_user>/Library/Preferences/parchis.org.XX.plist
+    //  In order to work with the user defaults, stored under:
+    //  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
     //  $ defaults read parchis.org.XX.plist
-    //
-
     let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
     /// --------------------------------------------------------------------------------

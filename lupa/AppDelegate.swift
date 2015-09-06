@@ -9,6 +9,7 @@
 import Cocoa
 
 // ErroType's
+//
 enum skViewControllerNotReady: ErrorType {
     case cannotActivate
     case cannotCreate
@@ -24,7 +25,7 @@ extension skViewControllerNotReady: CustomStringConvertible {
     }
 }
 
-//
+// Main app entry point
 //
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -33,26 +34,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //  MARK: Attributes
     /// --------------------------------------------------------------------------------
     
-    //  For the following attributes I'm using Implicitly Unwrapped Optional (!) so
-    //  they are optionals and do not need to initialize them here, will do later.
+    //  For the following attributes I'm using Implicitly Unwrapped Optional (!)
+    //  they are optionals and no need to initialize them here, will do later.
 
-    var searchViewCtrl          : LupaSearchViewCtrl!
-    var lupaDefaultsController  : LupaDefaults!      // Preferences -
-
-    var defaultWindow           : NSWindow!
-    //var statusbarController     : statusBarCtrl!
+    var searchViewCtrl          : LupaSearchViewCtrl!   // My Window for the status bar
+    var lupaDefaultsController  : LupaDefaults!         // Preferences Window
+    var defaultWindow           : NSWindow!             // Find out the main window (to hide it)
 
     //  Key's to observe for the HotKeys
     var observableKeys_HotKey = [ LUPADefaults.lupa_HotkeyEnabled ]
 
-    //  Connected to MainMenu.xib objects through the Interface Builder
-    
+    //  Connected to MainMenu.xib objects through Interface Builder
     @IBOutlet weak var statusMenu: NSMenu!
 
-    //  In order to work with the user defaults
+    //  In order to work with the user defaults, stored under:
+    //  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
+    //  $ defaults read parchis.org.XX.plist
     let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
-    // Class attributes
+    // To prepare the program name with GIT numbers
     var programName : String    = ""
 
 
@@ -63,15 +63,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(aNotification: NSNotification) {
 
         // NOTE: In order for the Icon disapear from the Dock and also disapear 
-        //       from the CMD-ALT list you need to do the following: 
-        //
-        // Modify your info.plist file and add the following:
+        //       from the CMD-ALT list I also modified the Info.plist and added:
         //
         //      Application is agent (UIElement) -> YES
         //
 
         /// Prepare windows
-        // Close the default window, in case you didn't delete it from MainMenu.xib :)
+        // I deleted the default main window from MainMenu.xib but just in 
+        // case double check and hide it.
         defaultWindow = NSApplication.sharedApplication().windows.first
         if defaultWindow != nil {
             defaultWindow.close()
@@ -80,31 +79,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         /// Program name
         // Store my program name.
         self.programName = programLongName()
-        // Log
-        // print("\(self.programName)")
 
         /// HotKey
-        // Register default values to be used for the first app start
-        // The first time I would access the propertys for the Hotkey
-        // I would get nitl, false or 0, so instead of doing tests, 
-        // I ship with some already predefined values for these keys.
-        // Then, start observing changes in the user Defaults hotkey properties...
+        // Register default values to be used when app start for the first time
+        // I ship with some already predefined values for some keys.
         self.userDefaults.registerDefaults( [ LUPADefaults.lupa_HotkeyEnabled:true ] )
+
+        // Start observing changes in the user Defaults hotkey properties...
         self.loadKVO()
 
-        // Initialize the defaults preferences & controller
+        // Initialize the defaults Preferences Window
         self.lupaDefaultsController = LupaDefaults(windowNibName: "LupaDefaults")
         
-        /// Menubar (Phase 1)
-        // Activo mi clase menubarController para controlar el statusBar
-        // self.statusbarController = statusBarCtrl(statusMenu)
-        
-        /// Menubar (Phase 2)
-        // Based on LPStatusItem framework singleton
-        // print("lpStatusItem name: \(lpStatusItem.name)")
-        
         /// Create my custom View Controller
-        ///
+        //  Based on LPStatusItem framework singleton
+        //
         var success: Bool = false
         do {
             try createCustomViewController()
@@ -128,15 +117,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if success {
             print("AppDelegate: Everything WENT WELL!!!")
         } else {
-            print("AppDelegate: VAYA CAGADA!!!!!")
+            print("AppDelegate: Something really bad hapenned !!!!")
         }
-
-        // Change to background mode
-        // self.setWindowMode(false)
     }
+
     
     func applicationWillTerminate(aNotification: NSNotification) {
-        // Insert code here to tear down your application
+        // Deactivate the KVO - Key Value Observing
         self.unloadKVO()
     }
     
@@ -147,9 +134,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     //
     // Show the preferences window:
-    // So when the user selects "Preferences" it will go through the First Responder
-    // chain till it finds someone implementing this method. Notice that you don't
-    // have to connect to this method itself, do it thorugh First Responder.
+    // When the user selects "Preferences" it will go through the First Responder
+    // chain till it finds someone implementing this method. 
+    // I just use it thorugh First Responder.
     // 
     // Connect MainMenu.xib->Program->Preferences with FirstResponder->"showPreferences:"
     //
@@ -172,50 +159,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //
     @IBAction func showSearchBox(sender : AnyObject) {
         
+        // Ask the LPStatusItem to manifest
         lpStatusItem.showStatusItemWindow()
-        
-//        if let window = self.searchBoxWindow.window {
-//            NSApplication.sharedApplication().activateIgnoringOtherApps(true)
-//            window.makeKeyAndOrderFront(self)
-//            //            if let window = self.searchBoxWindow.window {
-//            //                window.level = Int(CGWindowLevelForKey(CGWindowLevelKey.MaximumWindowLevelKey))
-//            //            }
-//            
-//            // Find out the Screen Coordinates of the NSStatusItem Frame and show the search box window
-//            let rectInWindow : NSRect = self.button.convertRect(self.button.bounds, toView: nil)
-//            if let letButtonWindow = self.button.window {
-//                let buttonWindow = letButtonWindow
-//                let screenRect : NSRect = buttonWindow.convertRectToScreen(rectInWindow)
-//                window.setFrame(NSMakeRect(screenRect.origin.x, screenRect.origin.y - 3.0, window.frame.width, window.frame.height), display: true)
-//            }
-//            
-//        }
+    }
 
-    }
-    
-    //
-    // Open the Preferences window
-    //
-    // Connect with FirstResponder->"showDefaultWindow:"
-    //
-    @IBAction func showDefaultWindow(sender: AnyObject) {
-        defaultWindow.makeKeyAndOrderFront(nil)
-    }
-    
     
     /// --------------------------------------------------------------------------------
-    //  MARK: Handling of the custom view controller and status bar
+    //  MARK: Main custom view controller and status bar activation
     /// --------------------------------------------------------------------------------
     
-    // Create my custom View Controller
+    // Create my custom View Controller which will be shown under
+    // the status bar.
     //
     func createCustomViewController () throws {
         
-        // Prepare the name of the NIB = name of the class
+        // Prepare the name of the NIB (from the name of the class)
         let sNibName = NSStringFromClass(LupaSearchViewCtrl).componentsSeparatedByString(".").last!
         
         // Create custom View Controller
         if let letSearchViewCtrl = LupaSearchViewCtrl(nibName: sNibName, bundle: nil) {
+            
             searchViewCtrl = letSearchViewCtrl
             
         } else {
@@ -233,9 +196,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //      the custom icon
         //
         if ( searchViewCtrl != nil ) {  //LupaOn_18x18   statusbar-icon
+
             if let letItemImage = NSImage(named: "LupaOn_18x18") {
                 let itemImage = letItemImage
+            
                 lpStatusItem.activateStatusItemWithImage(self.statusMenu, itemImage: itemImage, contentViewController: searchViewCtrl)
+                
             } else {
                 throw skViewControllerNotReady.cannotAccessIconImage
             }
@@ -246,7 +212,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     /// --------------------------------------------------------------------------------
-    //  MARK: KVO
+    //  MARK: KVO - Key Value Observing activation, de-activation and action
     /// --------------------------------------------------------------------------------
 
     // Context (up=unsafe pointer)
@@ -293,7 +259,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    // Actions when observing a change...
+    // Actions when a change comes...
     //
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>) {
         
@@ -341,6 +307,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    
     /// --------------------------------------------------------------------------------
     //  MARK: Hotkey actioning
     /// --------------------------------------------------------------------------------
@@ -357,7 +324,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    // Action when HotKey is Pressed
+    // Action when the HotKey is Pressed
     //
     func actionHotKey() {
         // Send a message to firstResponder
