@@ -115,7 +115,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Show result
         if success {
-            print("AppDelegate: Everything WENT WELL!!!")
+            // print("AppDelegate: Everything WENT WELL!!!")
         } else {
             print("AppDelegate: Something really bad hapenned !!!!")
         }

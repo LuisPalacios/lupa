@@ -32,7 +32,6 @@ import Cocoa
     var statusItem                  : NSStatusItem!
     var statusItemMenu              : NSMenu!
     var button                      : NSStatusBarButton!
-//    var statusItemAction            : eMouseStatusItemAction!
     var windowConfig                : LPStatusItemWindowConfig!
     
     // Menu
@@ -48,10 +47,6 @@ import Cocoa
     class var sharedInstance: LPStatusItem {
         return lpStatusItem
     }
-    
-    // Class attributes
-    var name: String            = "LPStatusItem"
-
     
     /// --------------------------------------------------------------------------------
     //  MARK: Dynamic attributes
@@ -110,16 +105,12 @@ import Cocoa
         
         /// Create Custom NSWindowController
         //
-        //      self                    : This statusItem
-        //      contentViewController   : The custom view controller passef by the AppDelegate
-        //      windowConfig            : Window configuration object to use to prepare the window
-        //
         var success: Bool = false
         do {
             try statusItemWindowController = LPStatusItemWindowCtrl (
-                statusItem: self,
-                contentViewController: contentViewController,
-                windowConfig: self.windowConfig )
+                statusItem: self,                               //  self : This statusItem
+                contentViewController: contentViewController,   //  contentViewController : The custom view controller passef by the AppDelegate
+                windowConfig: self.windowConfig )               //  windowConfig : Window configuration object to use to prepare the window
             success = true
         } catch let error as skStatusItemWindowCtrlNotReady {
             print(error.description)
@@ -197,14 +188,6 @@ import Cocoa
                 // Start the menu
                 self.showStatusItemMenu()
                 
-                // Deprecated
-                // NOTE: There is one issue with the right click. If I call the menu right away
-                // then the status item stays highlighted after an option is choosen in the menu
-                // so what I'm doing is leting it be called through a timer, after I exit this
-                // function
-                //self.startTimerShowStatusItemMenu()
-
-                
             default:
                 print ("clickActions: default, should never come here")
             }
@@ -235,50 +218,16 @@ import Cocoa
     //
     func showStatusItemMenu() {
         
-        // Start the menu
-        // print("Launching the menu")
-        
-        // Find out the Screen Coordinates of the NSStatusItem Frame and generate
-        // a right-click MENU.
+        // Find Screen Coordinates of the NSStatusItem Frame 
         let rectInWindow : NSRect = self.button.convertRect(self.button.bounds, toView: nil)
         
+        // Position the menu in the right place in screen
         if let letButtonWindow = self.button.window {
-            
             let buttonWindow = letButtonWindow
             let screenRect : NSRect = buttonWindow.convertRectToScreen(rectInWindow)
             let point : NSPoint = NSMakePoint(screenRect.origin.x, screenRect.origin.y - 3.0)
             self.statusMenu.popUpMenuPositioningItem(nil, atLocation: point, inView: nil)
         }
     }
-
-
-//    /// --------------------------------------------------------------------------------
-//    //  MARK: Timer to show the Menu  (DEPRECATED)
-//    /// --------------------------------------------------------------------------------
-//    
-//    // Start a timer to show the Menu
-//    //
-//    func startTimerShowStatusItemMenu() {
-//        
-//        timerShowMenu = NSTimer.scheduledTimerWithTimeInterval(0.0,
-//            target: self,
-//            selector: Selector("showStatusItemMenu"),
-//            userInfo: nil,
-//            repeats: false)
-//        
-//    }
-//    
-//    // Stop the timer (never used, but comes with my template :-))
-//    //
-//    func stopTimerShowStatusItemMenu() {
-//        if ( timerShowMenu != nil ) {
-//            if (  timerShowMenu.valid ) {
-//                timerShowMenu.invalidate()
-//            }
-//            timerShowMenu = nil
-//        }
-//    }
-    
-
 }
 

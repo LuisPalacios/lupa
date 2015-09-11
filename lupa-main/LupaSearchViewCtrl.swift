@@ -124,11 +124,9 @@ class LupaSearchViewCtrl: NSViewController {
     
     @IBAction func doSearch(sender: AnyObject) {
         
-        print("doSearch")
-
         // Read userDefaults (String) and convert into NSURL
         if let letURLString = self.userDefaults.objectForKey(LUPADefaults.lupa_URLPrefix) as? String {
-            print("lupa_URLPrefix: \(letURLString)")
+            // print("lupa_URLPrefix: \(letURLString)")
             
             if !letURLString.isEmpty {
                 
@@ -147,7 +145,7 @@ class LupaSearchViewCtrl: NSViewController {
                     
                     // Setup the final string
                     let searchURLString : String = letURLString + searchString
-                    print("searchURLString: \(searchURLString)")
+                    // print("searchURLString: \(searchURLString)")
                     
                     // Let's go rock and roll
                     //
@@ -166,7 +164,7 @@ class LupaSearchViewCtrl: NSViewController {
                         // Production mode, fix spaces
                         let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
                         let theURL : NSURL? = NSURL (string: myUrlString)
-                        print("theURL: \(theURL?.path)")
+                        // print("theURL: \(theURL?.path)")
                         NSWorkspace.sharedWorkspace().openURL(theURL!)
                     }
 

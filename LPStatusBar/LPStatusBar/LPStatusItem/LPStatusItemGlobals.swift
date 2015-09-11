@@ -44,16 +44,6 @@ extension skStatusItemWindowCtrlNotReady: CustomStringConvertible {
     }
 }
 
-
-
-// Type of Mouse Action
-//
-//enum eMouseStatusItemAction: Int {
-//    case actionNone = 0
-//    case actionPrimary
-//    case actionSecondary
-//}
-
 // Defaults
 let LPStatusItem_DefaultArrowHeight         : CGFloat        = 11.0
 let LPStatusItem_DefaultArrowWidth          : CGFloat        = 42.0
