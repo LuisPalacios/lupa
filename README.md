@@ -7,7 +7,7 @@ Project 'lupa' (spanish word for magnifying glass), created during the summer of
 
 <div align="left">
 
-The objective of the App itself is extremely simple. Launches your your default browser with a URL formed by the concatenation of "Prefix" + "Search Field". The "Prefix" is a preset stored under the OSX User Defaults. The "Search Field" is typed by the user. 
+The objective of the App itself is extremely simple. Launches your default browser with a URL formed by the concatenation of "Prefix" + "Search Field". The "Prefix" is a preset stored under the OSX User Defaults. The "Search Field" is typed by the user. 
 
 You can find probably dozen of use cases, some examples could be: Search in Google, search people in an enterprise Directory, etc. My personal use case is searching in my company's Directory, reducing significantly the number of keystrokes and mouse movements :-)
 
@@ -23,20 +23,23 @@ Configure the program by right clicking into the status bar icon and selecting p
 ![Screenshot of the menu](resources/scr_menu.png?raw=true "This is menu")
 
 <div align="left">
-- Find, opens the search box.
-- Preferences, enters into the preferences window.
-- Quit, exits the application
 
-Preferences alter the App behaviour you'll use it probably one once as they are saved under user's defaults.
+- Find: opens the search box.
+- Preferences: enters into the preferences window.
+- Quit: exits the application
+
+Under the **Preferences window** you can alter the App behaviour and it's saved under user's defaults.
+
 
 <div align="center">
 
 ![Screenshot of the preferences](resources/scr_preferences.png?raw=true "This is the preferences window")
+
 <div align="left">
 
-- System shortcut: set your custom Hotkey.
+- System shortcut: set your custom Hotkey, so you can invoke the program from any application.
 - Search separator: configure a character to be used as separator, some web sites need the search words separated by a character (i.e. a plus sign).
-- URL search prefix. This is the "Prefix", the left part of the URL used when calling your default broser, a pair of examples:
+- URL search prefix: this is the "Prefix", the left part of the URL used when calling your default broser, a pair of examples:
    - Example 1: https://www.google.com/search?q=
    - Example 2: http://www.yourcompany.com/query.cgi?user=
 
