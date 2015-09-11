@@ -154,6 +154,15 @@ import Cocoa
         self.button.image = itemImage
         
         // 5. Setup myself as actions target
+        // Le digo a mi vista custom qué actions realizar con click y click derecho
+//        [self.statusItemView setTarget:self];
+//        [self.statusItemView setClickAction:@selector(myClickAction)];
+//        [self.statusItemView setCmdClickAction:@selector(myClickAction)];
+//        [self.statusItemView setRightClickAction:@selector(myClickAction)];
+//        
+//        [self.statusItemView setMouseEnteredAction:@selector(myMouseEnteredAction)];
+//        [self.statusItemView setMouseExitedAction:@selector(myMouseExitedAction)];
+        
         button.target = self;
         button.action = "handleStatusItemActions:"
         button.sendActionOn( Int(NSEventMask.LeftMouseDownMask.rawValue) |

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8187.4" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8187.4" systemVersion="15A279b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8187.4"/>
         <capability name="box content view" minToolsVersion="7.0"/>
@@ -25,6 +25,7 @@
                         <subviews>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vVZ-ip-9hD" customClass="LupaSearchTextField" customModule="lupa" customModuleProvider="target">
                                 <rect key="frame" x="20" y="22" width="223" height="22"/>
+                                <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="VgV-yB-Wah">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -40,7 +41,9 @@
                             <constraint firstItem="vVZ-ip-9hD" firstAttribute="leading" secondItem="OLY-KU-OmL" secondAttribute="leading" constant="20" symbolic="YES" id="WqN-VT-VYB"/>
                             <constraint firstAttribute="trailing" secondItem="vVZ-ip-9hD" secondAttribute="trailing" constant="20" symbolic="YES" id="geX-u3-O1z"/>
                         </constraints>
+                        <animations/>
                     </view>
+                    <animations/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </box>
@@ -51,6 +54,7 @@
                 <constraint firstAttribute="trailing" secondItem="m3J-ke-4la" secondAttribute="trailing" constant="20" symbolic="YES" id="kN3-58-e6W"/>
                 <constraint firstItem="m3J-ke-4la" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="xIU-8p-Gji"/>
             </constraints>
+            <animations/>
             <point key="canvasLocation" x="-4" y="130.5"/>
         </customView>
     </objects>
