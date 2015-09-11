@@ -31,15 +31,6 @@ struct LUPADefaults {
     static let lupa_HotkeyEnabled   = "lupa_HotkeyEnabled"
 }
 
-// Type of Mouse Action
-//
-enum LUPAStatusItemType: Int {
-    case LUPAStatusItemActionNone = 0
-    case LUPAStatusItemActionPrimary
-    case LUPAStatusItemActionSecondary
-}
-
-
 /// Returns the program long name, based on constans found in "AbacoVersion.swift"
 /// automatically generated from custom Xcode->Project->Build Phase script, which
 /// analises the GIT information and creates version information

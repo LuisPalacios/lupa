@@ -32,12 +32,15 @@ import Cocoa
     var statusItem                  : NSStatusItem!
     var statusItemMenu              : NSMenu!
     var button                      : NSStatusBarButton!
-    var statusItemAction            : eMouseStatusItemAction!
+//    var statusItemAction            : eMouseStatusItemAction!
     var windowConfig                : LPStatusItemWindowConfig!
-
+    
     // Menu
     var statusMenu                  : NSMenu!
     var timerShowMenu               : NSTimer!          //!< Timer para mostrar el Menu right-click
+
+    // Vars that I need to be initialized
+    var leftButtomInterval          : NSTimeInterval = 0.0
     
 
     //  Singleton accessible from IB and Obj-C if needed
@@ -153,83 +156,60 @@ import Cocoa
         // 4. Assign the custom icon image passed from AppDelegate
         self.button.image = itemImage
         
-        // 5. Setup myself as actions target
-        // Le digo a mi vista custom qué actions realizar con click y click derecho
-//        [self.statusItemView setTarget:self];
-//        [self.statusItemView setClickAction:@selector(myClickAction)];
-//        [self.statusItemView setCmdClickAction:@selector(myClickAction)];
-//        [self.statusItemView setRightClickAction:@selector(myClickAction)];
-//        
-//        [self.statusItemView setMouseEnteredAction:@selector(myMouseEnteredAction)];
-//        [self.statusItemView setMouseExitedAction:@selector(myMouseExitedAction)];
-        
+        // 5. Setup myself as actions target for Mouse events
         button.target = self;
-        button.action = "handleStatusItemActions:"
+        button.action = "clickActions:"
         button.sendActionOn( Int(NSEventMask.LeftMouseDownMask.rawValue) |
             Int(NSEventMask.RightMouseDownMask.rawValue) |
             Int(NSEventMask.LeftMouseUpMask.rawValue) |
             Int(NSEventMask.RightMouseUpMask.rawValue) )
-        
-        // 6. Save mouse press status
-        self.statusItemAction = eMouseStatusItemAction.actionNone
-        
-        // 7. Store the Menu I should show when right-clicked
+
+        // 6. Store the Menu I should show when right-clicked
         self.statusItemMenu = statusMenu
 
     }
     
     //  StatusBar button handling
     //
-    func handleStatusItemActions(sender : AnyObject) {
+    func clickActions(sender : AnyObject) {
         
-        // Identify which button has been pressed
-        let buttonMask = NSEvent.pressedMouseButtons()
-        // print("buttonMask: \(buttonMask)")
-        let primaryDown : Bool = ((buttonMask & (1 << 0)) != 0);
-        let secondaryDown : Bool = ((buttonMask & (1 << 1)) != 0);
-        
-        if (primaryDown) {
-            
-            // Log
-            // print("actionPrimary")
-            
-            // Change my status
-            self.statusItemAction = eMouseStatusItemAction.actionPrimary
+        if let letCurrentEvent = NSApp.currentEvent {
+            let currentEvent = letCurrentEvent
 
-            // Show / Dismiss the status item window
-            if ( self.isStatusItemWindowVisible == true ) {
-                self.dismissStatusItemWindow()
-            } else {
+            switch currentEvent.type {
+            case NSEventType.LeftMouseDown:
+                // Show status item window
+                leftButtomInterval = currentEvent.timestamp
                 self.showStatusItemWindow()
-            }
 
-        } else if (secondaryDown) {
-            
-            // Log
-            // print("actionSecondary")
-            
-            // Change my status
-            self.statusItemAction = eMouseStatusItemAction.actionSecondary
-            
-            // Start the menu
-            // NOTE: There is one issue with the right click. If I call the menu right away
-            // then the status item stays highlighted after an option is choosen in the menu
-            // so what I'm doing is leting it be called through a timer, after I exit this
-            // function
-            startTimerMenu()
-            
-        } else {
-            
-            // Log
-            // print("actionNone")
-            
-            // Change my status
-            self.statusItemAction = eMouseStatusItemAction.actionNone
+            case NSEventType.LeftMouseUp:
+                // Dismiss status item window if user click was slow
+                leftButtomInterval = currentEvent.timestamp - leftButtomInterval
+                if ( leftButtomInterval > 0.5 ) {
+                    self.dismissStatusItemWindow()
+                }
+                
+            case NSEventType.RightMouseDown:
+                // Ignore it...
+                return
+                
+            case NSEventType.RightMouseUp:
+                // Start the menu
+                self.showStatusItemMenu()
+                
+                // Deprecated
+                // NOTE: There is one issue with the right click. If I call the menu right away
+                // then the status item stays highlighted after an option is choosen in the menu
+                // so what I'm doing is leting it be called through a timer, after I exit this
+                // function
+                //self.startTimerShowStatusItemMenu()
+
+                
+            default:
+                print ("clickActions: default, should never come here")
+            }
         }
-        
-        // Some logging
-        // print("handleStatusItemActions, buttonMask: \(buttonMask). primaryDown: \(primaryDown). secondaryDown: \(secondaryDown). statusItemAction: \(self.statusItemAction)")
-    }
+     }
     
     /// --------------------------------------------------------------------------------
     //  MARK: Handling Status Item window visibility
@@ -247,37 +227,13 @@ import Cocoa
         self.statusItemWindowController.dismissStatusItemWindow()
     }
     
-    
     /// --------------------------------------------------------------------------------
-    //  MARK: Timer to show the Menu
+    //  MARK: Handling Status Item Menu visibility
     /// --------------------------------------------------------------------------------
     
-    // Start a timer to show the Menu
+    // Show the menu
     //
-    func startTimerMenu() {
-        
-        timerShowMenu = NSTimer.scheduledTimerWithTimeInterval(0.0,
-            target: self,
-            selector: Selector("actionTimerMenu"),
-            userInfo: nil,
-            repeats: false)
-        
-    }
-    
-    // Stop the timer (not used, but comes with my template :-))
-    //
-    func stopTimerMenu() {
-        if ( timerShowMenu != nil ) {
-            if (  timerShowMenu.valid ) {
-                timerShowMenu.invalidate()
-            }
-            timerShowMenu = nil
-        }
-    }
-    
-    // Action to execute when the timer finishes
-    //
-    func actionTimerMenu() {
+    func showStatusItemMenu() {
         
         // Start the menu
         // print("Launching the menu")
@@ -294,6 +250,35 @@ import Cocoa
             self.statusMenu.popUpMenuPositioningItem(nil, atLocation: point, inView: nil)
         }
     }
+
+
+//    /// --------------------------------------------------------------------------------
+//    //  MARK: Timer to show the Menu  (DEPRECATED)
+//    /// --------------------------------------------------------------------------------
+//    
+//    // Start a timer to show the Menu
+//    //
+//    func startTimerShowStatusItemMenu() {
+//        
+//        timerShowMenu = NSTimer.scheduledTimerWithTimeInterval(0.0,
+//            target: self,
+//            selector: Selector("showStatusItemMenu"),
+//            userInfo: nil,
+//            repeats: false)
+//        
+//    }
+//    
+//    // Stop the timer (never used, but comes with my template :-))
+//    //
+//    func stopTimerShowStatusItemMenu() {
+//        if ( timerShowMenu != nil ) {
+//            if (  timerShowMenu.valid ) {
+//                timerShowMenu.invalidate()
+//            }
+//            timerShowMenu = nil
+//        }
+//    }
+    
 
 }
 
