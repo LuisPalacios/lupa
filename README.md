@@ -1,6 +1,6 @@
 ## Introduction
 
-Project 'lupa' (spanish word for magnifying glass), created during the summer of 2015 as an exersise to practice Swift during Xcode 7 and El Capitan betas. Something I was playing with in the past but wanted to do again using Swift: status bar application.
+Project 'lupa' (spanish word for magnifying glass), created during the summer of 2015 as an exercise to practice Swift during Xcode 7 and El Capitan betas. Something I was playing with in the past but wanted to do again using Swift: status bar application.
 
 <div align="center">
 ![Lupa](resources/dir_128x128.png?raw=true "My lupa")
