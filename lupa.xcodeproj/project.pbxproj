@@ -86,12 +86,12 @@
 		A0B4BA5D1B7B400500069614 /* dir_256x256@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dir_256x256@2x.png"; path = "resources/dir_256x256@2x.png"; sourceTree = "<group>"; };
 		A0B4BA5E1B7B400500069614 /* dir_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dir_512x512.png; path = resources/dir_512x512.png; sourceTree = "<group>"; };
 		A0B4BA5F1B7B400500069614 /* dir_512x512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dir_512x512@2x.png"; path = "resources/dir_512x512@2x.png"; sourceTree = "<group>"; };
-		A0D474D21B99200D00D957FA /* LPStatusItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItem.swift; path = LPStatusBar/LPStatusBar/LPStatusItem/LPStatusItem.swift; sourceTree = "<group>"; };
-		A0D474D31B99200D00D957FA /* LPStatusItemBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemBackgroundView.swift; path = LPStatusBar/LPStatusBar/LPStatusItem/LPStatusItemBackgroundView.swift; sourceTree = "<group>"; };
-		A0D474D41B99200D00D957FA /* LPStatusItemGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemGlobals.swift; path = LPStatusBar/LPStatusBar/LPStatusItem/LPStatusItemGlobals.swift; sourceTree = "<group>"; };
-		A0D474D51B99200D00D957FA /* LPStatusItemWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindow.swift; path = LPStatusBar/LPStatusBar/LPStatusItem/LPStatusItemWindow.swift; sourceTree = "<group>"; };
-		A0D474D61B99200D00D957FA /* LPStatusItemWindowConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindowConfig.swift; path = LPStatusBar/LPStatusBar/LPStatusItem/LPStatusItemWindowConfig.swift; sourceTree = "<group>"; };
-		A0D474D71B99200D00D957FA /* LPStatusItemWindowCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindowCtrl.swift; path = LPStatusBar/LPStatusBar/LPStatusItem/LPStatusItemWindowCtrl.swift; sourceTree = "<group>"; };
+		A0D474D21B99200D00D957FA /* LPStatusItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItem.swift; path = LPStatusItem/LPStatusItem.swift; sourceTree = "<group>"; };
+		A0D474D31B99200D00D957FA /* LPStatusItemBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemBackgroundView.swift; path = LPStatusItem/LPStatusItemBackgroundView.swift; sourceTree = "<group>"; };
+		A0D474D41B99200D00D957FA /* LPStatusItemGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemGlobals.swift; path = LPStatusItem/LPStatusItemGlobals.swift; sourceTree = "<group>"; };
+		A0D474D51B99200D00D957FA /* LPStatusItemWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindow.swift; path = LPStatusItem/LPStatusItemWindow.swift; sourceTree = "<group>"; };
+		A0D474D61B99200D00D957FA /* LPStatusItemWindowConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindowConfig.swift; path = LPStatusItem/LPStatusItemWindowConfig.swift; sourceTree = "<group>"; };
+		A0D474D71B99200D00D957FA /* LPStatusItemWindowCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindowCtrl.swift; path = LPStatusItem/LPStatusItemWindowCtrl.swift; sourceTree = "<group>"; };
 		A0D474E01B9920E500D957FA /* LupaSearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LupaSearchTextField.swift; path = "lupa-main/LupaSearchTextField.swift"; sourceTree = "<group>"; };
 		A0D474E11B9920E500D957FA /* LupaSearchViewCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LupaSearchViewCtrl.swift; path = "lupa-main/LupaSearchViewCtrl.swift"; sourceTree = "<group>"; };
 		A0D474E21B9920E500D957FA /* LupaSearchViewCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LupaSearchViewCtrl.xib; path = "lupa-main/LupaSearchViewCtrl.xib"; sourceTree = "<group>"; };
@@ -114,10 +114,10 @@
 		A05EDABB1B7A4466001B3F3C = {
 			isa = PBXGroup;
 			children = (
-				A0E44B6A1B7E6CBD00D0D5FA /* lupa-bridge */,
 				A05EDAC61B7A4466001B3F3C /* lupa */,
 				A0D474DE1B9920BB00D957FA /* lupa-main */,
 				A08557191B7E582600B1D1C5 /* LPStatusItem */,
+				A0E44B6A1B7E6CBD00D0D5FA /* lupa-bridge */,
 				A0E44B671B7E6BD000D0D5FA /* Frameworks */,
 				A05EDAC51B7A4466001B3F3C /* Products */,
 				A0B4BA551B7B3F9500069614 /* Resources */,
