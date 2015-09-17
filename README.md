@@ -19,7 +19,7 @@ You can find probably dozen of use cases, some examples could be: Search in Goog
 
 You can clone the project and open/compile with Xcode (tested Xcode 7).
 
-You can download a copy of the binary [lupa-1.0.0.zip](https://github.com/LuisPalacios/lupa/blob/master/download/lupa-1.0.0.zip) or clone/download this repo and compile with XCode (version 7). 
+You can download a copy of the binary [lupa-1.0.0.zip](https://github.com/LuisPalacios/lupa/raw/master/download/lupa-1.0.0.zip) or clone/download this repo and compile with XCode (version 7). 
 
 If you download the ZIP file, unzip it and place the executable into your PATH (or better /Applications). Double click to execute. I suggest to add it to the startup items, under Users and Groups in System Preferences so you have it always ready.
 
