@@ -46,7 +46,7 @@ Under the **Preferences window** you can alter the App behaviour and it's saved 
 
 - System shortcut: set your custom Hotkey, so you can invoke the program from any application.
 - Search separator: configure a character to be used as separator, some web sites need the search words separated by a character (i.e. a plus sign).
-- URL search prefix: this is the "Prefix", the left part of the URL used when calling your default broser, a pair of examples:
+- URL search prefix: this is the "Prefix", the left part of the URL used when calling your default browser, a pair of examples:
    - Example 1: https://www.google.com/search?q=
    - Example 2: http://www.yourcompany.com/query.cgi?user=
 
