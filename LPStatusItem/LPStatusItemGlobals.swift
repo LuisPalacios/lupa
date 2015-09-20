@@ -28,6 +28,7 @@ let lpStatusItem : LPStatusItem = LPStatusItem()
 enum skStatusItemWindowCtrlNotReady: ErrorType {
     case statusItemIsNil
     case contentViewControllerIsNil
+    case windowOrNil
     case windowConfigOrNil
     case customViewControllerIncorrectSize
     case cantCreateCustomWindow
@@ -37,6 +38,7 @@ extension skStatusItemWindowCtrlNotReady: CustomStringConvertible {
         switch self {
         case statusItemIsNil: return "Error: The statusItem is nil"
         case contentViewControllerIsNil: return "Error: The contentViewController is nil"
+        case windowOrNil: return "Error: The window is nil"
         case windowConfigOrNil: return "Error: The windowConfigOrNil is nil"
         case customViewControllerIncorrectSize: return "Error: contentSize of the custom NSViewController is wrong (zero)"
         case cantCreateCustomWindow: return "Error: Cannot create the custom NSWindow"

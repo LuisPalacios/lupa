@@ -1,18 +1,14 @@
 //
-//  LupaSearchViewCtrl.swift
-//  LPStatusBar
+//  LupaSearchWinCtrl.swift
+//  lupa
 //
-//  Created by Luis Palacios on 17/8/15.
+//  Created by Luis Palacios on 20/9/15.
 //  Copyright © 2015 Luis Palacios. All rights reserved.
-//
-//
-//  ToDo, launch on text did change: ldapsearch -x -b "ou=active,ou=employees,ou=people,o=cisco.com" -h ldap.cisco.com uid=lpalacio
-//
 //
 
 import Cocoa
 
-class LupaSearchViewCtrl: NSViewController, NSTextFieldDelegate {
+class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFieldDelegate {
 
     /// --------------------------------------------------------------------------------
     //  MARK: Attributes
@@ -20,7 +16,10 @@ class LupaSearchViewCtrl: NSViewController, NSTextFieldDelegate {
     
     //  For the following attributes I'm using Implicitly Unwrapped Optional (!) so
     //  they are optionals and do not need to initialize them here, will do later.
-    @IBOutlet weak var searchField: LupaSearchTextField!
+    @IBOutlet weak var searchField: LupaSearchField!
+    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var scrollView: NSScrollView!
+        
     
     //  In order to work with the user defaults, stored under:
     //  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
@@ -29,120 +28,57 @@ class LupaSearchViewCtrl: NSViewController, NSTextFieldDelegate {
     
     //  Vars that I need to be initialized
     var textDidChangeInterval : NSTimeInterval = 0.0    //!< Time interval to calculate text did change trigger action
-    var timerTextDidChange    : NSTimer!             //!< Timer that triggers action after text did change
+    var timerTextDidChange    : NSTimer!                //!< Timer that triggers action after text did change
+    var searchIsRunning : Bool = false
     
-
+    
     /// --------------------------------------------------------------------------------
     //  MARK: Main
     /// --------------------------------------------------------------------------------
     
-    /// Initalization when created through IB
+    /// Sent after the window owned by the receiver has been loaded.
     ///
-    required init?(coder: NSCoder)
-    {
-        super.init(coder: coder)
-        
-        print("init?(coder: NSCoder  \(coder))")
-    }
-    
-    /// Initalization when created programatically
-    ///
-    override init?(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!)
-    {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    override func windowDidLoad() {
+        super.windowDidLoad()
 
-        // Log
-        Swift.print("LupaSearchViewCtrl - Initalization when created programatically")
-        //Swift.print("    \(self) init?(nibName: \(nibNameOrNil), bundle: \(nibBundleOrNil))")
-        //Swift.print("    self.preferredContentSize.width : \(self.preferredContentSize.width)")
-        //Swift.print("    self.preferredContentSize.height: \(self.preferredContentSize.height)")
-        //Swift.print("    self.view: \(self.view)")
-        
+        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
     
     /// awakeFromNib()
     //
     //  Prepares the receiver for service after it has been loaded from
-    //  an Interface Builder archive, or nib file
-    //  It is guaranteed to have all its outlet instance variables set.
+    //  an Interface Builder archive, or nib file. It is guaranteed to 
+    //  have all its outlet instance variables set.
     //
     override func awakeFromNib() {
         print("awakeFromNib()")
-    }
-    
-    
-    /// loadView()
-    //
-    //  This method connects an instantiated view from a nib file to the
-    //  view property of the view controller. This method is called by
-    //  the system, and is exposed in this class so you can override it to
-    //  add behavior immediately before or after nib loading
-    //
-    override func loadView() {
-        super.loadView()
-        print("loadView()")
         
         // Tell the searchField I'm his delegate
-        self.searchField.delegate = self
-    }
+        // self.searchField.delegate = self
 
+        // Follow search string modifications
+        // NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("doSearch:"), name: NSControlTextDidChangeNotification, object: self.searchField)
 
-    /// viewDidLoad()  *new in 10.10*
-    //
-    //  Called after the view controller’s view has been loaded into memory.
-    //  For a view controller originating in a nib file, this method is called 
-    //  immediately after the view property is set. For a view controller 
-    //  created programmatically, this method is called immediately after 
-    //  the loadView method completes.
-    //
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
-        //print("viewDidLoad()")
     }
     
-    // Fuerzo que mi preferredContentSize sea mi tamaño actual
-    //
-    override var preferredContentSize : NSSize {
-        get {
-            return self.view.frame.size
-        }
-        set {
-            super.preferredContentSize = newValue
-        }
-    }
-    
-    /// --------------------------------------------------------------------------------
-    //  MARK: IBActions through First Responder
-    /// --------------------------------------------------------------------------------
-    
-    //
-    // Capture firstResponder "doCancelSearch:" command.
-    //
-    // This is not connected through IBN but is a message sent from the
-    // searchTextField subclass when user presse ESCAPE in the searchBox
-    //
-    @IBAction func doCancelSearch(sender: AnyObject) {
-        // Simply close the search box window
-        if let window = self.view.window {
-            window.close()
-        }
-    }
-
     
     
     /// --------------------------------------------------------------------------------
     //  MARK: Execute the search when user pressed ENTER
     /// --------------------------------------------------------------------------------
     
+    @IBAction func searchFieldModified(sender: AnyObject) {
+            self.textDidChangeInterval = 0.0
+            self.startTimerTextDidChange()
+    }
+    
     // Call default browser with full URL from the prefix + search_field
     //
-    
-    @IBAction func doSearch(sender: AnyObject) {
-        
+    func startSearch() {
+        print("startSearch()")
         // Read userDefaults (String) and convert into NSURL
         if let letURLString = self.userDefaults.objectForKey(LUPADefaults.lupa_URLPrefix) as? String {
-            // print("lupa_URLPrefix: \(letURLString)")
+            print("lupa_URLPrefix: \(letURLString)")
             
             if !letURLString.isEmpty {
                 
@@ -161,7 +97,7 @@ class LupaSearchViewCtrl: NSViewController, NSTextFieldDelegate {
                     
                     // Setup the final string
                     let searchURLString : String = letURLString + searchString
-                    // print("searchURLString: \(searchURLString)")
+                    print("searchURLString: \(searchURLString)")
                     
                     // Let's go rock and roll
                     //
@@ -174,16 +110,19 @@ class LupaSearchViewCtrl: NSViewController, NSTextFieldDelegate {
                     if let letTestMode = self.userDefaults.objectForKey(LUPADefaults.lupa_TestMode) as? Bool {
                         testMode = letTestMode
                     }
+                    
+                    // Let's go for it
+                    searchIsRunning = true
                     if ( testMode ) {
                         print("TEST MODE - Browser URL: \(searchURLString)")
                     } else {
                         // Production mode, fix spaces
                         let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
                         let theURL : NSURL? = NSURL (string: myUrlString)
-                        // print("theURL: \(theURL?.path)")
+                        print("theURL: \(theURL?.path)")
                         NSWorkspace.sharedWorkspace().openURL(theURL!)
                     }
-
+                    searchIsRunning = false
                     
                 } else {
                     print ("Search string empty, ignore it...")
@@ -197,26 +136,40 @@ class LupaSearchViewCtrl: NSViewController, NSTextFieldDelegate {
         }
         
         // Close the Window
-        if let window = self.view.window {
-            window.close()
-        }
+//        if let window = self.view.window {
+//            window.close()
+//        }
+
     }
 
-    
-    /// --------------------------------------------------------------------------------
-    //  MARK: Execute something when user modifies the search field
-    /// --------------------------------------------------------------------------------
-    
-    // Called when user modify the nstextfield
-    //
-    override func controlTextDidChange(notification: NSNotification?) {
-        if notification?.object as? NSTextField == self.searchField {
-            self.textDidChangeInterval = 0.0
-            print("Algo pasa con Mary")
-            self.startTimerTextDidChange()
-        }
-    }
+    func stopSearch() {
+        print("stopSearch()")
 
+        // Send a signal indicating that search was cancel
+        searchIsRunning = false
+        
+        // ToDo
+        
+    }
+    /*
+    - (void)runSearch
+    {
+    NSString *searchFormat = @"";
+    NSString *searchString = [self.searchField stringValue];
+    if ([searchString length] > 0)
+    {
+    searchFormat = NSLocalizedString(@"Search for ‘%@’…", @"Format for search request");
+    }
+    NSString *searchRequest = [NSString stringWithFormat:searchFormat, searchString];
+    [self.textField setStringValue:searchRequest];
+    NSLog(@"Aqui");
+    
+    NSSize size = self.window.frame.size;
+    size.height = size.height + 20.0;
+    [self.window setContentSize:size];
+    }
+*/
+    
     
     /// --------------------------------------------------------------------------------
     //  MARK: Timer to show the Menu
@@ -242,6 +195,12 @@ class LupaSearchViewCtrl: NSViewController, NSTextFieldDelegate {
             if (  timerTextDidChange.valid ) {
                 print("stopTimerTextDidChange()")
                 timerTextDidChange.invalidate()
+                
+                if ( searchIsRunning ) {
+                    print("stopSearching()")
+                    self.stopSearch()
+
+                }
             }
             timerTextDidChange = nil
         }
@@ -251,55 +210,68 @@ class LupaSearchViewCtrl: NSViewController, NSTextFieldDelegate {
     //
     func actionTimerTextDidChange() {
         
+        // print("Algo pasa con Mary")
+        self.startSearch()
+
         // Start the menu
-//        print("Launching the action")
-//        var frame = self.view.frame
-//        frame.size.height = frame.size.height + 20.0
-//        self.view.frame = frame
-//        if let window = lpStatusItem.statusItemWindowController.window {
-//            window.contentView = self.view
-//        }
+        //        print("Launching the action")
+        //        var frame = self.view.frame
+        //        frame.size.height = frame.size.height + 20.0
+        //        self.view.frame = frame
+        //        if let window = lpStatusItem.statusItemWindowController.window {
+        //            window.contentView = self.view
+        //        }
         
-//        lpStatusItem.statusItemWindowController.refreshContentViewController()
-        
-        
-//        lpStatusItem.statusItemWindowController.window?.contentView = self.view
+        //        lpStatusItem.statusItemWindowController.refreshContentViewController()
         
         
-
-//        if let letSuperview = self.view.superview {
-//            let superview = letSuperview
-//            var frame = superview.frame
-//            frame.size.height = frame.size.height + 20.0
-//            superview.frame = frame
-//        }
-//        
-//        print("self.view: \(self.view)")
-//        print("self.view.superview: \(self.view.superview)")
-
+        //        lpStatusItem.statusItemWindowController.window?.contentView = self.view
+        
+        
+        
+        //        if let letSuperview = self.view.superview {
+        //            let superview = letSuperview
+        //            var frame = superview.frame
+        //            frame.size.height = frame.size.height + 20.0
+        //            superview.frame = frame
+        //        }
         //
-//        self.view.translatesAutoresizingMaskIntoConstraints = false
-//        let viewsDict = ["subView" : self.view]
-//        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict)
-//        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict)
-//        self.view.addConstraints(verticalConstraints)
-//        self.view.addConstraints(horizontalConstraints)
+        //        print("self.view: \(self.view)")
+        //        print("self.view.superview: \(self.view.superview)")
         
-
-        if let window = lpStatusItem.statusItemWindowController.window {
-            
-            print("window.contentView: \(window.contentView)")
-            let frame = window.frame
+        //
+        //        self.view.translatesAutoresizingMaskIntoConstraints = false
+        //        let viewsDict = ["subView" : self.view]
+        //        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict)
+        //        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict)
+        //        self.view.addConstraints(verticalConstraints)
+        //        self.view.addConstraints(horizontalConstraints)
+        
+        
+//        if let window = lpStatusItem.statusItemWindowController.window {
+//            
+//            print("window.contentView: \(window.contentView)")
+//            let frame = window.frame
+//            var newSize = frame.size
+//            newSize.height = newSize.height + 20.0
+//            
+//            // Opción 1
+//            //self.resizeWindowForContentSize(window, size: newSize)
+//            
+//            // Opción 2
+//            window.setContentSize(newSize)
+//            
+//        }
+        
+        // Resize my window
+        if let letMyWindow = self.window {
+            let myWindow = letMyWindow
+            let frame = myWindow.frame
             var newSize = frame.size
             newSize.height = newSize.height + 20.0
-            
-            // Opción 1
-            //self.resizeWindowForContentSize(window, size: newSize)
-            
-            // Opción 2
-            window.setContentSize(newSize)
-
+            myWindow.setContentSize(newSize)
         }
+        
     }
     
     func resizeWindowForContentSize ( window : NSWindow, size : NSSize ) {
@@ -307,4 +279,5 @@ class LupaSearchViewCtrl: NSViewController, NSTextFieldDelegate {
         let newWindowFrame = window.frameRectForContentRect(NSMakeRect(NSMinX(windowFrame), NSMaxY(windowFrame) - size.height, size.width, size.height))
         window.setFrame(newWindowFrame, display: true, animate: window.visible)
     }
+
 }

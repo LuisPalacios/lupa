@@ -39,3 +39,22 @@ func programLongName() -> String
     let myProgramLongName : String = "Lupa \(skPROGRAM_DISPLAY_VERSION)-\(ikPROGRAM_VERSION)(\(skPROGRAM_BUILD))"
     return myProgramLongName;
 }
+
+
+
+extension NSView {
+    
+    var backgroundColor: NSColor? {
+        get {
+            if let colorRef = self.layer?.backgroundColor {
+                return NSColor(CGColor: colorRef)
+            } else {
+                return nil
+            }
+        }
+        set {
+            self.wantsLayer = true
+            self.layer?.backgroundColor = newValue?.CGColor
+        }
+    }
+}

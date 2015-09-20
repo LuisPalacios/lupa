@@ -9,7 +9,7 @@
 import Cocoa
 import QuartzCore
 
-class LPStatusItemWindow: NSPanel {
+class LPStatusItemWindow: NSWindow {
 
     
     /// --------------------------------------------------------------------------------
@@ -19,7 +19,6 @@ class LPStatusItemWindow: NSPanel {
     //  For the following attributes I'm using Implicitly Unwrapped Optional (!) so
     //  they are optionals and do not need to initialize them here, will do later.
     var statusItem      : LPStatusItem!
-    var contentViewCtr  : NSViewController!
     var windowConfig    : LPStatusItemWindowConfig!
 
     var backgroundView  : LPStatusItemBackgroundView!
@@ -54,16 +53,19 @@ class LPStatusItemWindow: NSPanel {
         //
         //  Note: During super.init() the contentView SET is called
         //
-        super.init(contentRect: NSZeroRect, styleMask: NSNonactivatingPanelMask, backing: NSBackingStoreType.Buffered, `defer`: true)
+//        super.init(contentRect: NSZeroRect, styleMask: NSNonactivatingPanelMask, backing: NSBackingStoreType.Buffered, `defer`: true)
+
+        super.init(contentRect: NSMakeRect(0, 0, 100, 100), styleMask: NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask | NSTexturedBackgroundWindowMask, backing: NSBackingStoreType.Buffered, `defer`: true)
         
         // Setup the window class
         self.opaque     = false
         self.hasShadow  = true
         self.level      = Int(CGWindowLevelForKey(CGWindowLevelKey.StatusWindowLevelKey))
+        //
+        Swift.print("LUIS BACKGROUND COLOR")
         self.backgroundColor    = NSColor.clearColor()
         self.collectionBehavior = [NSWindowCollectionBehavior.Stationary , NSWindowCollectionBehavior.IgnoresCycle]
         self.appearance = NSAppearance.currentAppearance()
-        
         
         // Log
         // Swift.print("LPStatusItemWindow - Initialized my own NSWindow")
@@ -91,13 +93,46 @@ class LPStatusItemWindow: NSPanel {
     //
     override var contentView : NSView? {
         get {
+            return super.contentView
+            
+            
             // Log
             //Swift.print ("contentView GET")
             return self.userContentView
         }
         set {
+
+            Swift.print("searchViewCtrl.view (CHECK): \(newValue)")
+
+            // Log ANTES
+            if let letTheContentView = super.contentView {
+                let theContentView = letTheContentView
+                Swift.print("ANTES: super.contentView.constraints: \(theContentView.constraints)")
+            }
+
+            if ( super.contentView == newValue ) {
+                super.contentView = nil
+            }
+            super.contentView = newValue
+            super.contentView!.translatesAutoresizingMaskIntoConstraints = false
+//            Swift.print("translatesAutoresizingMaskIntoConstraints: \(super.contentView!.translatesAutoresizingMaskIntoConstraints)")
+            
+            // Log DESPUES
+            if let letTheContentView = super.contentView {
+                let theContentView = letTheContentView
+                if theContentView.constraints.count > 0 {
+                    // Remove all constraints
+                    //theContentView.removeConstraints(theContentView.constraints)
+                    
+                    // Log
+                    Swift.print("DESPUES: super.contentView.constraints: \(theContentView.constraints)")
+                }
+            }
+            
+            return
+            
             // Log
-            //Swift.print ("contentView SET - ENTRADA newValue : \(newValue)")
+            // Swift.print ("contentView SET - ENTRADA newValue : \(newValue)")
             
             // if already using my userContentView return
             if ( self.userContentView == newValue ) {
@@ -107,8 +142,8 @@ class LPStatusItemWindow: NSPanel {
             // Prepare the passed new NSView
             let newUserContentView : NSView = newValue!
             let bounds           : NSRect = newUserContentView.bounds
-            let antialiasingMask : CAEdgeAntialiasingMask = [CAEdgeAntialiasingMask.LayerLeftEdge,  CAEdgeAntialiasingMask.LayerLeftEdge, CAEdgeAntialiasingMask.LayerLeftEdge, CAEdgeAntialiasingMask.LayerLeftEdge]
-            
+            let antialiasingMask : CAEdgeAntialiasingMask = [CAEdgeAntialiasingMask.LayerLeftEdge,  CAEdgeAntialiasingMask.LayerRightEdge, CAEdgeAntialiasingMask.LayerBottomEdge, CAEdgeAntialiasingMask.LayerTopEdge]
+
             //
             if let letBackgroundView = super.contentView {
                 self.backgroundView = letBackgroundView as! LPStatusItemBackgroundView
@@ -120,6 +155,8 @@ class LPStatusItemWindow: NSPanel {
                 self.backgroundView.layer?.masksToBounds = true
                 self.backgroundView.layer?.edgeAntialiasingMask = antialiasingMask
                 super.contentView   = self.backgroundView
+
+                //super.contentView!.translatesAutoresizingMaskIntoConstraints = true
                 //Swift.print("let No-OK. super.contentView value: \(super.contentView)")
             }
             
@@ -138,9 +175,29 @@ class LPStatusItemWindow: NSPanel {
             
             //
             self.backgroundView.addSubview(self.userContentView)
-
+            //self.addSubView(self.userContentView, containerView: self.backgroundView)
+            
             //super.contentView = newValue
             //Swift.print ("contentView SET - SALIDA self.contentView : \(self.contentView)")
         }
     }
+  
+    func addSubView ( insertedView: NSView, containerView: NSView  ) {
+        
+        Swift.print("containerView.constraints: \(containerView.constraints)")
+        
+        containerView.addSubview(insertedView)
+        //insertedView.translatesAutoresizingMaskIntoConstraints = false
+        let viewsDict = ["insertedView" : insertedView]
+        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[insertedView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict)
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[insertedView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict)
+        containerView.addConstraints(horizontalConstraints)
+        containerView.addConstraints(verticalConstraints)
+        Swift.print("PUSE EL TEMITA EN MARCHA")
+        // containerView.layoutSubtreeIfNeeded()
+        Swift.print("containerView.constraints: \(containerView.constraints)")
+    }
+    
 }
+
+

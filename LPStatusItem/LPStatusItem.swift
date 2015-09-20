@@ -36,7 +36,6 @@ import Cocoa
     
     // Menu
     var statusMenu                  : NSMenu!
-    var timerShowMenu               : NSTimer!          //!< Timer para mostrar el Menu right-click
 
     // Vars that I need to be initialized
     var leftButtomInterval          : NSTimeInterval = 0.0
@@ -126,6 +125,52 @@ import Cocoa
         }
     }
     
+    
+    
+    /// Activate my status item and present it in the bar
+    ///
+    func activateStatusItemWithMenuImageWindow (statusMenu: NSMenu, itemImage : NSImage, winController: NSWindowController) {
+        
+        // Log
+        //print("LPStatusItem - Activate my status item and present it in the bar")
+        //print("    activateStatusItemWithImage (imageName : \(imageName), contentViewController: \(contentViewController)) ")
+        
+        // Store the Menu
+        self.statusMenu = statusMenu
+        
+        /// Create Status Bar Item with an NSImage
+        //
+        self.createStatusBarItemWithImage(statusMenu, itemImage: itemImage)
+        
+        
+        // Create the default configuration
+        //
+        self.windowConfig = LPStatusItemWindowConfig() // = [CCNStatusItemWindowConfiguration defaultConfiguration];
+        
+        
+        /// Create Custom NSWindowController
+        //
+        var success: Bool = false
+        do {
+            try statusItemWindowController = LPStatusItemWindowCtrl (
+                statusItem: self,                               //  self : This statusItem
+                window: winController.window,                   //  Window
+                windowConfig: self.windowConfig )               //  windowConfig : Window configuration object to use to prepare the window
+            success = true
+        } catch let error as skStatusItemWindowCtrlNotReady {
+            print(error.description)
+        } catch {
+            print ("Undefinded error")
+        }
+        
+        // Show result
+        if success {
+            // print("activateStatusItemWithImage: you're all set!!!")
+        } else {
+            print("activateStatusItemWithImage: Something really bad hapenned !!!!!")
+        }
+    }
+
     
     /// --------------------------------------------------------------------------------
     //  MARK: StatusBar Item

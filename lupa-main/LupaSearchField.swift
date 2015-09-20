@@ -1,14 +1,14 @@
 //
-//  LupaSearchTextField.swift
-//  LPStatusBar
+//  LupaSearchField.swift
+//  lupa
 //
-//  Created by Luis Palacios on 3/9/15.
+//  Created by Luis Palacios on 20/9/15.
 //  Copyright © 2015 Luis Palacios. All rights reserved.
 //
 
 import Cocoa
 
-class LupaSearchTextField: NSTextField {
+class LupaSearchField: NSSearchField {
 
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
@@ -27,9 +27,9 @@ class LupaSearchTextField: NSTextField {
             return
             
         default:
-            // Swift.print("Algo pasa con Mary")
+            Swift.print("Algo pasa con Mary")
             break
         }
         super.doCommandBySelector(aSelector)
-    }    
+    }
 }
