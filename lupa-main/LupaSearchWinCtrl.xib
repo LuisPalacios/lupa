@@ -6,9 +6,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="LupaSearchWinCtrl" customModule="lupa" customModuleProvider="target">
             <connections>
-                <outlet property="scrollView" destination="sLR-Bk-kfa" id="HTX-gE-eTo"/>
                 <outlet property="searchField" destination="mzq-eI-59F" id="MhW-lN-OTY"/>
                 <outlet property="textField" destination="2qj-4U-JiY" id="LqN-qo-j3o"/>
+                <outlet property="textLabel" destination="Eyb-D4-goM" id="xSo-0e-ou0"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -16,16 +16,16 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="lupa" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="none" id="F0z-JX-Cv5" customClass="LupaPanel" customModule="lupa" customModuleProvider="target">
             <windowStyleMask key="styleMask" utility="YES" nonactivatingPanel="YES"/>
-            <windowCollectionBehavior key="collectionBehavior" moveToActiveSpace="YES" ignoresCycle="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" moveToActiveSpace="YES" stationary="YES" ignoresCycle="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="292" height="244"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="292" height="244"/>
+            <rect key="contentRect" x="196" y="240" width="292" height="272"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <view key="contentView" id="se5-gp-TjO" customClass="LPStatusItemBackgroundView" customModule="lupa" customModuleProvider="target">
+                <rect key="frame" x="0.0" y="0.0" width="292" height="272"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <searchField wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mzq-eI-59F" customClass="LupaSearchField" customModule="lupa" customModuleProvider="target">
-                        <rect key="frame" x="20" y="202" width="252" height="22"/>
+                    <searchField wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mzq-eI-59F">
+                        <rect key="frame" x="20" y="230" width="252" height="22"/>
                         <animations/>
                         <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="dCh-xu-EgJ">
                             <font key="font" metaFont="system"/>
@@ -34,85 +34,97 @@
                         </searchFieldCell>
                         <connections>
                             <action selector="searchFieldModified:" target="-2" id="tdc-aG-Q2i"/>
+                            <outlet property="delegate" destination="-2" id="pkT-NO-FUK"/>
                         </connections>
                     </searchField>
-                    <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sLR-Bk-kfa">
-                        <rect key="frame" x="20" y="48" width="252" height="87"/>
-                        <clipView key="contentView" id="t2O-gH-rft">
-                            <rect key="frame" x="1" y="1" width="250" height="85"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <view translatesAutoresizingMaskIntoConstraints="NO" id="yNF-3P-syj">
-                                    <rect key="frame" x="0.0" y="-9" width="181" height="94"/>
-                                    <animations/>
-                                </view>
-                            </subviews>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="yNF-3P-syj" secondAttribute="bottom" constant="-9" id="67e-9Q-8nP"/>
-                                <constraint firstItem="yNF-3P-syj" firstAttribute="top" secondItem="t2O-gH-rft" secondAttribute="top" id="M3N-Fp-Blr"/>
-                                <constraint firstAttribute="trailing" secondItem="yNF-3P-syj" secondAttribute="trailing" constant="69" id="kM6-ra-7Wl"/>
-                                <constraint firstItem="yNF-3P-syj" firstAttribute="leading" secondItem="t2O-gH-rft" secondAttribute="leading" id="ns0-L8-2p4"/>
-                            </constraints>
-                            <animations/>
-                        </clipView>
-                        <animations/>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="1bE-LS-YWg">
-                            <rect key="frame" x="1" y="70" width="250" height="16"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
-                        </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="xNx-1c-Yqy">
-                            <rect key="frame" x="235" y="1" width="16" height="85"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
-                        </scroller>
-                    </scrollView>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2qj-4U-JiY">
-                        <rect key="frame" x="20" y="143" width="252" height="51"/>
+                        <rect key="frame" x="20" y="140" width="252" height="51"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="51" id="AO0-5R-NkL"/>
+                            <constraint firstAttribute="height" constant="51" id="CMU-EO-kcs"/>
                         </constraints>
                         <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="9IM-Gj-Jts">
+                        <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" id="9IM-Gj-Jts">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eyb-D4-goM">
+                        <rect key="frame" x="18" y="205" width="256" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="vBN-rE-q6s">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N2O-iU-03Y">
-                        <rect key="frame" x="81" y="20" width="130" height="17"/>
+                        <rect key="frame" x="54" y="20" width="184" height="17"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="17" id="4nS-Yg-PDA"/>
+                            <constraint firstAttribute="height" constant="17" id="ut8-ow-gCO"/>
                         </constraints>
                         <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Alfa 1.1 (not working)" id="DZq-lV-ovN">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Alfa 1.1 (ldap feature not working)" id="DZq-lV-ovN">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6aw-Gp-JSh">
+                        <rect key="frame" x="20" y="45" width="252" height="87"/>
+                        <clipView key="contentView" id="wea-PG-SOA">
+                            <rect key="frame" x="1" y="1" width="250" height="85"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <view translatesAutoresizingMaskIntoConstraints="NO" id="7zT-Au-XN1">
+                                    <rect key="frame" x="0.0" y="-9" width="181" height="94"/>
+                                    <animations/>
+                                </view>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="7zT-Au-XN1" secondAttribute="bottom" constant="-9" id="8k8-FY-brg"/>
+                                <constraint firstItem="7zT-Au-XN1" firstAttribute="top" secondItem="wea-PG-SOA" secondAttribute="top" id="G6N-YR-cPe"/>
+                                <constraint firstItem="7zT-Au-XN1" firstAttribute="leading" secondItem="wea-PG-SOA" secondAttribute="leading" id="X9a-wQ-4by"/>
+                                <constraint firstAttribute="trailing" secondItem="7zT-Au-XN1" secondAttribute="trailing" constant="69" id="nnP-ey-P4S"/>
+                            </constraints>
+                            <animations/>
+                        </clipView>
+                        <animations/>
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="fsY-62-Mzg">
+                            <rect key="frame" x="1" y="70" width="250" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
+                        </scroller>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="xTr-oq-fmc">
+                            <rect key="frame" x="235" y="1" width="16" height="85"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
+                        </scroller>
+                    </scrollView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="mzq-eI-59F" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="3NZ-l7-0is"/>
-                    <constraint firstItem="mzq-eI-59F" firstAttribute="trailing" secondItem="2qj-4U-JiY" secondAttribute="trailing" id="6DA-H6-DD0"/>
-                    <constraint firstAttribute="bottom" secondItem="N2O-iU-03Y" secondAttribute="bottom" constant="20" symbolic="YES" id="7s9-0H-dHG"/>
-                    <constraint firstItem="2qj-4U-JiY" firstAttribute="leading" secondItem="sLR-Bk-kfa" secondAttribute="leading" id="Awd-a1-8Wo"/>
-                    <constraint firstItem="sLR-Bk-kfa" firstAttribute="trailing" secondItem="2qj-4U-JiY" secondAttribute="trailing" id="BBD-dW-uw2"/>
-                    <constraint firstItem="2qj-4U-JiY" firstAttribute="top" secondItem="mzq-eI-59F" secondAttribute="bottom" constant="8" symbolic="YES" id="Fc6-we-InS"/>
-                    <constraint firstItem="mzq-eI-59F" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="QkZ-KS-bdA"/>
-                    <constraint firstItem="sLR-Bk-kfa" firstAttribute="top" secondItem="2qj-4U-JiY" secondAttribute="bottom" constant="8" symbolic="YES" id="au8-JU-HMZ"/>
-                    <constraint firstItem="2qj-4U-JiY" firstAttribute="leading" secondItem="mzq-eI-59F" secondAttribute="leading" id="ayN-SD-8Hw"/>
-                    <constraint firstAttribute="trailing" secondItem="mzq-eI-59F" secondAttribute="trailing" constant="20" symbolic="YES" id="dLr-z2-YXB"/>
-                    <constraint firstItem="N2O-iU-03Y" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="83" id="eDk-D5-4VA"/>
-                    <constraint firstItem="N2O-iU-03Y" firstAttribute="centerX" secondItem="sLR-Bk-kfa" secondAttribute="centerX" id="ffS-jC-Q9C"/>
-                    <constraint firstItem="N2O-iU-03Y" firstAttribute="top" secondItem="sLR-Bk-kfa" secondAttribute="bottom" constant="11" id="sbP-3t-IAj"/>
+                    <constraint firstAttribute="trailing" secondItem="mzq-eI-59F" secondAttribute="trailing" constant="20" symbolic="YES" id="0es-g4-neA"/>
+                    <constraint firstItem="mzq-eI-59F" firstAttribute="trailing" secondItem="Eyb-D4-goM" secondAttribute="trailing" id="5w4-RS-c9M"/>
+                    <constraint firstItem="mzq-eI-59F" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="D4f-Pa-nBJ"/>
+                    <constraint firstItem="6aw-Gp-JSh" firstAttribute="top" secondItem="2qj-4U-JiY" secondAttribute="bottom" constant="8" symbolic="YES" id="HsG-3g-HqY"/>
+                    <constraint firstItem="mzq-eI-59F" firstAttribute="leading" secondItem="Eyb-D4-goM" secondAttribute="leading" id="Jjc-ai-DJd"/>
+                    <constraint firstItem="Eyb-D4-goM" firstAttribute="top" secondItem="mzq-eI-59F" secondAttribute="bottom" constant="8" symbolic="YES" id="Oih-OO-VL8"/>
+                    <constraint firstItem="mzq-eI-59F" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="R1k-cx-Tqe"/>
+                    <constraint firstItem="6aw-Gp-JSh" firstAttribute="leading" secondItem="2qj-4U-JiY" secondAttribute="leading" id="TMa-Nr-NKx"/>
+                    <constraint firstItem="N2O-iU-03Y" firstAttribute="top" secondItem="6aw-Gp-JSh" secondAttribute="bottom" constant="8" symbolic="YES" id="U3o-Wm-beB"/>
+                    <constraint firstItem="Eyb-D4-goM" firstAttribute="trailing" secondItem="2qj-4U-JiY" secondAttribute="trailing" id="UTC-cD-ruJ"/>
+                    <constraint firstAttribute="bottom" secondItem="N2O-iU-03Y" secondAttribute="bottom" constant="20" symbolic="YES" id="VP6-hH-np1"/>
+                    <constraint firstItem="6aw-Gp-JSh" firstAttribute="centerX" secondItem="N2O-iU-03Y" secondAttribute="centerX" id="cuT-o0-Cte"/>
+                    <constraint firstItem="6aw-Gp-JSh" firstAttribute="trailing" secondItem="2qj-4U-JiY" secondAttribute="trailing" id="gix-7F-kgC"/>
+                    <constraint firstItem="2qj-4U-JiY" firstAttribute="top" secondItem="Eyb-D4-goM" secondAttribute="bottom" constant="14" id="sIY-k5-voG"/>
+                    <constraint firstItem="2qj-4U-JiY" firstAttribute="leading" secondItem="Eyb-D4-goM" secondAttribute="leading" id="sp5-za-T4u"/>
                 </constraints>
                 <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="63" y="245"/>
+            <point key="canvasLocation" x="-120" y="234"/>
         </window>
     </objects>
 </document>

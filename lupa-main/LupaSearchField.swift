@@ -22,12 +22,11 @@ class LupaSearchField: NSSearchField {
         switch aSelector {
         case "cancelOperation:":
             // Send a message to firstResponder
-            // searchBoxViewCtrl.swift will capture it and close the search window
+            Swift.print("doCancelSearch:")
             NSApplication.sharedApplication().sendAction("doCancelSearch:", to: nil, from: self)
             return
             
         default:
-            Swift.print("Algo pasa con Mary")
             break
         }
         super.doCommandBySelector(aSelector)

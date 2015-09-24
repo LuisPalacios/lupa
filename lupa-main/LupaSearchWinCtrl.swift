@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFieldDelegate {
+class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDelegate { // , NSSearchFieldDelegate {
 
     /// --------------------------------------------------------------------------------
     //  MARK: Attributes
@@ -17,6 +17,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFie
     //  For the following attributes I'm using Implicitly Unwrapped Optional (!) so
     //  they are optionals and do not need to initialize them here, will do later.
     @IBOutlet weak var searchField: LupaSearchField!
+    @IBOutlet weak var textLabel: NSTextField!
     @IBOutlet weak var textField: NSTextField!
     @IBOutlet weak var scrollView: NSScrollView!
         
@@ -28,8 +29,10 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFie
     
     //  Vars that I need to be initialized
     var textDidChangeInterval : NSTimeInterval = 0.0    //!< Time interval to calculate text did change trigger action
+    var previousSearchString : String = ""              //!< Control if I'm asked to search the same string as before
     var timerTextDidChange    : NSTimer!                //!< Timer that triggers action after text did change
-    var searchIsRunning : Bool = false
+    var browserSearchIsRunning : Bool = false
+    var ldapSearchIsRunning : Bool = false
     
     
     /// --------------------------------------------------------------------------------
@@ -41,7 +44,25 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFie
     override func windowDidLoad() {
         super.windowDidLoad()
 
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+        // Setup the window class
+        if let letMyWindow = self.window {
+            let myWindow = letMyWindow
+            myWindow.opaque = false
+            myWindow.hasShadow = true
+            myWindow.backgroundColor = NSColor.clearColor()
+        }
+        
+        // Work in Progress
+        //
+        WiP
+        //
+        // Lo ideal sería hacer lo anterior en la clase LPStatusItemWindowCtrl.
+        // durante su inicalización y recibir esta nswindow, que le cambiase la 
+        // clase de su contentview a LPStatusitembacgroundview
+        // pero sin tocarle absolutamente nada más... :-)
+        //        // Show the Window fading in...
+        //        let window : LPStatusItemWindow = self.window as! LPStatusItemWindow
+
     }
     
     /// awakeFromNib()
@@ -62,20 +83,70 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFie
     }
     
     
-    
     /// --------------------------------------------------------------------------------
-    //  MARK: Execute the search when user pressed ENTER
+    //  MARK: Actions when user modifies searchField or presses Enter
     /// --------------------------------------------------------------------------------
     
+    // Bound to the NSSearchField. Called every time the search field content is modified.
+    //
     @IBAction func searchFieldModified(sender: AnyObject) {
             self.textDidChangeInterval = 0.0
             self.startTimerTextDidChange()
     }
     
+    
+    // Bound thanks to NSSearchFieldDelegate
+    //
+    // From IB connect NSSearchField with File's Owner->Delegate
+    //
+    func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
+
+        // If I return false then the default will happen, 
+        // searchFieldModified() will be called
+        var retValue : Bool = false //
+        
+        switch commandSelector {
+        case "insertNewline:":
+            // BROWSER Search -
+            //
+            Swift.print("insertNewline")
+            self.startBrowserSearch()
+
+            // retval = true causes Apple to NOT fire the default enter action
+            // so if true, searchFieldModified() will NOT be called
+            retValue = true
+    
+        case "cancelOperation:":
+            // CANCEL Search Window -
+            //
+            lpStatusItem.dismissStatusItemWindow()
+
+            // retval = true causes Apple to NOT fire the default enter action
+            // so if true, searchFieldModified() will NOT be called
+            retValue = true
+            
+        default:
+            Swift.print("Llegó otro comando, deconozco cual: \(commandSelector)")
+            break
+        }
+
+        // Return
+        return retValue
+    }
+    
+    /// --------------------------------------------------------------------------------
+    //  MARK: Browser search
+    /// --------------------------------------------------------------------------------
+
     // Call default browser with full URL from the prefix + search_field
     //
-    func startSearch() {
-        print("startSearch()")
+    func startBrowserSearch() {
+        
+        print("startBrowserSearch()")
+
+        // Cancel the automated LDAP search if pending...
+        self.stopTimerTextDidChange()
+        
         // Read userDefaults (String) and convert into NSURL
         if let letURLString = self.userDefaults.objectForKey(LUPADefaults.lupa_URLPrefix) as? String {
             print("lupa_URLPrefix: \(letURLString)")
@@ -112,7 +183,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFie
                     }
                     
                     // Let's go for it
-                    searchIsRunning = true
+                    browserSearchIsRunning = true
                     if ( testMode ) {
                         print("TEST MODE - Browser URL: \(searchURLString)")
                     } else {
@@ -122,7 +193,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFie
                         print("theURL: \(theURL?.path)")
                         NSWorkspace.sharedWorkspace().openURL(theURL!)
                     }
-                    searchIsRunning = false
+                    browserSearchIsRunning = false
                     
                 } else {
                     print ("Search string empty, ignore it...")
@@ -136,41 +207,74 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFie
         }
         
         // Close the Window
-//        if let window = self.view.window {
-//            window.close()
-//        }
-
+        lpStatusItem.dismissStatusItemWindow()
     }
-
-    func stopSearch() {
-        print("stopSearch()")
-
+    
+    // Try to stop the Browser search
+    func stopBrowserSearch() {
+        print("stopBrowserSearch(): ToDo")
+        
         // Send a signal indicating that search was cancel
-        searchIsRunning = false
+        browserSearchIsRunning = false
         
         // ToDo
         
     }
-    /*
-    - (void)runSearch
-    {
-    NSString *searchFormat = @"";
-    NSString *searchString = [self.searchField stringValue];
-    if ([searchString length] > 0)
-    {
-    searchFormat = NSLocalizedString(@"Search for ‘%@’…", @"Format for search request");
+
+
+    /// --------------------------------------------------------------------------------
+    //  MARK: LDAP search
+    /// --------------------------------------------------------------------------------
+    
+    // Call default browser with full URL from the prefix + search_field
+    //
+    func startLDAPSearch() {
+        print("startLDAPSearch(): ToDo")
+        
+        // Log
+        let leftLDAPString : String  = "ldapsearch -x -b \"ou=active,ou=employees,ou=people,o=cisco.com\" -h ldap.cisco.com uid="
+        let searchString : String = searchField.stringValue
+        let commandString : String = leftLDAPString + searchString
+        print("LDAP: \(commandString)")
+        self.textLabel.stringValue = "Searching...: " + searchField.stringValue
+
+        // ToDo
+        ldapSearchIsRunning = true
+
+        // Resize my window
+        if let letMyWindow = self.window {
+            let myWindow = letMyWindow
+            let frame = myWindow.frame
+            var newSize = frame.size
+            newSize.height = newSize.height + 20.0
+            myWindow.setContentSize(newSize)  // Only available under 10.10
+        }
+        
+        // LDAP Search. Now it's just a simulated delay
+        NSTimer.scheduledTimerWithTimeInterval(1.0,
+            target: self,
+            selector: Selector("stopLDAPSearch"),
+            userInfo: nil,
+            repeats: false)
+
+        // Future:
+        // self.stopLDAPSearch()
     }
-    NSString *searchRequest = [NSString stringWithFormat:searchFormat, searchString];
-    [self.textField setStringValue:searchRequest];
-    NSLog(@"Aqui");
-    
-    NSSize size = self.window.frame.size;
-    size.height = size.height + 20.0;
-    [self.window setContentSize:size];
+
+    // Stop the Browser search
+    //
+    func stopLDAPSearch() {
+        print("stopLDAPSearch(): ToDo")
+        
+        // Send a signal indicating that search was cancel
+        ldapSearchIsRunning = false
+        
+        // ToDo
+        self.textLabel.stringValue = ""
+
     }
-*/
     
-    
+
     /// --------------------------------------------------------------------------------
     //  MARK: Timer to show the Menu
     /// --------------------------------------------------------------------------------
@@ -178,14 +282,21 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFie
     // Start a timer to show the Menu
     //
     func startTimerTextDidChange() {
-        print("startTimerTextDidChange()")
+        // print("entered startTimerTextDidChange()")
+        // Always cancel any pending search
         self.stopTimerTextDidChange()
-        timerTextDidChange = NSTimer.scheduledTimerWithTimeInterval(0.5,
-            target: self,
-            selector: Selector("actionTimerTextDidChange"),
-            userInfo: nil,
-            repeats: false)
-        
+
+        // Check if we've got something decent to search
+        if !searchField.stringValue.isEmpty {
+
+            // Start timer that may trigger the search
+            print("Starting timer that may trigger the search")
+            timerTextDidChange = NSTimer.scheduledTimerWithTimeInterval(0.8,
+                target: self,
+                selector: Selector("actionTimerTextDidChange"),
+                userInfo: nil,
+                repeats: false)
+        }
     }
     
     // Stop the timer (not used, but comes with my template :-))
@@ -193,13 +304,12 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFie
     func stopTimerTextDidChange() {
         if ( timerTextDidChange != nil ) {
             if (  timerTextDidChange.valid ) {
-                print("stopTimerTextDidChange()")
+                // print("stopTimerTextDidChange()")
                 timerTextDidChange.invalidate()
                 
-                if ( searchIsRunning ) {
+                if ( ldapSearchIsRunning ) {
                     print("stopSearching()")
-                    self.stopSearch()
-
+                    self.stopLDAPSearch()
                 }
             }
             timerTextDidChange = nil
@@ -209,71 +319,30 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate { // , NSSearchFie
     // Action to execute when the timer finishes
     //
     func actionTimerTextDidChange() {
-        
-        // print("Algo pasa con Mary")
-        self.startSearch()
 
-        // Start the menu
-        //        print("Launching the action")
-        //        var frame = self.view.frame
-        //        frame.size.height = frame.size.height + 20.0
-        //        self.view.frame = frame
-        //        if let window = lpStatusItem.statusItemWindowController.window {
-        //            window.contentView = self.view
-        //        }
-        
-        //        lpStatusItem.statusItemWindowController.refreshContentViewController()
-        
-        
-        //        lpStatusItem.statusItemWindowController.window?.contentView = self.view
-        
-        
-        
-        //        if let letSuperview = self.view.superview {
-        //            let superview = letSuperview
-        //            var frame = superview.frame
-        //            frame.size.height = frame.size.height + 20.0
-        //            superview.frame = frame
-        //        }
-        //
-        //        print("self.view: \(self.view)")
-        //        print("self.view.superview: \(self.view.superview)")
-        
-        //
-        //        self.view.translatesAutoresizingMaskIntoConstraints = false
-        //        let viewsDict = ["subView" : self.view]
-        //        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict)
-        //        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict)
-        //        self.view.addConstraints(verticalConstraints)
-        //        self.view.addConstraints(horizontalConstraints)
-        
-        
-//        if let window = lpStatusItem.statusItemWindowController.window {
-//            
-//            print("window.contentView: \(window.contentView)")
-//            let frame = window.frame
-//            var newSize = frame.size
-//            newSize.height = newSize.height + 20.0
-//            
-//            // Opción 1
-//            //self.resizeWindowForContentSize(window, size: newSize)
-//            
-//            // Opción 2
-//            window.setContentSize(newSize)
-//            
-//        }
-        
-        // Resize my window
-        if let letMyWindow = self.window {
-            let myWindow = letMyWindow
-            let frame = myWindow.frame
-            var newSize = frame.size
-            newSize.height = newSize.height + 20.0
-            myWindow.setContentSize(newSize)
+        // Check if I'm asked to search the same
+        if (  previousSearchString == searchField.stringValue ) {
+            // print("Me piden buscar el mismo string que la vez anterior, lo ingnoro")
+        } else {
+            
+            // LDAP Search -
+            // Check if I'm asked for quick dirty ldap search
+            //
+            self.startLDAPSearch()
+            
         }
-        
+        previousSearchString=searchField.stringValue
     }
     
+    
+    // Sets the size of the window’s content to a given size,
+    // 
+    // Note: This method is NOT used because I'm using:
+    //       myWindow.setContentSize(newSize)
+    //
+    //       However, it's only available in 10.10, so I leave
+    //       the following just in case I develop a <10.10 version
+    //
     func resizeWindowForContentSize ( window : NSWindow, size : NSSize ) {
         let windowFrame = window.contentRectForFrameRect(window.frame)
         let newWindowFrame = window.frameRectForContentRect(NSMakeRect(NSMinX(windowFrame), NSMaxY(windowFrame) - size.height, size.width, size.height))

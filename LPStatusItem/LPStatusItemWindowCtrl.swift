@@ -165,7 +165,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
         /// !!! CONNECT the NSWindow  !!!
         /// ============================
         self.window = windowOrNil
-   
+        
         // Subscribe myself so I'll receive(Get) Notifications
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "handleWindowDidResignKeyNotification:",
@@ -187,7 +187,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
     //  Hide the Window when loosing focus
     //
     func handleWindowDidResignKeyNotification (note : NSNotification) {
-      
+
         var noteWindow : NSWindow
         if let letNoteWindow : AnyObject = note.object {
             noteWindow = letNoteWindow as! NSWindow
@@ -425,12 +425,17 @@ class LPStatusItemWindowCtrl: NSWindowController {
     //
     // func animationCompletionForWindow ( window: LPStatusItemWindow, fadeDirection: eFadeDirection ) {
     func animationCompletionForWindow ( window: NSWindow, fadeDirection: eFadeDirection ) {
-        // let nc : NSNotificationCenter = NSNotificationCenter.defaultCenter()
         if ( fadeDirection == eFadeDirection.fadeIn ) {
-            // window.makeKeyAndOrderFront(self)
-            window.makeKeyWindow()
+            if ( isWindowOpen == false ) {
+                window.makeKeyWindow()
+                window.level = Int(CGWindowLevelForKey(CGWindowLevelKey.ModalPanelWindowLevelKey))
+                isWindowOpen=true
+            }
         } else {
-            window.close()
+            if ( isWindowOpen == true ) {
+                window.close()
+                isWindowOpen=false
+            }
         }
     }
 }

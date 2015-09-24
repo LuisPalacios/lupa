@@ -75,8 +75,8 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <animations/>
                             </scroller>
-                            <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="jKJ-u4-qat">
-                                <rect key="frame" x="243" y="1" width="16" height="58"/>
+                            <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.94444444444444442" horizontal="NO" id="jKJ-u4-qat">
+                                <rect key="frame" x="244" y="1" width="15" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <animations/>
                             </scroller>
