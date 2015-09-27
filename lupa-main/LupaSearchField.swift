@@ -15,7 +15,7 @@ class LupaSearchField: NSSearchField {
 
         // Drawing code here.
     }
-    
+
     // Send a doCancelSearch: command to firstResponder
     //
     override func doCommandBySelector(aSelector: Selector) {

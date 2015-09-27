@@ -93,9 +93,6 @@ class LPStatusItemWindow: NSWindow {
     //
     override var contentView : NSView? {
         get {
-            return super.contentView
-            
-            
             // Log
             //Swift.print ("contentView GET")
             return self.userContentView
@@ -128,8 +125,6 @@ class LPStatusItemWindow: NSWindow {
                     Swift.print("DESPUES: super.contentView.constraints: \(theContentView.constraints)")
                 }
             }
-            
-            return
             
             // Log
             // Swift.print ("contentView SET - ENTRADA newValue : \(newValue)")

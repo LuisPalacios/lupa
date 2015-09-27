@@ -47,6 +47,14 @@
 		A0D474E61B9920E500D957FA /* LupaSearchViewCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0D474E21B9920E500D957FA /* LupaSearchViewCtrl.xib */; settings = {ASSET_TAGS = (); }; };
 		A0E44B691B7E6BE100D0D5FA /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0E44B681B7E6BE100D0D5FA /* MASShortcut.framework */; };
 		A0E44B6E1B7E6DDD00D0D5FA /* MASShortcut.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A0E44B681B7E6BE100D0D5FA /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A0EFB0611BB83077007E3ED4 /* LPLdapsearchScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB0601BB83077007E3ED4 /* LPLdapsearchScanner.swift */; settings = {ASSET_TAGS = (); }; };
+		A0EFB0631BB83151007E3ED4 /* LPLdapUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB0621BB83151007E3ED4 /* LPLdapUser.swift */; settings = {ASSET_TAGS = (); }; };
+		A0EFB0691BB83EFD007E3ED4 /* LPStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB0681BB83EFD007E3ED4 /* LPStream.swift */; settings = {ASSET_TAGS = (); }; };
+		A0EFB06B1BB83F24007E3ED4 /* LPFileHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB06A1BB83F24007E3ED4 /* LPFileHandle.swift */; settings = {ASSET_TAGS = (); }; };
+		A0EFB06D1BB83F6D007E3ED4 /* LPFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB06C1BB83F6D007E3ED4 /* LPFiles.swift */; settings = {ASSET_TAGS = (); }; };
+		A0EFB06F1BB840D8007E3ED4 /* LPString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB06E1BB840D8007E3ED4 /* LPString.swift */; settings = {ASSET_TAGS = (); }; };
+		A0EFB0711BB841B7007E3ED4 /* LPCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB0701BB841B7007E3ED4 /* LPCommand.swift */; settings = {ASSET_TAGS = (); }; };
+		A0EFB0731BB85B39007E3ED4 /* LupaSinImagen.png in Resources */ = {isa = PBXBuildFile; fileRef = A0EFB0721BB85B39007E3ED4 /* LupaSinImagen.png */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -105,6 +113,14 @@
 		A0D474E21B9920E500D957FA /* LupaSearchViewCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LupaSearchViewCtrl.xib; path = "lupa-main/LupaSearchViewCtrl.xib"; sourceTree = "<group>"; };
 		A0E44B681B7E6BE100D0D5FA /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = Frameworks/MASShortcut.framework; sourceTree = "<group>"; };
 		A0E44B6B1B7E6CF700D0D5FA /* lupa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "lupa-Bridging-Header.h"; path = "lupa/lupa-Bridging-Header.h"; sourceTree = "<group>"; };
+		A0EFB0601BB83077007E3ED4 /* LPLdapsearchScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPLdapsearchScanner.swift; path = LPLdapsearchScanner/LPLdapsearchScanner.swift; sourceTree = "<group>"; };
+		A0EFB0621BB83151007E3ED4 /* LPLdapUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPLdapUser.swift; path = LPLdapsearchScanner/LPLdapUser.swift; sourceTree = "<group>"; };
+		A0EFB0681BB83EFD007E3ED4 /* LPStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStream.swift; path = LPLdapsearchScanner/LPStream.swift; sourceTree = "<group>"; };
+		A0EFB06A1BB83F24007E3ED4 /* LPFileHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPFileHandle.swift; path = LPLdapsearchScanner/LPFileHandle.swift; sourceTree = "<group>"; };
+		A0EFB06C1BB83F6D007E3ED4 /* LPFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPFiles.swift; path = LPLdapsearchScanner/LPFiles.swift; sourceTree = "<group>"; };
+		A0EFB06E1BB840D8007E3ED4 /* LPString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPString.swift; path = LPLdapsearchScanner/LPString.swift; sourceTree = "<group>"; };
+		A0EFB0701BB841B7007E3ED4 /* LPCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPCommand.swift; path = LPLdapsearchScanner/LPCommand.swift; sourceTree = "<group>"; };
+		A0EFB0721BB85B39007E3ED4 /* LupaSinImagen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LupaSinImagen.png; path = resources/LupaSinImagen.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +141,7 @@
 				A05EDAC61B7A4466001B3F3C /* lupa */,
 				A0D474DE1B9920BB00D957FA /* lupa-main */,
 				A08557191B7E582600B1D1C5 /* LPStatusItem */,
+				A0EFB05F1BB82FFF007E3ED4 /* LPLdapsearchScanner */,
 				A0E44B6A1B7E6CBD00D0D5FA /* lupa-bridge */,
 				A0E44B671B7E6BD000D0D5FA /* Frameworks */,
 				A05EDAC51B7A4466001B3F3C /* Products */,
@@ -168,6 +185,7 @@
 		A0B4BA551B7B3F9500069614 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A0EFB0721BB85B39007E3ED4 /* LupaSinImagen.png */,
 				A0603A941B7BD2CE0059578E /* LupaOff_18x18.png */,
 				A0603A951B7BD2CE0059578E /* LupaOff_18x18@2x.png */,
 				A0603A961B7BD2CE0059578E /* LupaOffNeg_18x18.png */,
@@ -221,6 +239,20 @@
 				A0E44B6B1B7E6CF700D0D5FA /* lupa-Bridging-Header.h */,
 			);
 			name = "lupa-bridge";
+			sourceTree = "<group>";
+		};
+		A0EFB05F1BB82FFF007E3ED4 /* LPLdapsearchScanner */ = {
+			isa = PBXGroup;
+			children = (
+				A0EFB0601BB83077007E3ED4 /* LPLdapsearchScanner.swift */,
+				A0EFB0621BB83151007E3ED4 /* LPLdapUser.swift */,
+				A0EFB0681BB83EFD007E3ED4 /* LPStream.swift */,
+				A0EFB06A1BB83F24007E3ED4 /* LPFileHandle.swift */,
+				A0EFB06C1BB83F6D007E3ED4 /* LPFiles.swift */,
+				A0EFB06E1BB840D8007E3ED4 /* LPString.swift */,
+				A0EFB0701BB841B7007E3ED4 /* LPCommand.swift */,
+			);
+			name = LPLdapsearchScanner;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0603AA11B7BD2CE0059578E /* LupaOn_18x18@2x.png in Resources */,
+				A0EFB0731BB85B39007E3ED4 /* LupaSinImagen.png in Resources */,
 				A0B4BA621B7B400500069614 /* dir_32x32.png in Resources */,
 				A0B4BA671B7B400500069614 /* dir_256x256@2x.png in Resources */,
 				A0603AA21B7BD2CE0059578E /* LupaOnNeg_18x18.png in Resources */,
@@ -340,12 +373,19 @@
 				A0D474E41B9920E500D957FA /* LupaSearchTextField.swift in Sources */,
 				A06210901BAECEE9008DA0C9 /* LupaSearchField.swift in Sources */,
 				A0D474DD1B99200D00D957FA /* LPStatusItemWindowCtrl.swift in Sources */,
+				A0EFB0631BB83151007E3ED4 /* LPLdapUser.swift in Sources */,
 				A0D474D91B99200D00D957FA /* LPStatusItemBackgroundView.swift in Sources */,
+				A0EFB0711BB841B7007E3ED4 /* LPCommand.swift in Sources */,
+				A0EFB0691BB83EFD007E3ED4 /* LPStream.swift in Sources */,
+				A0EFB0611BB83077007E3ED4 /* LPLdapsearchScanner.swift in Sources */,
 				A0D474D81B99200D00D957FA /* LPStatusItem.swift in Sources */,
 				A05EDAC81B7A4466001B3F3C /* AppDelegate.swift in Sources */,
+				A0EFB06F1BB840D8007E3ED4 /* LPString.swift in Sources */,
 				A040949A1B99F998005AF9C4 /* LupaGlobals.swift in Sources */,
 				A0D474DC1B99200D00D957FA /* LPStatusItemWindowConfig.swift in Sources */,
+				A0EFB06D1BB83F6D007E3ED4 /* LPFiles.swift in Sources */,
 				A0D474DA1B99200D00D957FA /* LPStatusItemGlobals.swift in Sources */,
+				A0EFB06B1BB83F24007E3ED4 /* LPFileHandle.swift in Sources */,
 				A0B4BA511B7A647F00069614 /* LupaDefaults.swift in Sources */,
 				A0D474E51B9920E500D957FA /* LupaSearchViewCtrl.swift in Sources */,
 			);

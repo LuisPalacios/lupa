@@ -50,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     //  In order to work with the user defaults, stored under:
     //  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
-    //  $ defaults read parchis.org.XX.plist
+    //  $ defaults read parchis.org.lupa.plist
     let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
     // To prepare the program name with GIT numbers
@@ -191,9 +191,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //
         // Prepare the name of the NIB (from the name of the class) and create custom Win Controller
         let searchWinNibName = NSStringFromClass(LupaSearchWinCtrl).componentsSeparatedByString(".").last!
-        Swift.print("searchWinNibName: \(searchWinNibName)")
+        //Swift.print("searchWinNibName: \(searchWinNibName)")
         searchWinCtrl = LupaSearchWinCtrl(windowNibName: searchWinNibName)
-        Swift.print("searchWinCtrl: \(self.searchWinCtrl)")
+        //Swift.print("searchWinCtrl: \(self.searchWinCtrl)")
 
     }
     
@@ -243,7 +243,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let itemImage = letItemImage
                 
                 //searchViewCtrl.view.backgroundColor = NSColor.greenColor()
-                Swift.print("searchWinCtrl.window: \(self.searchWinCtrl.window)")
+                // Swift.print("searchWinCtrl.window: \(self.searchWinCtrl.window)")
 
                 lpStatusItem.activateStatusItemWithMenuImageWindow(self.statusMenu, itemImage: itemImage, winController: searchWinCtrl)
                 

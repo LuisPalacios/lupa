@@ -6,9 +6,6 @@
 //  Copyright © 2015 Luis Palacios. All rights reserved.
 //
 //
-//  ToDo, launch on text did change: ldapsearch -x -b "ou=active,ou=employees,ou=people,o=cisco.com" -h ldap.cisco.com uid=lpalacio
-//
-//
 
 import Cocoa
 
@@ -52,7 +49,7 @@ class LupaSearchViewCtrl: NSViewController, NSTextFieldDelegate {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
         // Log
-        Swift.print("LupaSearchViewCtrl - Initalization when created programatically")
+        // Swift.print("LupaSearchViewCtrl - Initalization when created programatically")
         //Swift.print("    \(self) init?(nibName: \(nibNameOrNil), bundle: \(nibBundleOrNil))")
         //Swift.print("    self.preferredContentSize.width : \(self.preferredContentSize.width)")
         //Swift.print("    self.preferredContentSize.height: \(self.preferredContentSize.height)")
@@ -67,7 +64,7 @@ class LupaSearchViewCtrl: NSViewController, NSTextFieldDelegate {
     //  It is guaranteed to have all its outlet instance variables set.
     //
     override func awakeFromNib() {
-        print("awakeFromNib()")
+        // print("awakeFromNib()")
     }
     
     

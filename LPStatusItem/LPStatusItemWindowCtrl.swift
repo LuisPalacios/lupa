@@ -148,12 +148,6 @@ class LPStatusItemWindowCtrl: NSWindowController {
             throw skStatusItemWindowCtrlNotReady.windowConfigOrNil
         }
         
-//        // Check the right sizes are set...
-//        if ( contentViewControllerOrNil.preferredContentSize.width == 0 &&
-//            contentViewControllerOrNil.preferredContentSize.height == 0 ) {
-//                throw skStatusItemWindowCtrlNotReady.customViewControllerIncorrectSize
-//        }
-        
         // Store the window configuration
         windowConfig = windowConfigOrNil
         
@@ -172,10 +166,18 @@ class LPStatusItemWindowCtrl: NSWindowController {
             name: NSWindowDidResignKeyNotification,
             object: nil)
         
-        NSDistributedNotificationCenter.defaultCenter().addObserver(self,
-            selector: "handleAppleInterfaceThemeChangedNotification:",
-            name: "AppleInterfaceThemeChangedNotification",
+        // Subscribe myself so I'll receive(Get) Notifications
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "handleWindowDidBecomeActiveNotification:",
+            name: NSWindowDidBecomeKeyNotification,
             object: nil)
+        
+        // Future implementation
+        //
+        //        NSDistributedNotificationCenter.defaultCenter().addObserver(self,
+        //            selector: "handleAppleInterfaceThemeChangedNotification:",
+        //            name: "AppleInterfaceThemeChangedNotification",
+        //            object: nil)
     }
     
     
@@ -187,7 +189,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
     //  Hide the Window when loosing focus
     //
     func handleWindowDidResignKeyNotification (note : NSNotification) {
-
+        
         var noteWindow : NSWindow
         if let letNoteWindow : AnyObject = note.object {
             noteWindow = letNoteWindow as! NSWindow
@@ -203,12 +205,17 @@ class LPStatusItemWindowCtrl: NSWindowController {
         }
     }
     
-    // LUIS - ToDo !!!!
+    //  What to do when the Window is shown
     //
-    func handleAppleInterfaceThemeChangedNotification (note : NSNotification) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:CCNSystemInterfaceThemeChangedNotification object:nil];
-        print("handleAppleInterfaceThemeChangedNotification")
+    func handleWindowDidBecomeActiveNotification (note : NSNotification) {
     }
+    
+    // Future implementation
+    //
+//    func handleAppleInterfaceThemeChangedNotification (note : NSNotification) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:CCNSystemInterfaceThemeChangedNotification object:nil];
+//        print("handleAppleInterfaceThemeChangedNotification")
+//    }
 
     
     
@@ -235,6 +242,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
         
         // Con Window
         // ----------
+        // Swift.print("Ahí que voy!!!!!!")
         if let window = self.window {
             self.updateWindowFrame()
             window.alphaValue = 0.0
@@ -427,6 +435,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
     func animationCompletionForWindow ( window: NSWindow, fadeDirection: eFadeDirection ) {
         if ( fadeDirection == eFadeDirection.fadeIn ) {
             if ( isWindowOpen == false ) {
+                window.makeMainWindow()
                 window.makeKeyWindow()
                 window.level = Int(CGWindowLevelForKey(CGWindowLevelKey.ModalPanelWindowLevelKey))
                 isWindowOpen=true

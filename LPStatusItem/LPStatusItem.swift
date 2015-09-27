@@ -249,6 +249,12 @@ import Cocoa
         self.statusItemWindowController.showStatusItemWindow()
     }
     
+    // Show the status item window
+    //
+    func updateFrameStatusItemWindow() {
+        self.statusItemWindowController.updateWindowFrame()
+    }
+    
     // Dismiss the status item window
     //
     func dismissStatusItemWindow() {

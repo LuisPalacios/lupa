@@ -20,15 +20,15 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
 
     @IBOutlet var textView: NSTextView!
     @IBOutlet weak var searchSeparator: NSTextField!
-    @IBOutlet weak var urlScroll: NSScrollView!
-    @IBOutlet var urlView: NSTextView!
+//    @IBOutlet weak var urlScroll: NSScrollView!
+//    @IBOutlet var urlView: NSTextView!
     @IBOutlet weak var version: NSTextField!
     
     @IBOutlet weak var customShortcutView: MASShortcutView!
     
     //  In order to work with the user defaults, stored under:
     //  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
-    //  $ defaults read parchis.org.XX.plist
+    //  $ defaults read parchis.org.lupa.plist
     let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
     
@@ -49,8 +49,8 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         customShortcutView.bind("enabled", toObject: userDefaults, withKeyPath: LUPADefaults.lupa_HotkeyEnabled, options: nil)
         
         // Clean the URL scrollview background
-        urlScroll.backgroundColor = NSColor.clearColor()
-        urlScroll.drawsBackground = false
+        //urlScroll.backgroundColor = NSColor.clearColor()
+        //urlScroll.drawsBackground = false
         
         // Prepare the data entry content
         textView.delegate = self
@@ -68,12 +68,12 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     // Sync urlView with textView
     //
     func textDidChange(notification: NSNotification) {
-        syncURLView()
+        // syncURLView()
     }
-    func syncURLView() {
-        let thePrefix : String = textView.textStorage!.string + "<search contents>"
-        urlView.textStorage?.setAttributedString(NSAttributedString(string: thePrefix))
-    }
+//    func syncURLView() {
+//        let thePrefix : String = textView.textStorage!.string + "<search contents>"
+//        urlView.textStorage?.setAttributedString(NSAttributedString(string: thePrefix))
+//    }
     
 
     /// --------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
             setSampleDefault()
         }
         // Show URL View
-        syncURLView()
+        //syncURLView()
         
     }
 
