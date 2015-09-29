@@ -44,7 +44,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="51" rowSizeStyle="automatic" viewBased="YES" id="LMX-1P-cwF">
-                                    <rect key="frame" x="0.0" y="0.0" width="250" height="157"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="250" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -75,6 +75,9 @@
                                                             </constraints>
                                                             <animations/>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="LupaSinImagen" id="CS7-DI-ZwC"/>
+                                                            <connections>
+                                                                <binding destination="Lre-0D-xUh" name="valueURL" keyPath="objectValue.picturl" id="rwe-Zl-Wwu"/>
+                                                            </connections>
                                                         </imageView>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wsZ-3O-CjI">
                                                             <rect key="frame" x="57" y="34" width="35" height="14"/>

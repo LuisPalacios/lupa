@@ -381,6 +381,28 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         //  self.textLabel.stringValue = ""
         self.stopUI_LDAPsearchInProgress()
 
+        // Post process the list of users
+        for user in tmpUsers {
+            if ( user.haspict == "y" ) {
+                
+                if let letLupa_LDAP_PictureURL = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_PictureURL) as? String {
+                    
+                    let mutableString = NSMutableString(string: letLupa_LDAP_PictureURL)
+                    let regex = try! NSRegularExpression(pattern: "<UID>",
+                        options: [.CaseInsensitive])
+                    regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.uid)
+                    if let mySwiftString : String = mutableString as String {
+                        if let letURL = NSURL(string: mySwiftString) {
+                            user.picturl = letURL
+                        }
+                    }
+                }
+                print("\(user.uid) Photo: \(user.picturl)")
+            } else {
+                print("\(user.uid) Photo: NO PICTURE !!!!")
+            }
+        }
+        
         // Fill up the tableview
         users = tmpUsers
 

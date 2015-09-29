@@ -28,6 +28,7 @@ class LPLdapUser: NSObject {
     var voiceint:   String = ""
     var haspict:    String = ""
     var title:      String = ""
+    var picturl:    NSURL!
     
     /// --------------------------------------------------------------------------------
     //  MARK: Main
