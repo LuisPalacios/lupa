@@ -31,4 +31,6 @@ class LupaSearchField: NSSearchField {
         }
         super.doCommandBySelector(aSelector)
     }
+    
+    
 }

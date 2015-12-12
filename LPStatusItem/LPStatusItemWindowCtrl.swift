@@ -166,14 +166,15 @@ class LPStatusItemWindowCtrl: NSWindowController {
             name: NSWindowDidResignKeyNotification,
             object: nil)
         
-        // Subscribe myself so I'll receive(Get) Notifications
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "handleWindowDidBecomeActiveNotification:",
-            name: NSWindowDidBecomeKeyNotification,
-            object: nil)
-        
         // Future implementation
         //
+        //        // Subscribe myself so I'll receive(Get) Notifications
+        //        NSNotificationCenter.defaultCenter().addObserver(self,
+        //            selector: "handleWindowDidBecomeActiveNotification:",
+        //            name: NSWindowDidBecomeKeyNotification,
+        //            object: nil)
+        //
+        //        // Subscribe myself so I'll receive a notification
         //        NSDistributedNotificationCenter.defaultCenter().addObserver(self,
         //            selector: "handleAppleInterfaceThemeChangedNotification:",
         //            name: "AppleInterfaceThemeChangedNotification",
@@ -189,7 +190,6 @@ class LPStatusItemWindowCtrl: NSWindowController {
     //  Hide the Window when loosing focus
     //
     func handleWindowDidResignKeyNotification (note : NSNotification) {
-        
         var noteWindow : NSWindow
         if let letNoteWindow : AnyObject = note.object {
             noteWindow = letNoteWindow as! NSWindow
@@ -205,10 +205,12 @@ class LPStatusItemWindowCtrl: NSWindowController {
         }
     }
     
+    // FUTURE Implementation if needed...
     //  What to do when the Window is shown
     //
-    func handleWindowDidBecomeActiveNotification (note : NSNotification) {
-    }
+//    func handleWindowDidBecomeActiveNotification (note : NSNotification) {
+//        print("LPStatusItemWindowCtrl: handleWindowDidBecomeActiveNotification")
+//    }
     
     // Future implementation
     //
@@ -227,22 +229,8 @@ class LPStatusItemWindowCtrl: NSWindowController {
     //
     func showStatusItemWindow() {
 
-        // Con View
-        // ---------
-//        // Refresh where and how to show the window
-//        self.updateWindowFrame()
-//        self.window?.alphaValue = 0.0
-//        self.showWindow(nil)
-//        
-//        // Show the Window fading in...
-//        let window : LPStatusItemWindow = self.window as! LPStatusItemWindow
-//        self.animateWindow(window, fadeDirection: eFadeDirection.fadeIn)
-        
-        
-        
         // Con Window
         // ----------
-        // Swift.print("Ahí que voy!!!!!!")
         if let window = self.window {
             self.updateWindowFrame()
             window.alphaValue = 0.0

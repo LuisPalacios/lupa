@@ -21,7 +21,6 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     //  they are optionals and do not need to initialize them here, will do later.
     @IBOutlet weak var searchField: LupaSearchField!
     @IBOutlet weak var searchFieldCell: NSSearchFieldCell!
-//    @IBOutlet weak var textLabel: NSTextField!
     @IBOutlet weak var textField: NSTextField!
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var spinningLDAP: NSProgressIndicator!
@@ -87,6 +86,13 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             myWindow.setContentSize(newSize)  // Only available under 10.10
         }
         
+        // Subscribe myself so I'll receive(Get) Notifications
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "handleWindowDidBecomeActiveNotification:",
+            name: NSWindowDidBecomeKeyNotification,
+            object: nil)
+
+        
     }
     
     /// awakeFromNib()
@@ -110,6 +116,14 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         
     }
     
+    
+    //  What to do when the Window is shown, well... select the whole nssearchfield :)
+    //  so the user can start typing a new search text (deleting the old one)
+    //
+    func handleWindowDidBecomeActiveNotification (note : NSNotification) {
+        self.searchField.selectText(self)
+    }
+
     
     /// --------------------------------------------------------------------------------
     //  MARK: Actions when user modifies searchField or presses Enter
@@ -176,7 +190,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     //
     func startBrowserSearch() {
         
-        // print("startBrowserSearch()")
+        //print("startBrowserSearch()")
 
         // Cancel the automated LDAP search if pending...
         self.stopTimerTextDidChange()
@@ -593,10 +607,10 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     
 
     /// --------------------------------------------------------------------------------
-    //  MARK: Timer to show the Menu
+    //  MARK: Timer when search text changes
     /// --------------------------------------------------------------------------------
     
-    // Start a timer to show the Menu
+    // Start a timer when text changes in the search box
     //
     func startTimerTextDidChange() {
         // print("entered startTimerTextDidChange()")
@@ -620,7 +634,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         }
     }
     
-    // Stop the timer (not used, but comes with my template :-))
+    // Stop the timer 
     //
     func stopTimerTextDidChange() {
         // print("entered stopTimerTextDidChange()")

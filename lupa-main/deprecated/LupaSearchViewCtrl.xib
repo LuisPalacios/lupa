@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15B17c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
@@ -27,7 +27,6 @@
                                 <subviews>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vVZ-ip-9hD" customClass="LupaSearchTextField" customModule="lupa" customModuleProvider="target">
                                         <rect key="frame" x="20" y="22" width="223" height="22"/>
-                                        <animations/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="VgV-yB-Wah">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -44,9 +43,7 @@
                                     <constraint firstItem="vVZ-ip-9hD" firstAttribute="top" secondItem="OLY-KU-OmL" secondAttribute="top" constant="20" symbolic="YES" id="ZdF-8g-Lvm"/>
                                     <constraint firstItem="vVZ-ip-9hD" firstAttribute="leading" secondItem="OLY-KU-OmL" secondAttribute="leading" constant="20" symbolic="YES" id="jaI-lB-8QO"/>
                                 </constraints>
-                                <animations/>
                             </view>
-                            <animations/>
                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </box>
@@ -58,7 +55,6 @@
                                 <subviews>
                                     <view translatesAutoresizingMaskIntoConstraints="NO" id="5j5-ZI-ZvW">
                                         <rect key="frame" x="0.0" y="-36" width="181" height="94"/>
-                                        <animations/>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -67,18 +63,14 @@
                                     <constraint firstAttribute="bottom" secondItem="5j5-ZI-ZvW" secondAttribute="bottom" constant="-36" id="dd0-6I-sJg"/>
                                     <constraint firstItem="5j5-ZI-ZvW" firstAttribute="top" secondItem="4oB-k2-4aU" secondAttribute="top" id="jEe-GB-IVU"/>
                                 </constraints>
-                                <animations/>
                             </clipView>
-                            <animations/>
                             <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="Kwu-MV-ZuF">
                                 <rect key="frame" x="1" y="43" width="258" height="16"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <animations/>
                             </scroller>
                             <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.94444444444444442" horizontal="NO" id="jKJ-u4-qat">
                                 <rect key="frame" x="244" y="1" width="15" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <animations/>
                             </scroller>
                         </scrollView>
                     </subviews>
@@ -91,7 +83,6 @@
                         <constraint firstAttribute="trailing" secondItem="m3J-ke-4la" secondAttribute="trailing" constant="20" symbolic="YES" id="axb-zd-Dtg"/>
                         <constraint firstItem="OsT-X7-qcT" firstAttribute="leading" secondItem="8Uh-1u-hC3" secondAttribute="leading" constant="20" symbolic="YES" id="v2h-aX-Y5U"/>
                     </constraints>
-                    <animations/>
                 </customView>
             </subviews>
             <constraints>
@@ -100,7 +91,6 @@
                 <constraint firstAttribute="bottom" secondItem="8Uh-1u-hC3" secondAttribute="bottom" id="Tay-ha-Awi"/>
                 <constraint firstItem="8Uh-1u-hC3" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="U1C-FG-5x0"/>
             </constraints>
-            <animations/>
             <point key="canvasLocation" x="-832" y="70"/>
         </customView>
     </objects>

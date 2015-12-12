@@ -37,7 +37,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //  For the following attributes I'm using Implicitly Unwrapped Optional (!)
     //  they are optionals and no need to initialize them here, will do later.
 
-    var searchViewCtrl          : LupaSearchViewCtrl!   // My View for the status bar
     var searchWinCtrl           : LupaSearchWinCtrl!    // My Window for the status bar
     var lupaDefaultsController  : LupaDefaults!         // Preferences Window
     var defaultWindow           : NSWindow!             // Find out the main window (to hide it)
@@ -174,62 +173,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //
     func createCustomViewController () throws {
 
-        /// CREATE LupaSearchViewCtrl   !!!
-        ///
-        //
-        // Prepare the name of the NIB (from the name of the class)
-        let searchViewNibName = NSStringFromClass(LupaSearchViewCtrl).componentsSeparatedByString(".").last!
-        // Create custom View Controller
-        if let letSearchViewCtrl = LupaSearchViewCtrl(nibName: searchViewNibName, bundle: nil) {
-            searchViewCtrl = letSearchViewCtrl
-        } else {
-            throw skControllerNotReady.cannotCreate
-        }
-        
-        
         /// CREATE LupaSearchWinCtrl   !!!
         //
-        // Prepare the name of the NIB (from the name of the class) and create custom Win Controller
+        // Prepare the name of the NIB (from the name of the class)
         let searchWinNibName = NSStringFromClass(LupaSearchWinCtrl).componentsSeparatedByString(".").last!
-        //Swift.print("searchWinNibName: \(searchWinNibName)")
+        
+        // ..and create custom Win Controller
         searchWinCtrl = LupaSearchWinCtrl(windowNibName: searchWinNibName)
-        //Swift.print("searchWinCtrl: \(self.searchWinCtrl)")
 
     }
     
-    // Activate status bar and make connections
-    // ((DEPRECATED)
-    func activateStatusBarWithViewController () throws {
-        //
-        // Activate my (singleton) "lpStatusItem" (Status Bar Item) passing:
-        //
-        //      the custom view controller
-        //      the custom icon
-        //
-        if ( searchViewCtrl != nil ) {
-            
-            if let letItemImage = NSImage(named: "LupaOn_18x18") {
-                let itemImage = letItemImage
-                
-                Swift.print("searchViewCtrl.view (ORIGINAL): \(searchViewCtrl.view)")
-                Swift.print("searchViewCtrl.view.constraints (ORIGINAL): \(searchViewCtrl.view.constraints)")
-
-                searchViewCtrl.view.backgroundColor = NSColor.greenColor()
-                
-                lpStatusItem.activateStatusItemWithImage(self.statusMenu, itemImage: itemImage, contentViewController: searchViewCtrl)
-                
-            } else {
-                throw skControllerNotReady.cannotAccessIconImage
-            }
-            
-        } else {
-            throw skControllerNotReady.cannotActivate
-        }
-    }
 
     // Activate status bar and make connections
     //
-    func activateStatusBarWithWinController () throws {
+    func activateStatusBarWithWinController() throws {
     
         //
         // Activate my (singleton) "lpStatusItem" (Status Bar Item) passing:
@@ -242,9 +199,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if let letItemImage = NSImage(named: "LupaOn_18x18") {
                 let itemImage = letItemImage
                 
-                //searchViewCtrl.view.backgroundColor = NSColor.greenColor()
-                // Swift.print("searchWinCtrl.window: \(self.searchWinCtrl.window)")
-
                 lpStatusItem.activateStatusItemWithMenuImageWindow(self.statusMenu, itemImage: itemImage, winController: searchWinCtrl)
                 
             } else {
@@ -327,7 +281,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         if ( keyPath == LUPADefaults.lupa_HotkeyEnabled ) {
                             if let letNewValue : Bool = change[NSKeyValueChangeNewKey]?.boolValue {
                                 let newValue = letNewValue
-                                self.activateKotKey(newValue)
+                                self.activateHotKey(newValue)
                             }
                         }
                     case .Insertion:
@@ -360,7 +314,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // Activate or deactivate the Shortcut HotKey
     //
-    func activateKotKey (newValue: Bool) {
+    func activateHotKey (newValue: Bool) {
         if newValue == true {
             MASShortcutBinder.sharedBinder().bindShortcutWithDefaultsKey(LUPADefaults.lupa_Hotkey, toAction: {
                 self.actionHotKey()
