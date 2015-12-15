@@ -291,76 +291,88 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
 
             if let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
                 
-                commandString = commandString + " -h " + letLDAP_Host
+//                commandString = commandString + " -h " + letLDAP_Host
+                commandString = commandString + " -H ldaps://" + letLDAP_Host + ":636"
                 
-                if let letLDAP_BaseDN = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_BaseDN) as? String {
-
-                    commandString = commandString + " -x -b \"" + letLDAP_BaseDN + "\""
-
-                    if ( searchWords.count == 1 ) {
-                        if let letLDAP_Filter_One = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Filter_One) as? String {
-
-                            let mutableString = NSMutableString(string: letLDAP_Filter_One)
-                            let regex = try! NSRegularExpression(pattern: "\\bWORD1\\b",
-                                options: [.CaseInsensitive])
-                            regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: searchWords.first!)
-                            if let mySwiftString : String = mutableString as String {
-                               
-                                commandString = commandString + " '" + mySwiftString as String  + "'"
-
-                            }
-
-                        }
-                    } else {
-                        if ( searchWords.count > 1 ) {
-                            if let letLDAP_Filter_Two = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Filter_Two) as? String {
-                                
-                                let mutableString = NSMutableString(string: letLDAP_Filter_Two)
-
-                                let regex1 = try! NSRegularExpression(pattern: "\\bWORD1\\b",
-                                    options: [.CaseInsensitive])
-                                regex1.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: searchWords.first!)
-                                
-                                let regex2 = try! NSRegularExpression(pattern: "\\bWORD2\\b",
-                                    options: [.CaseInsensitive])
-                                regex2.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: searchWords[1])
-                                
-                                if let mySwiftString : String = mutableString as String {
+                if let letLDAP_Bind_User = self.userDefaults.objectForKey(LUPADefaults.lupa_Bind_User) as? String {
+                    
+                    commandString = commandString + " -D \"" + letLDAP_Bind_User + "\""
+                    
+                    if let letLDAP_Bind_Password = self.userDefaults.objectForKey(LUPADefaults.lupa_Bind_Password) as? String {
+                        
+                        commandString = commandString + " -w \"" + letLDAP_Bind_Password + "\""
+                        
+                        
+                        if let letLDAP_BaseDN = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_BaseDN) as? String {
+                            
+                            commandString = commandString + " -x -b \"" + letLDAP_BaseDN + "\""
+                            
+                            if ( searchWords.count == 1 ) {
+                                if let letLDAP_Filter_One = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Filter_One) as? String {
                                     
-                                    commandString = commandString + " '" + mySwiftString as String  + "'"
+                                    let mutableString = NSMutableString(string: letLDAP_Filter_One)
+                                    let regex = try! NSRegularExpression(pattern: "\\bWORD1\\b",
+                                        options: [.CaseInsensitive])
+                                    regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: searchWords.first!)
+                                    if let mySwiftString : String = mutableString as String {
+                                        
+                                        commandString = commandString + " '" + mySwiftString as String  + "'"
+                                        
+                                    }
                                     
                                 }
+                            } else {
+                                if ( searchWords.count > 1 ) {
+                                    if let letLDAP_Filter_Two = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Filter_Two) as? String {
+                                        
+                                        let mutableString = NSMutableString(string: letLDAP_Filter_Two)
+                                        
+                                        let regex1 = try! NSRegularExpression(pattern: "\\bWORD1\\b",
+                                            options: [.CaseInsensitive])
+                                        regex1.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: searchWords.first!)
+                                        
+                                        let regex2 = try! NSRegularExpression(pattern: "\\bWORD2\\b",
+                                            options: [.CaseInsensitive])
+                                        regex2.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: searchWords[1])
+                                        
+                                        if let mySwiftString : String = mutableString as String {
+                                            
+                                            commandString = commandString + " '" + mySwiftString as String  + "'"
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            // Prepare the attributes to recover
+                            commandString = commandString + " dn cn uid "
+                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Desc) as? String {
+                                commandString = commandString + letTheString + " "
+                            }
+                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Country) as? String {
+                                commandString = commandString + letTheString + " "
+                            }
+                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_City) as? String {
+                                commandString = commandString + letTheString + " "
+                            }
+                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceLin) as? String {
+                                commandString = commandString + letTheString + " "
+                            }
+                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceInt) as? String {
+                                commandString = commandString + letTheString + " "
+                            }
+                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceMob) as? String {
+                                commandString = commandString + letTheString + " "
+                            }
+                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_HasPict) as? String {
+                                commandString = commandString + letTheString + " "
+                            }
+                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Title) as? String {
+                                commandString = commandString + letTheString
                             }
                         }
                     }
-                    
-                    // Prepare the attributes to recover
-                    commandString = commandString + " dn cn uid "
-                    if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Desc) as? String {
-                        commandString = commandString + letTheString + " "
-                    }
-                    if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Country) as? String {
-                        commandString = commandString + letTheString + " "
-                    }
-                    if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_City) as? String {
-                        commandString = commandString + letTheString + " "
-                    }
-                    if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceLin) as? String {
-                        commandString = commandString + letTheString + " "
-                    }
-                    if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceInt) as? String {
-                        commandString = commandString + letTheString + " "
-                    }
-                    if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceMob) as? String {
-                        commandString = commandString + letTheString + " "
-                    }
-                    if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_HasPict) as? String {
-                        commandString = commandString + letTheString + " "
-                    }
-                    if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Title) as? String {
-                        commandString = commandString + letTheString
-                    }
-                 }
+                }
             }
         }
 
