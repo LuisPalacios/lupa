@@ -29,7 +29,10 @@ struct LUPADefaults {
     static let lupa_TestMode                = "lupa_TestMode"                       // Doesn't call the Browser, just logs the URL
     static let lupa_Hotkey                  = "lupa_Hotkey"                         //
     static let lupa_HotkeyEnabled           = "lupa_HotkeyEnabled"                  //
-    
+
+    static let lupa_Bind_User               = "lupa_BIND_User"                      // ldapsearch -D
+    static let lupa_Bind_Password           = "lupa_BIND_Password"                  // ldapsearch -w
+
     static let lupa_LDAP_Command            = "lupa_LDAP_Command"                   // ldapsearch -x
     static let lupa_LDAP_BaseDN             = "lupa_LDAP_BaseDN"                    // -b ou=employees,o=company.com
     static let lupa_LDAP_Host               = "lupa_LDAP_Host"                      // -h ldap.company.com
