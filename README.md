@@ -71,4 +71,4 @@ This project uses the MASShortcut.framework (by [shpakovski/MASShortcut
 
 #### Copyright
 
-Imperium is licensed under [The MIT license](http://www.opensource.org/licenses/mit-license.php)
+Licensed under [The MIT license](http://www.opensource.org/licenses/mit-license.php)
