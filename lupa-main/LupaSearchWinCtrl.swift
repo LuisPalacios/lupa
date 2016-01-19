@@ -24,6 +24,8 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     @IBOutlet weak var textField: NSTextField!
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var spinningLDAP: NSProgressIndicator!
+    @IBOutlet weak var ldapResultTableView: NSTableView!
+    @IBOutlet var arrayController: NSArrayController!
         
     
     //  Placeholder for the ldap searches, which is also observed for changes
@@ -45,6 +47,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     var browserSearchIsRunning : Bool = false
     var ldapSearchIsRunning : Bool = false
     
+    var postfix_searchString = ""
     
     /// --------------------------------------------------------------------------------
     //  MARK: Main
@@ -158,8 +161,12 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         case "insertNewline:":
             // BROWSER Search -
             //
-            self.startBrowserSearch()
-
+            if !searchField.stringValue.isEmpty {
+                self.postfix_searchString = self.searchField.stringValue
+                self.startBrowserSearch()
+            } else {
+                // print ("Search string empty, ignore it...")
+            }
             // retval = true causes Apple to NOT fire the default enter action
             // so if true, searchFieldModified() will NOT be called
             retValue = true
@@ -201,51 +208,49 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             
             if !letURLString.isEmpty {
                 
-                if !searchField.stringValue.isEmpty {
-                    var searchString : String = searchField.stringValue
-                    
-                    if let letSearchSeparatorEnabled = self.userDefaults.objectForKey(LUPADefaults.lupa_SearchSeparatorEnabled) as? Bool {
-                        let searchSeparatorEnabled = letSearchSeparatorEnabled
-                        if ( searchSeparatorEnabled ) {
-                            if let letSearchSeparator = self.userDefaults.objectForKey(LUPADefaults.lupa_SearchSeparator) as? String {
-                                let searchSeparator = letSearchSeparator
-                                searchString = searchField.stringValue.stringByReplacingOccurrencesOfString(" ", withString: searchSeparator, options: NSStringCompareOptions.LiteralSearch, range: nil)
-                            }
+                // I spect self.postfix_searchString with the string
+                // to be added at the end of the url
+                var searchString = self.postfix_searchString
+                
+                if let letSearchSeparatorEnabled = self.userDefaults.objectForKey(LUPADefaults.lupa_SearchSeparatorEnabled) as? Bool {
+                    let searchSeparatorEnabled = letSearchSeparatorEnabled
+                    if ( searchSeparatorEnabled ) {
+                        if let letSearchSeparator = self.userDefaults.objectForKey(LUPADefaults.lupa_SearchSeparator) as? String {
+                            let searchSeparator = letSearchSeparator
+                            searchString = searchField.stringValue.stringByReplacingOccurrencesOfString(" ", withString: searchSeparator, options: NSStringCompareOptions.LiteralSearch, range: nil)
                         }
                     }
-                    
-                    // Setup the final string
-                    let searchURLString : String = letURLString + searchString
-                    // print("searchURLString: \(searchURLString)")
-                    
-                    // Let's go rock and roll
-                    //
-                    // Note: I'm leaving here a way to activate a "Testing" mode logging into screen instead
-                    // of launching the default browser. To activate it though, needs to be done from Terminal:
-                    //
-                    //  $ defaults write parchis.org.lupa lupa_TestMode -bool YES
-                    //
-                    var testMode: Bool = false
-                    if let letTestMode = self.userDefaults.objectForKey(LUPADefaults.lupa_TestMode) as? Bool {
-                        testMode = letTestMode
-                    }
-                    
-                    // Let's go for it
-                    browserSearchIsRunning = true
-                    if ( testMode ) {
-                        print("TEST MODE - Browser URL: \(searchURLString)")
-                    } else {
-                        // Production mode, fix spaces
-                        let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-                        let theURL : NSURL? = NSURL (string: myUrlString)
-                        // print("theURL: \(theURL?.path)")
-                        NSWorkspace.sharedWorkspace().openURL(theURL!)
-                    }
-                    browserSearchIsRunning = false
-                    
-                } else {
-                    // print ("Search string empty, ignore it...")
                 }
+                
+                // Setup the final string
+                let searchURLString : String = letURLString + searchString
+                // print("searchURLString: \(searchURLString)")
+                
+                // Let's go rock and roll
+                //
+                // Note: I'm leaving here a way to activate a "Testing" mode logging into screen instead
+                // of launching the default browser. To activate it though, needs to be done from Terminal:
+                //
+                //  $ defaults write parchis.org.lupa lupa_TestMode -bool YES
+                //
+                var testMode: Bool = false
+                if let letTestMode = self.userDefaults.objectForKey(LUPADefaults.lupa_TestMode) as? Bool {
+                    testMode = letTestMode
+                }
+                
+                // Let's go for it
+                browserSearchIsRunning = true
+                if ( testMode ) {
+                    print("TEST MODE - Browser URL: \(searchURLString)")
+                } else {
+                    // Production mode, fix spaces
+                    let myUrlString : String = searchURLString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+                    let theURL : NSURL? = NSURL (string: myUrlString)
+                    // print("theURL: \(theURL?.path)")
+                    NSWorkspace.sharedWorkspace().openURL(theURL!)
+                }
+                browserSearchIsRunning = false
+                
             } else {
                 // print ("URL Prefix is empty, you should set something like doDefaults...")
                 // statusbarController.showPreferences()
@@ -279,6 +284,17 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     func startLDAPSearch() {
 
 
+        // Ldap search limit
+        var limitResults = 20
+        if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Limit_Results) as? String {
+            if ( !letTheString.isEmpty ) {
+                if let theLimit = Int(letTheString) {
+                    limitResults = theLimit
+                }
+            }
+        }
+        
+//lupa_BIND_UserStore
         // Read the search string
         let searchString : String = searchField.stringValue
         let searchWords = searchString.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
@@ -291,12 +307,27 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
 
             if let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
                 
-//                commandString = commandString + " -h " + letLDAP_Host
-                commandString = commandString + " -H ldaps://" + letLDAP_Host + ":636"
+                var port = "636"
+                
+                if let letLDAP_Bind_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
+                    port = letLDAP_Bind_Port
+                }
+
+                commandString = commandString + " -H ldaps://" + letLDAP_Host + ":" + port
+                
+                // Add the limit search
+                commandString = commandString + " -z \(limitResults)"
+                
                 
                 if let letLDAP_Bind_User = self.userDefaults.objectForKey(LUPADefaults.lupa_Bind_User) as? String {
+                   
+                    var bindUser = letLDAP_Bind_User
                     
-                    commandString = commandString + " -D \"" + letLDAP_Bind_User + "\""
+                    if let letLDAP_Bind_UserStore = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_UserStore) as? String {
+                        bindUser = "CN=" + bindUser + "," + letLDAP_Bind_UserStore
+                    }
+                    
+                    commandString = commandString + " -D \"" + bindUser + "\""
                     
                     if let letLDAP_Bind_Password = self.userDefaults.objectForKey(LUPADefaults.lupa_Bind_Password) as? String {
                         
@@ -346,13 +377,14 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
                             
                             // Prepare the attributes to recover
                             commandString = commandString + " dn cn uid "
-                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Desc) as? String {
-                                commandString = commandString + letTheString + " "
-                            }
-                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Country) as? String {
-                                commandString = commandString + letTheString + " "
-                            }
                             if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_City) as? String {
+                                commandString = commandString + letTheString + " "
+                            }
+
+                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Title) as? String {
+                                commandString = commandString + letTheString + " "
+                            }
+                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Desc) as? String {
                                 commandString = commandString + letTheString + " "
                             }
                             if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceLin) as? String {
@@ -361,13 +393,13 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
                             if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceInt) as? String {
                                 commandString = commandString + letTheString + " "
                             }
+                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Country) as? String {
+                                commandString = commandString + letTheString + " "
+                            }
+                            //if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_HasPict) as? String {
+                            //    commandString = commandString + letTheString + " "
+                            //}
                             if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceMob) as? String {
-                                commandString = commandString + letTheString + " "
-                            }
-                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_HasPict) as? String {
-                                commandString = commandString + letTheString + " "
-                            }
-                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Title) as? String {
                                 commandString = commandString + letTheString
                             }
                         }
@@ -398,6 +430,24 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
 
     }
 
+    @IBAction func rowSelected(sender: AnyObject) {
+        print("Se seleccionó una fila")
+
+        let selectedRow = self.ldapResultTableView.selectedRow
+        if ( selectedRow != -1 ) {
+            print("\(self.arrayController.arrangedObjects[selectedRow])")
+            if let user : LPLdapUser = self.arrayController.arrangedObjects[selectedRow] as? LPLdapUser {
+                if !user.cn.isEmpty {
+                    self.postfix_searchString = user.cn
+                    self.startBrowserSearch()
+                } else {
+                    print ("user cn is empty")
+                }
+            }
+        }
+    }
+    
+    
     // Stop the Browser search
     //
     func stopLDAPSearch() {
@@ -408,25 +458,26 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         self.stopUI_LDAPsearchInProgress()
 
         // Post process the list of users
+        print("Found \(tmpUsers.count) users")
         for user in tmpUsers {
-            if ( user.haspict == "y" ) {
-                
+//            if ( user.haspict == "y" ) {
+            
                 if let letLupa_LDAP_PictureURL = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_PictureURL) as? String {
                     
                     let mutableString = NSMutableString(string: letLupa_LDAP_PictureURL)
-                    let regex = try! NSRegularExpression(pattern: "<UID>",
+                    let regex = try! NSRegularExpression(pattern: "<ID>",
                         options: [.CaseInsensitive])
-                    regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.uid)
+                    regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.cn)
                     if let mySwiftString : String = mutableString as String {
                         if let letURL = NSURL(string: mySwiftString) {
                             user.picturl = letURL
                         }
                     }
                 }
-                print("\(user.uid) Photo: \(user.picturl)")
-            } else {
-                print("\(user.uid) Photo: NO PICTURE !!!!")
-            }
+                print("\(user.cn) Photo: \(user.picturl)")
+//            } else {
+//                print("\(user.uid) Photo: NO PICTURE !!!!")
+//            }
         }
         
         // Fill up the tableview

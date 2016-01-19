@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15E27e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="LupaSearchWinCtrl" customModule="lupa" customModuleProvider="target">
             <connections>
+                <outlet property="arrayController" destination="CaR-wG-5SX" id="txb-5W-PbH"/>
+                <outlet property="ldapResultTableView" destination="LMX-1P-cwF" id="QEH-Vi-VMa"/>
                 <outlet property="searchField" destination="mzq-eI-59F" id="MhW-lN-OTY"/>
                 <outlet property="searchFieldCell" destination="dCh-xu-EgJ" id="U3n-FV-ctH"/>
                 <outlet property="spinningLDAP" destination="TqW-HL-zol" id="zMX-Kd-yKT"/>
@@ -71,7 +73,7 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="48" id="wls-d1-gqd"/>
                                                             </constraints>
-                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="LupaSinImagen" id="CS7-DI-ZwC"/>
+                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="LupaSinImagen" id="CS7-DI-ZwC"/>
                                                             <connections>
                                                                 <binding destination="Lre-0D-xUh" name="valueURL" keyPath="objectValue.picturl" id="rwe-Zl-Wwu"/>
                                                             </connections>
@@ -84,7 +86,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="Lre-0D-xUh" name="value" keyPath="objectValue.cn" id="7cg-uS-otQ"/>
+                                                                <binding destination="Lre-0D-xUh" name="value" keyPath="objectValue.desc" id="B1K-PK-Nd8"/>
                                                             </connections>
                                                         </textField>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F3t-c0-u4b">
@@ -95,7 +97,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="Lre-0D-xUh" name="value" keyPath="objectValue.uid" id="XZs-91-3P6"/>
+                                                                <binding destination="Lre-0D-xUh" name="value" keyPath="objectValue.cn" id="2G8-nB-9hi"/>
                                                             </connections>
                                                         </textField>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SXG-dN-Kzo">
@@ -141,6 +143,7 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <action selector="rowSelected:" target="-2" id="QLm-th-SbG"/>
                                         <binding destination="CaR-wG-5SX" name="content" keyPath="arrangedObjects" id="7D7-Uu-MyI"/>
                                         <binding destination="CaR-wG-5SX" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="7D7-Uu-MyI" id="Unb-28-Oj0"/>
                                     </connections>
@@ -176,7 +179,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="-711" y="-483"/>
+            <point key="canvasLocation" x="-701" y="-965"/>
         </window>
         <arrayController automaticallyPreparesContent="YES" automaticallyRearrangesObjects="YES" id="CaR-wG-5SX" userLabel="someUsersController">
             <connections>
