@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A00456BB1B80FCE100EF2A1D /* LupaVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00456BA1B80FCE100EF2A1D /* LupaVersion.swift */; };
 		A040949A1B99F998005AF9C4 /* LupaGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04094991B99F998005AF9C4 /* LupaGlobals.swift */; };
+		A052C7C01C5013DF0002A2AB /* LPQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = A052C7BF1C5013DF0002A2AB /* LPQueue.swift */; };
 		A05EDAC81B7A4466001B3F3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05EDAC71B7A4466001B3F3C /* AppDelegate.swift */; };
 		A05EDACA1B7A4466001B3F3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A05EDAC91B7A4466001B3F3C /* Assets.xcassets */; };
 		A05EDACD1B7A4466001B3F3C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A05EDACB1B7A4466001B3F3C /* MainMenu.xib */; };
@@ -24,6 +25,7 @@
 		A062108E1BAECE49008DA0C9 /* LupaSearchWinCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = A062108C1BAECE49008DA0C9 /* LupaSearchWinCtrl.xib */; };
 		A06210901BAECEE9008DA0C9 /* LupaSearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A062108F1BAECEE9008DA0C9 /* LupaSearchField.swift */; };
 		A06210921BAECF9A008DA0C9 /* LupaPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06210911BAECF9A008DA0C9 /* LupaPanel.swift */; };
+		A073C4191C4F6FE4002B9945 /* ABGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = A073C4181C4F6FE4002B9945 /* ABGradientView.m */; };
 		A0B4BA511B7A647F00069614 /* LupaDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B4BA4F1B7A647F00069614 /* LupaDefaults.swift */; };
 		A0B4BA521B7A647F00069614 /* LupaDefaults.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0B4BA501B7A647F00069614 /* LupaDefaults.xib */; };
 		A0B4BA601B7B400500069614 /* dir_16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B4BA561B7B400500069614 /* dir_16x16.png */; };
@@ -70,6 +72,7 @@
 /* Begin PBXFileReference section */
 		A00456BA1B80FCE100EF2A1D /* LupaVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LupaVersion.swift; sourceTree = "<group>"; };
 		A04094991B99F998005AF9C4 /* LupaGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LupaGlobals.swift; path = "lupa-main/LupaGlobals.swift"; sourceTree = "<group>"; };
+		A052C7BF1C5013DF0002A2AB /* LPQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPQueue.swift; path = "lupa-main/LPQueue.swift"; sourceTree = "<group>"; };
 		A05EDAC41B7A4466001B3F3C /* lupa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lupa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A05EDAC71B7A4466001B3F3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A05EDAC91B7A4466001B3F3C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -87,6 +90,8 @@
 		A062108C1BAECE49008DA0C9 /* LupaSearchWinCtrl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LupaSearchWinCtrl.xib; path = "lupa-main/LupaSearchWinCtrl.xib"; sourceTree = "<group>"; };
 		A062108F1BAECEE9008DA0C9 /* LupaSearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LupaSearchField.swift; path = "lupa-main/LupaSearchField.swift"; sourceTree = "<group>"; };
 		A06210911BAECF9A008DA0C9 /* LupaPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LupaPanel.swift; path = "lupa-main/LupaPanel.swift"; sourceTree = "<group>"; };
+		A073C4171C4F6FE4002B9945 /* ABGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ABGradientView.h; path = "lupa-main/ABGradientView.h"; sourceTree = "<group>"; };
+		A073C4181C4F6FE4002B9945 /* ABGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ABGradientView.m; path = "lupa-main/ABGradientView.m"; sourceTree = "<group>"; };
 		A0B4BA4F1B7A647F00069614 /* LupaDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LupaDefaults.swift; path = "lupa-main/LupaDefaults.swift"; sourceTree = "<group>"; };
 		A0B4BA501B7A647F00069614 /* LupaDefaults.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LupaDefaults.xib; path = "lupa-main/LupaDefaults.xib"; sourceTree = "<group>"; };
 		A0B4BA561B7B400500069614 /* dir_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dir_16x16.png; path = resources/dir_16x16.png; sourceTree = "<group>"; };
@@ -212,6 +217,9 @@
 				A062108B1BAECE49008DA0C9 /* LupaSearchWinCtrl.swift */,
 				A062108C1BAECE49008DA0C9 /* LupaSearchWinCtrl.xib */,
 				A06210911BAECF9A008DA0C9 /* LupaPanel.swift */,
+				A073C4171C4F6FE4002B9945 /* ABGradientView.h */,
+				A073C4181C4F6FE4002B9945 /* ABGradientView.m */,
+				A052C7BF1C5013DF0002A2AB /* LPQueue.swift */,
 			);
 			name = "lupa-main";
 			sourceTree = "<group>";
@@ -364,10 +372,12 @@
 				A0D474DD1B99200D00D957FA /* LPStatusItemWindowCtrl.swift in Sources */,
 				A0EFB0631BB83151007E3ED4 /* LPLdapUser.swift in Sources */,
 				A0D474D91B99200D00D957FA /* LPStatusItemBackgroundView.swift in Sources */,
+				A073C4191C4F6FE4002B9945 /* ABGradientView.m in Sources */,
 				A0EFB0711BB841B7007E3ED4 /* LPCommand.swift in Sources */,
 				A0EFB0691BB83EFD007E3ED4 /* LPStream.swift in Sources */,
 				A0EFB0611BB83077007E3ED4 /* LPLdapsearchScanner.swift in Sources */,
 				A0D474D81B99200D00D957FA /* LPStatusItem.swift in Sources */,
+				A052C7C01C5013DF0002A2AB /* LPQueue.swift in Sources */,
 				A05EDAC81B7A4466001B3F3C /* AppDelegate.swift in Sources */,
 				A0EFB06F1BB840D8007E3ED4 /* LPString.swift in Sources */,
 				A040949A1B99F998005AF9C4 /* LupaGlobals.swift in Sources */,

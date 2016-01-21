@@ -21,7 +21,7 @@
             <windowCollectionBehavior key="collectionBehavior" moveToActiveSpace="YES" stationary="YES" ignoresCycle="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="292" height="244"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <view key="contentView" id="se5-gp-TjO" customClass="LPStatusItemBackgroundView" customModule="lupa" customModuleProvider="target">
                 <rect key="frame" x="0.0" y="0.0" width="292" height="244"/>
                 <autoresizingMask key="autoresizingMask"/>

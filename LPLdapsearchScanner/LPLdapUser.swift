@@ -26,7 +26,6 @@ class LPLdapUser: NSObject {
     var voicetel:   String = ""
     var voicemob:   String = ""
     var voiceint:   String = ""
-    var haspict:    String = ""
     var title:      String = ""
     var picturl:    NSURL!
     

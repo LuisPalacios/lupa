@@ -30,18 +30,14 @@ struct LUPADefaults {
     static let lupa_Hotkey                  = "lupa_Hotkey"                         //
     static let lupa_HotkeyEnabled           = "lupa_HotkeyEnabled"                  //
 
-    static let lupa_Bind_User               = "lupa_BIND_User"                      // ldapsearch -D  CN=<lupa_BIND_User>, <lupa_BIND_UserStore>
+    static let lupa_BIND_User               = "lupa_BIND_User"                      // ldapsearch -D  CN=<lupa_BIND_User>, <lupa_BIND_UserStore>
     static let lupa_BIND_UserStore          = "lupa_BIND_UserStore"                 // ldapsearch -D  CN=<lupa_BIND_User>, <lupa_BIND_UserStore>
-    static let lupa_Bind_Password           = "lupa_BIND_Password"                  // ldapsearch -w
+    static let lupa_BIND_Password           = "lupa_BIND_Password"                  // ldapsearch -w
 
     static let lupa_LDAP_Command            = "lupa_LDAP_Command"                   // ldapsearch -x
     static let lupa_LDAP_BaseDN             = "lupa_LDAP_BaseDN"                    // -b ou=employees,o=company.com
     static let lupa_LDAP_Host               = "lupa_LDAP_Host"                      // -H ldaps://ldap.company.com
     static let lupa_LDAP_Port               = "lupa_LDAP_Port"                      // port
-    static let lupa_LDAP_Filter_One         = "lupa_LDAP_Filter_One"                // '(&(objectClass=inetOrgPerson)(|(cn=*WORD1* *WORD2*)))'
-    static let lupa_LDAP_Filter_Two         = "lupa_LDAP_Filter_Two"                // '(&(objectClass=inetOrgPerson)(|(cn=*WORD1*)(uid=*WORD1*)))'
-    // static let lupa_LDAP_Attributes         = "lupa_LDAP_Attributes"                // dn cn uid description co state telephoneNumber voicemail mobile publishpicture title
-
 
     // LDAP attributes that will be retrieved. 
     static let lupa_LDAP_Attr_DN            = "lupa_LDAP_Attr_DN"                   // Attribute for the distinguished name (fixed to "dn:")
@@ -55,11 +51,18 @@ struct LUPADefaults {
     static let lupa_LDAP_Attr_VoiceMob      = "lupa_LDAP_Attr_VoiceMob"             // Attribute for the Voice mobile telephone
     static let lupa_LDAP_Attr_HasPict       = "lupa_LDAP_Attr_HasPict"              // Attribute for the y/n value indicating if the user has a picture
     static let lupa_LDAP_Attr_Title         = "lupa_LDAP_Attr_Title"                // Attribute for the user's job title
+
+    // Fields where ldapsarch will look for the searched content
+    static let lupa_LDAP_Search_CN            = "lupa_LDAP_Search_CN"               // Include the CN as a field where we'll search in the ldapsearch
+    static let lupa_LDAP_Search_Desc          = "lupa_LDAP_Search_Desc"             // Include the Description
+    static let lupa_LDAP_Search_VoiceLin      = "lupa_LDAP_Search_VoiceLin"         // Include the fixed thelephone line
+    static let lupa_LDAP_Search_VoiceInt      = "lupa_LDAP_Search_VoiceInt"         // Include the voice mail 
+    static let lupa_LDAP_Search_VoiceMob      = "lupa_LDAP_Search_VoiceMob"         // Include the mobile
     
     static let lupa_LDAP_PictureURL         = "lupa_LDAP_PictureURL"                // Attribute for the URL pointing to the user picture
-
-    
     static let lupa_LDAP_Limit_Results       = "lupa_LDAP_Limit_Results"              // Max. num of returned results
+
+    static let keychain_BIND_Password        = "lupa_BIND_Password"
 
 }
 
@@ -71,8 +74,6 @@ func programLongName() -> String
     let myProgramLongName : String = "Lupa \(skPROGRAM_DISPLAY_VERSION)-\(ikPROGRAM_VERSION)(\(skPROGRAM_BUILD))"
     return myProgramLongName;
 }
-
-
 
 extension NSView {
     
