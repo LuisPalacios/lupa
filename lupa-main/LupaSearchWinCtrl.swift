@@ -4,7 +4,7 @@
 //
 //  Created by Luis Palacios on 20/9/15.
 //  Copyright © 2015 Luis Palacios. All rights reserved.
-//
+//  LDAPTLS_REQCERT=allow /usr/bin/ldapsearch
 
 import Cocoa
 import Foundation
@@ -21,33 +21,39 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     //  they are optionals and do not need to initialize them here, will do later.
     @IBOutlet weak var searchField: LupaSearchField!
     @IBOutlet weak var searchFieldCell: NSSearchFieldCell!
-    @IBOutlet weak var textField: NSTextField!
-    @IBOutlet weak var scrollView: NSScrollView!
-    @IBOutlet weak var spinningLDAP: NSProgressIndicator!
-    @IBOutlet weak var ldapResultTableView: NSTableView!
-    @IBOutlet var arrayController: NSArrayController!
-        
     
-    //  Placeholder for the ldap searches, which is also observed for changes
+    @IBOutlet weak var spinningLDAP: NSProgressIndicator!
+
+    @IBOutlet weak var msgStackView: NSStackView!
+    @IBOutlet var msgTextView: NSTextView!
+    var timerHideAlert : NSTimer!                //!< Timer that the alert to be hidden
+    
+    @IBOutlet weak var ldapResultTableView: NSTableView!
+    @IBOutlet weak var ldapResultStackView: NSStackView!
+    
+    @IBOutlet var arrayController: NSArrayController!
+    
+    //  In order to work with the user defaults, stored under:
+    //  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
+    //  $ defaults read parchis.org.lupa.plist
+    let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+
+    //  Class attributes
     dynamic var ldapSearchResults = ""
     var observableKeys_LDAPSearchResults = [ "self.ldapSearchFinished" ]
     dynamic var ldapSearchFinished : Bool = false
     dynamic var users = [LPLdapUser]()
     dynamic var tmpUsers = [LPLdapUser]()
 
-    //  In order to work with the user defaults, stored under:
-    //  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
-    //  $ defaults read parchis.org.lupa.plist
-    let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
-    
-    //  Vars that I need to be initialized
+    // More attributes
     var textDidChangeInterval : NSTimeInterval = 0.0    //!< Time interval to calculate text did change trigger action
     var previousSearchString : String = ""              //!< Control if I'm asked to search the same string as before
     var timerTextDidChange    : NSTimer!                //!< Timer that triggers action after text did change
     var browserSearchIsRunning : Bool = false
     var ldapSearchIsRunning : Bool = false
-    
     var postfix_searchString = ""
+    var firstTimeOnScreen = true
+    var baseFrame : NSRect = NSMakeRect(0.0, 0.0, 0.0, 0.0)
     
     /// --------------------------------------------------------------------------------
     //  MARK: Main
@@ -66,28 +72,11 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             myWindow.backgroundColor = NSColor.clearColor()
         }
         
-        //
+        // Spy when ldapsearch finishes...
         self.loadKVO()
         
-        // Work in Progress
-        //
-        //WiP
-        //
-        // Lo ideal sería hacer lo anterior en la clase LPStatusItemWindowCtrl.
-        // durante su inicalización y recibir esta nswindow, que le cambiase la 
-        // clase de su contentview a LPStatusitembacgroundview
-        // pero sin tocarle absolutamente nada más... :-)
-        //        // Show the Window fading in...
-        //        let window : LPStatusItemWindow = self.window as! LPStatusItemWindow
-
-        // Resize my window
-        if let letMyWindow = self.window {
-            let myWindow = letMyWindow
-            let frame = myWindow.frame
-            var newSize = frame.size
-            newSize.height = ikWINDOW_MIN_HEIGHT
-            myWindow.setContentSize(newSize)  // Only available under 10.10
-        }
+        // Hide the results stackview
+        self.hideLdapResultsStackView()
         
         // Subscribe myself so I'll receive(Get) Notifications
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -95,6 +84,11 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             name: NSWindowDidBecomeKeyNotification,
             object: nil)
 
+        // Hide alert views
+        self.hideAlert()
+        
+        // Hide spinning
+        self.spinningLDAP.hidden = true
         
     }
     
@@ -124,7 +118,112 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     //  so the user can start typing a new search text (deleting the old one)
     //
     func handleWindowDidBecomeActiveNotification (note : NSNotification) {
+        
+        // Store frame
+        if ( self.firstTimeOnScreen == true ) {
+            if let window = self.window {
+                self.baseFrame = window.frame
+            }
+            self.firstTimeOnScreen = false
+        }
+
+        // Everytime I do appear select the text
         self.searchField.selectText(self)
+    }
+
+    
+    /// --------------------------------------------------------------------------------
+    //  MARK: UI
+    /// --------------------------------------------------------------------------------
+    
+    // Show the ldap results stack view
+    //
+    func showLdapResultsStackView() {
+        
+        // Show the stack view
+        self.ldapResultStackView.hidden = false
+        self.updateSearchWindowFrarme()
+    }
+    
+
+    // Hide the ldap results stack view
+    //
+    func hideLdapResultsStackView() {
+        self.ldapResultStackView.hidden = true
+        self.updateSearchWindowFrarme()
+    }
+
+    // Show Alert stack view
+    func showAlert(msg: String) {
+        self.msgTextView.string = msg
+        self.msgStackView.hidden = false
+        self.startTimerHideAlert()
+    }
+    
+    func hideAlert() {
+        self.msgStackView.hidden = true
+        self.updateSearchWindowFrarme()
+    }
+    
+    // Hide the stack view
+    func updateSearchWindowFrarme() {
+    
+        // Is the ldap resulta stack view hidden
+        if ( self.ldapResultStackView.hidden == true ) {
+            if let window = self.window {
+                var newSize = window.frame.size
+                newSize.height = ikWINDOW_MIN_HEIGHT
+                window.setContentSize(newSize)  // Only available under 10.10
+                window.setFrameOrigin(self.baseFrame.origin)
+            }
+        } else {
+            var windowHeight = ikWINDOW_MIN_HEIGHT
+            if ( self.users.count != 0 ) {
+                var max : CGFloat = 5.0
+                if ( self.users.count < 5 ) {
+                    max = CGFloat ( self.users.count )
+                }
+                windowHeight = ikWINDOW_MIN_HEIGHT + ( 57.0 * max )
+            }
+            // Execute the resize
+            if let window = self.window {
+                var newSize = window.frame.size
+                newSize.height = windowHeight
+                window.setContentSize(newSize)  // Only available under 10.10
+                // Ask the LPStatusItem to manifest
+                lpStatusItem.updateFrameStatusItemWindow()
+            }
+        }
+    }
+    
+    // Start a timer that will hide the Alert information
+    //
+    func startTimerHideAlert() {
+        self.stopTimerHideAlert()
+
+        self.timerHideAlert = NSTimer.scheduledTimerWithTimeInterval(2.0,
+                target: self,
+                selector: Selector("actionTimerHideAlert"),
+                userInfo: nil,
+                repeats: false)
+    }
+    
+    // Stop the timer that will hide the Alert information
+    //
+    func stopTimerHideAlert() {
+        if ( timerHideAlert != nil ) {
+            if (  self.timerHideAlert.valid ) {
+                self.timerHideAlert.invalidate()
+                
+            }
+            self.timerHideAlert = nil
+        }
+    }
+    
+    // Action to execute when the timer finishes
+    //
+    func actionTimerHideAlert() {
+        self.hideAlert()
     }
 
     
@@ -298,37 +397,93 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     /// --------------------------------------------------------------------------------
     
     // Start the ldap search
+    // Prepare the command....
     //
     func startLDAPSearch() {
 
-        // Prepare the command....
+        // search string
+        let searchString : String = searchField.stringValue
+        let searchWords = searchString.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
-        // search limit
+
+        
+        // Continue analysing each of the arguments...
+        var commandString : String  = ""
+        
+        // CLI Command (LDAPTLS_REQCERT=allow /usr/bin/ldapsearch)
+        //
+        guard let letLDAP_Command = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Command) as? String else {
+            self.showAlert("ERROR: Missing LDAP command")
+            return
+        }
+        commandString = letLDAP_Command
+
+        // Host and port URL (-H ldaps://myhost.domain.com:636)
+        //
+        guard let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String else {
+            self.showAlert("ERROR: Missing Host")
+            return
+        }
+        var letLDAP_Port = "636" // Default
+        if let letLDAP_Bind_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
+            letLDAP_Port = letLDAP_Bind_Port
+        }
+        var intLDAP_Port = 0
+        if let num = Int(letLDAP_Port) {
+            intLDAP_Port = num
+        }
+        commandString = commandString + " -H ldaps://" + letLDAP_Host + ":" + letLDAP_Port
+
+        // Limit search (-z 'n')
+        //
         var limitResults = 20
         if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Limit_Results) as? String {
             if ( !letTheString.isEmpty ) {
                 if let theLimit = Int(letTheString) {
                     limitResults = theLimit
+                    commandString = commandString + " -z \(limitResults)"
                 }
             }
         }
-
-        // search string
-        let searchString : String = searchField.stringValue
-        let searchWords = searchString.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-
         
+        // Binding information -D user,usrestore -w Password
+        //
+        if let letLDAP_Bind_User = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
+            var bindUser = letLDAP_Bind_User
+            guard let letLDAP_Bind_UserStore = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_UserStore) as? String else {
+                self.showAlert("ERROR: Missing User store")
+                return
+            }
+            bindUser = "CN=" + bindUser + "," + letLDAP_Bind_UserStore
+            commandString = commandString + " -D \"" + bindUser + "\""
+            
+            
+            guard let letLDAP_Bind_Password = internetPasswordForServer(letLDAP_Host, account: letLDAP_Bind_User, port: intLDAP_Port, secProtocol: SecProtocolType.LDAPS) else {
+                self.showAlert("ERROR: Missing the password")
+                return
+            }
+            commandString = commandString + " -w \"" + letLDAP_Bind_Password + "\""
+        }
         
+
+        // Search base (-x -b basedn)
+        //
+        guard let letLDAP_BaseDN = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_BaseDN) as? String else {
+            self.showAlert("ERROR: Missing the Base DN")
+            return
+        }
+        commandString = commandString + " -x -b \"" + letLDAP_BaseDN + "\""
+                            
+
         // Prepare the Filters
-        // Just One Filter supporting multiple words:
         //
         // ( | (description=*W1*W2*W3*...*Wn*) (cn=*W1*W2*W3*...*Wn*) )
         //
+        var gotFilter = false
         var wordRegex = "*"
         for word in searchWords {
             if ( word.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 ) {
                 wordRegex = wordRegex + "\(word)*"
-                
             }
         }
         let search_CN = self.userDefaults.boolForKey(LUPADefaults.lupa_LDAP_Search_CN)
@@ -336,115 +491,72 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         let search_VoiceLin = self.userDefaults.boolForKey(LUPADefaults.lupa_LDAP_Search_VoiceLin)
         let search_VoiceInt = self.userDefaults.boolForKey(LUPADefaults.lupa_LDAP_Search_VoiceInt)
         let search_VoiceMob = self.userDefaults.boolForKey(LUPADefaults.lupa_LDAP_Search_VoiceMob)
-
-
-        // Continue analysing each of the arguments... 
-        var commandString : String  = ""
-        if let letLDAP_Command = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Command) as? String {
-            
-            commandString = letLDAP_Command
-
-            if let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
-                
-                var port = "636" // Default
-                if let letLDAP_Bind_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
-                    port = letLDAP_Bind_Port
-                }
-
-                // URL
-                commandString = commandString + " -H ldaps://" + letLDAP_Host + ":" + port
-                
-                // Add the limit search
-                commandString = commandString + " -z \(limitResults)"
-                
-                // Start the binding...
-                if let letLDAP_Bind_User = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
-                   
-                    var bindUser = letLDAP_Bind_User
-                    
-                    if let letLDAP_Bind_UserStore = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_UserStore) as? String {
-                        bindUser = "CN=" + bindUser + "," + letLDAP_Bind_UserStore
-                    }
-                    
-                    commandString = commandString + " -D \"" + bindUser + "\""
-                    
-                    if let letLDAP_Bind_Password = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_Password) as? String {
-                        
-                        commandString = commandString + " -w \"" + letLDAP_Bind_Password + "\""
-                        
-                        
-                        if let letLDAP_BaseDN = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_BaseDN) as? String {
-                            
-                            commandString = commandString + " -x -b \"" + letLDAP_BaseDN + "\""
-                            
-                            // Apply the filter
-                            //
-                            // Lets prepare the filter
-                            var filter = "( |"
-                            
-                            if search_CN {
-                                if let str = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_CN) as? String {
-                                    filter = filter + " (\(str)=\(wordRegex))"
-                                }
-                            }
-                            if search_Desc {
-                                if let str = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Desc) as? String {
-                                    filter = filter + " (\(str)=\(wordRegex))"
-                                }
-                            }
-                            if search_VoiceLin {
-                                if let str = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceLin) as? String {
-                                    filter = filter + " (\(str)=\(wordRegex))"
-                                }
-                            }
-                            if search_VoiceInt {
-                                if let str = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceInt) as? String {
-                                    filter = filter + " (\(str)=\(wordRegex))"
-                                }
-                            }
-                            if search_VoiceMob {
-                                if let str = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceMob) as? String {
-                                    filter = filter + " (\(str)=\(wordRegex))"
-                                }
-                            }
-                            filter = filter + " )"
-                            // print("FILTER: \(filter)")
-                            
-                            commandString = commandString + " '" + filter as String  + "'"
-                            
-                            // Prepare the attributes to recover
-                            commandString = commandString + " dn cn uid "
-                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_City) as? String {
-                                commandString = commandString + letTheString + " "
-                            }
-
-                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Title) as? String {
-                                commandString = commandString + letTheString + " "
-                            }
-                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Desc) as? String {
-                                commandString = commandString + letTheString + " "
-                            }
-                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceLin) as? String {
-                                commandString = commandString + letTheString + " "
-                            }
-                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceInt) as? String {
-                                commandString = commandString + letTheString + " "
-                            }
-                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Country) as? String {
-                                commandString = commandString + letTheString + " "
-                            }
-                            if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceMob) as? String {
-                                commandString = commandString + letTheString
-                            }
-                        }
-                    }
-                }
+        
+        var filter = "( |"
+        if search_CN {
+            if let str = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_CN) as? String {
+                filter = filter + " (\(str)=\(wordRegex))"
+                gotFilter=true
             }
         }
-
+        if search_Desc {
+            if let str = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Desc) as? String {
+                filter = filter + " (\(str)=\(wordRegex))"
+                gotFilter=true
+            }
+        }
+        if search_VoiceLin {
+            if let str = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceLin) as? String {
+                filter = filter + " (\(str)=\(wordRegex))"
+                gotFilter=true
+            }
+        }
+        if search_VoiceInt {
+            if let str = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceInt) as? String {
+                filter = filter + " (\(str)=\(wordRegex))"
+                gotFilter=true
+            }
+        }
+        if search_VoiceMob {
+            if let str = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceMob) as? String {
+                filter = filter + " (\(str)=\(wordRegex))"
+                gotFilter=true
+            }
+        }
+        filter = filter + " )"
+        if ( gotFilter == true ) {
+            commandString = commandString + " '" + filter as String  + "'"
+        }
+        
+        // Prepare the attributes to fetch
+        //
+        commandString = commandString + " dn cn uid "
+        if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_City) as? String {
+            commandString = commandString + letTheString + " "
+        }
+        
+        if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Title) as? String {
+            commandString = commandString + letTheString + " "
+        }
+        if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Desc) as? String {
+            commandString = commandString + letTheString + " "
+        }
+        if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceLin) as? String {
+            commandString = commandString + letTheString + " "
+        }
+        if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceInt) as? String {
+            commandString = commandString + letTheString + " "
+        }
+        if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Country) as? String {
+            commandString = commandString + letTheString + " "
+        }
+        if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_VoiceMob) as? String {
+            commandString = commandString + letTheString
+        }
+        
         // Got a command, lets log it. Notice that I REMOVE THE PASSWORD
         //  print("Command: \(commandString)")
-        //  ToDO - investigate: if someone is looking at the process list (difficult I know)... 
+        //  ToDO - investigate: if someone is looking at the process list (difficult I know)...
         //  they will see the password while the command is being executed
         var logString = ""
         if let rangeBeforePassword = commandString.rangeOfString("-w", options: .BackwardsSearch) {
@@ -460,15 +572,14 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
        }
         print("Command: \(logString)")
  
-        // Let's go for the command....
-        //
-
-        // Start the spinning... 
+        // Start the spinning...
         let mainQueue = LPQueue.Main
         mainQueue.async { () -> () in
             self.startUI_LDAPsearchInProgress()
         }
         
+        // Let's go for the command....
+        //
         // Launch the ldapsearch (it's done in the Main sync so it'll block, but
         // this is done on purpose so the user doesn't start multiple ldapsearch
         // commands simultaneously. Future ToDO: async thread and kill previous?
@@ -488,9 +599,12 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         //  self.textLabel.stringValue = ""
         self.stopUI_LDAPsearchInProgress()
 
+        // Get the new list of users
+        self.users = self.tmpUsers
+        
         // Post process the list of users
-        print("--\nFound \(tmpUsers.count) users.\n")
-        for user in tmpUsers {
+        print("--\nFound \(users.count) users.\n")
+        for user in self.users {
 
             if let letLupa_LDAP_PictureURL = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_PictureURL) as? String {
                 
@@ -507,31 +621,9 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             // print("\(user.cn) Photo: \(user.picturl)")
         }
         
-        // Fill up the tableview
-        users = tmpUsers
-
-        // The search finished
-        var windowHeight = ikWINDOW_MIN_HEIGHT
-        if ( tmpUsers.count != 0 ) {
-            var max : CGFloat = 5.0
-            if ( tmpUsers.count < 5 ) {
-                max = CGFloat ( tmpUsers.count )
-            }
-            windowHeight = ikWINDOW_MIN_HEIGHT + ( 57.0 * max )
-            if ( tmpUsers.count == 1 ) {
-                windowHeight = windowHeight + 6.0
-            }
-        }
-        // Resize my window
-        if let letMyWindow = self.window {
-            let myWindow = letMyWindow
-            let frame = myWindow.frame
-            var newSize = frame.size
-            newSize.height = windowHeight
-            myWindow.setContentSize(newSize)  // Only available under 10.10
-            // Ask the LPStatusItem to manifest
-            lpStatusItem.updateFrameStatusItemWindow()
-        }
+        //
+        self.showLdapResultsStackView()
+        
         // Send a signal indicating that search was cancel
         self.ldapSearchIsRunning = false
         
@@ -597,7 +689,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
 
         
         // Clean start
-        tmpUsers.removeAll()
+        self.tmpUsers.removeAll()
         
         // Analyses of every line
         //
@@ -614,7 +706,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
                     var token = line.componentsSeparatedByString("dn: ")
                     user = LPLdapUser()
                     user.dn = token[1]
-                    tmpUsers.append(user)
+                    self.tmpUsers.append(user)
                 } else {
                     if ( newUser ) {
                         for attr in myAttributes {
@@ -710,7 +802,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
                 timerTextDidChange.invalidate()
                 
                 if ( self.ldapSearchIsRunning ) {
-                    print("FIX ME ... !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   <=== !!!!*****!!!!!   stopLDAPSearch()")
+                    print("FIX ME ... NEW TEXT BUT LDAP SEARCH IS STILL RUNNING. NEED TO BE ABLE TO STOP IT")
                     self.stopLDAPSearch()
                 }
             }
@@ -736,24 +828,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         previousSearchString=searchField.stringValue
     }
     
-    
-    // Sets the size of the window’s content to a given size,
-    // 
-    // Note: This method is NOT used because I'm using:
-    //       myWindow.setContentSize(newSize)
-    //
-    //       However, it's only available in 10.10, so I leave
-    //       the following just in case I develop a <10.10 version
-    //
-    // func resizeWindowForContentSize ( window : NSWindow, size : NSSize ) {
-    //    let windowFrame = window.contentRectForFrameRect(window.frame)
-    //    let newWindowFrame = window.frameRectForContentRect(NSMakeRect(NSMinX(windowFrame), NSMaxY(windowFrame) - size.height, size.width, size.height))
-    //    window.setFrame(newWindowFrame, display: true, animate: window.visible)
-    //}
-
-    
-    
-    /// --------------------------------------------------------------------------------
+   /// --------------------------------------------------------------------------------
     //  MARK: KVO - Key Value Observing activation, de-activation and action
     /// --------------------------------------------------------------------------------
     
@@ -843,5 +918,4 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         }
     }
     
-    
-}
+ }

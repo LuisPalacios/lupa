@@ -198,7 +198,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             if let letItemImage = NSImage(named: "LupaOn_18x18") {
                 let itemImage = letItemImage
-                
+
                 lpStatusItem.activateStatusItemWithMenuImageWindow(self.statusMenu, itemImage: itemImage, winController: searchWinCtrl)
                 
             } else {

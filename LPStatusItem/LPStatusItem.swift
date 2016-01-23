@@ -83,52 +83,6 @@ import Cocoa
     
     /// Activate my status item and present it in the bar
     ///
-//    func activateStatusItemWithImage (statusMenu: NSMenu, itemImage : NSImage, contentViewController: NSViewController) {
-//        
-//        // Log
-//        print("LPStatusItem - Activate my status item and present it in the bar")
-//        print("    activateStatusItemWithImage (statusMenu: \(statusMenu) itemImage : \(itemImage), contentViewController: \(contentViewController)) ")
-//        
-//        // Store the Menu 
-//        self.statusMenu = statusMenu
-//        
-//        /// Create Status Bar Item with an NSImage
-//        //
-//        self.createStatusBarItemWithImage(statusMenu, itemImage: itemImage)
-//
-//        
-//        // Create the default configuration
-//        //
-//        self.windowConfig = LPStatusItemWindowConfig() // = [CCNStatusItemWindowConfiguration defaultConfiguration];
-//
-//        
-//        /// Create Custom NSWindowController
-//        //
-//        var success: Bool = false
-//        do {
-//            try statusItemWindowController = LPStatusItemWindowCtrl (
-//                statusItem: self,                               //  self : This statusItem
-//                contentViewController: contentViewController,   //  contentViewController : The custom view controller passef by the AppDelegate
-//                windowConfig: self.windowConfig )               //  windowConfig : Window configuration object to use to prepare the window
-//            success = true
-//        } catch let error as skStatusItemWindowCtrlNotReady {
-//            print(error.description)
-//        } catch {
-//            print ("Undefinded error")
-//        }
-//        
-//        // Show result
-//        if success {
-//            // print("activateStatusItemWithImage: you're all set!!!")
-//        } else {
-//            print("activateStatusItemWithImage: Something really bad hapenned !!!!!")
-//        }
-//    }
-    
-    
-    
-    /// Activate my status item and present it in the bar
-    ///
     func activateStatusItemWithMenuImageWindow (statusMenu: NSMenu, itemImage : NSImage, winController: NSWindowController) {
         
         // Log
@@ -142,11 +96,9 @@ import Cocoa
         //
         self.createStatusBarItemWithImage(statusMenu, itemImage: itemImage)
         
-        
         // Create the default configuration
         //
-        self.windowConfig = LPStatusItemWindowConfig() // = [CCNStatusItemWindowConfiguration defaultConfiguration];
-        
+        self.windowConfig = LPStatusItemWindowConfig()
         
         /// Create Custom NSWindowController
         //

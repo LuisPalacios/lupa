@@ -32,8 +32,6 @@ struct LUPADefaults {
 
     static let lupa_BIND_User               = "lupa_BIND_User"                      // ldapsearch -D  CN=<lupa_BIND_User>, <lupa_BIND_UserStore>
     static let lupa_BIND_UserStore          = "lupa_BIND_UserStore"                 // ldapsearch -D  CN=<lupa_BIND_User>, <lupa_BIND_UserStore>
-    static let lupa_BIND_Password           = "lupa_BIND_Password"                  // ldapsearch -w
-
     static let lupa_LDAP_Command            = "lupa_LDAP_Command"                   // ldapsearch -x
     static let lupa_LDAP_BaseDN             = "lupa_LDAP_BaseDN"                    // -b ou=employees,o=company.com
     static let lupa_LDAP_Host               = "lupa_LDAP_Host"                      // -H ldaps://ldap.company.com
@@ -62,7 +60,9 @@ struct LUPADefaults {
     static let lupa_LDAP_PictureURL         = "lupa_LDAP_PictureURL"                // Attribute for the URL pointing to the user picture
     static let lupa_LDAP_Limit_Results       = "lupa_LDAP_Limit_Results"              // Max. num of returned results
 
-    static let keychain_BIND_Password        = "lupa_BIND_Password"
+    
+    // The following attribute has been *DEPRECATED*
+    static let lupa_BIND_Password           = "lupa_BIND_Password"                  // ldapsearch -w
 
 }
 
@@ -90,4 +90,140 @@ extension NSView {
             self.layer?.backgroundColor = newValue?.CGColor
         }
     }
+}
+
+
+
+
+// --------------------------------------------------------------------------------
+//  MARK: Keychain for the Password
+// --------------------------------------------------------------------------------
+//
+// Notice this is my own implementation, but much better framwork here:
+//  https://github.com/kishikawakatsumi/KeychainAccess
+//
+
+private let Class = String(kSecClass)
+private let AttributeAccount = String(kSecAttrAccount)
+
+
+// Save the Password
+//
+func setInternetPassword(password: String, forServer server: String, account: String, port: Int, secProtocol: SecProtocolType ) {
+    let password_ns: NSString = password
+    let server_ns: NSString = server
+    let account_ns: NSString = account
+    
+    // Attributes to store the oldPassword, if any
+    //
+    var oldPasswordPtrLength: UInt32 = 0
+    var oldPasswordPtr: UnsafeMutablePointer<Void> = nil
+    var itemRef : SecKeychainItemRef? = nil
+    
+    // First check whether there is already one in the keychain
+    //
+    let err : OSStatus = SecKeychainFindInternetPassword(
+        nil,
+        UInt32(server_ns.length), server_ns.UTF8String,
+        0, nil, /* security domain */
+        UInt32(account_ns.length), account_ns.UTF8String,
+        0, nil, /* path */
+        UInt16(port), /* port */
+        secProtocol,
+        SecAuthenticationType.Default,
+        &oldPasswordPtrLength, &oldPasswordPtr,
+        &itemRef) /* itemRef */
+    
+    //
+    //
+    let passwordLength = password.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+    if ( passwordLength > 0 ) {
+        
+        // Create the new password
+        //
+        if ( err != 0 ) {
+            let addStatus = SecKeychainAddInternetPassword(
+                nil, /* default keychain */
+                UInt32(server_ns.length), server_ns.UTF8String,
+                0, nil, /* security domain */
+                UInt32(account_ns.length), account_ns.UTF8String,
+                0, nil, /* path */
+                UInt16(port), /* port */
+                secProtocol,
+                SecAuthenticationType.Default,
+                UInt32(password_ns.length), password_ns.UTF8String,
+                nil)
+            
+            if addStatus != errSecSuccess {
+                // print("Could not save password.")
+                let msg = SecCopyErrorMessageString(addStatus, nil)
+                print("\(msg)")
+            } else {
+                // print("Added new Password: \(password)")
+            }
+            
+        } else {
+            // Otherwise, modify existing, if different
+            //
+            var oldPassword = ""
+            if let str = NSString(bytes: oldPasswordPtr, length: Int(oldPasswordPtrLength), encoding: NSUTF8StringEncoding) as? String {
+                oldPassword = str
+            }
+            if ( password != oldPassword ) {
+                if let passRef = itemRef  {
+                    SecKeychainItemModifyContent(passRef, nil, UInt32(password_ns.length), password_ns.UTF8String)
+                    // print("Changed Password, old: \(oldPassword)  new: \(password)")
+                }
+            }
+        }
+    } else {
+        if ( err == 0 ) {
+            
+            // Asked to removed the password, let's go for it...
+            //
+            if let passRef = itemRef  {
+                SecKeychainItemDelete(passRef)
+                // print("Removed Password")
+                // The following is not needed under Swift 2.1
+                // CFRelease(passRef)
+            }
+        }
+    }
+}
+
+
+// Read the Password
+//
+func internetPasswordForServer(server: String, account: String, port: Int, secProtocol: SecProtocolType) -> String? {
+    
+    var passwordLength: UInt32 = 0
+    var passwordData: UnsafeMutablePointer<Void> = nil
+    
+    let server_ns: NSString = server
+    let account_ns: NSString = account
+    
+    let status = SecKeychainFindInternetPassword(nil,
+        UInt32(server_ns.length), server_ns.UTF8String,
+        0, nil, /* security domain */
+        UInt32(account_ns.length), account_ns.UTF8String,
+        0, nil, /* path */
+        UInt16(port), /* port */
+        secProtocol,
+        SecAuthenticationType.Default,
+        &passwordLength, &passwordData,
+        nil) /* itemRef */
+    
+    if status != errSecSuccess {
+        // print("server: \(server). account: \(account). port: \(port). secProtocol: \(secProtocol) ==> Could not find password.")
+        return nil
+    }
+    
+    var password = ""
+    if let str = NSString(bytes: passwordData, length: Int(passwordLength), encoding: NSUTF8StringEncoding) as? String {
+        SecKeychainItemFreeContent(nil, passwordData);
+        password = str
+    }
+    // print("Found Password: \(password)")
+    
+    return password
 }

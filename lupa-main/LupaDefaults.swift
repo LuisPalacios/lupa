@@ -51,6 +51,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         self.updateUI()
     }
 
+ 
     /// --------------------------------------------------------------------------------
     //  MARK: User changes
     /// --------------------------------------------------------------------------------
@@ -71,47 +72,40 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     // *NEW* Version will save into Keychain. NOTICE: Still not fully implemented (21/1/16@)
     //
     @IBAction func passwordChanged(sender: AnyObject) {
+
         
         // Password special case:
         let pass = self.passwdTextField.stringValue
 
+        var intLDAP_Port = 0
+        var letLDAP_Port = "636" // Default
+        if let letLDAP_Bind_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
+            letLDAP_Port = letLDAP_Bind_Port
+            if let num = Int(letLDAP_Port) {
+                intLDAP_Port = num
+            }
+        } else {
+            print("ERROR: El campo Port está vacío")
+        }
+
+        
         if let server = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
             if ( !server.isEmpty ) {
         
                 if let user = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
                     if ( !user.isEmpty ) {
                 
+                        setInternetPassword(pass, forServer: server, account: user, port: intLDAP_Port, secProtocol: SecProtocolType.LDAPS)
                     
-                        
-                        
-                        //self.setKeychainPassword(pass, forServer: server, withUsername: user)
+                        // Log to touble check it was correctly saved
+                        //
+                        // if let thePassword = internetPasswordForServer(server, account: user, port: intLDAP_Port, secProtocol: SecProtocolType.LDAPS) {
+                        //     print("Password in keychain = '\(thePassword)'")
+                        // } else {
+                        //     print("Password in keychain is EMPTY")
+                        // }
+
                     
-                        // Asking for a password set (or change)
-                        self.setInternetPassword(pass, forServer: server, account: user, port: 0, secProtocol: SecProtocolType.LDAPS)
-                    
-                    } else {
-                        print("ERROR: El campo usuario está vacío")
-                    }
-                } else {
-                    print("ERROR: El campo usuario no existe...")
-                }
-            }
-        } else {
-            print("ERROR, por favor pon antes el HOST !!!! ")
-        }
-
-        
-        if let server = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
-            if ( !server.isEmpty ) {
-                if let user = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
-                    if ( !user.isEmpty ) {
-
-                        if let thePassword = self.internetPasswordForServer(server, account: user, port: 0, secProtocol: SecProtocolType.LDAPS) {
-                            print("Password in keychain = '\(thePassword)'")
-                        } else {
-                            print("Password in keychain is EMPTY")
-                        }
-
                     } else {
                         print("ERROR: El campo usuario está vacío")
                     }
@@ -130,9 +124,20 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     }
     
     
+    /// --------------------------------------------------------------------------------
+    //  MARK: UI
+    /// --------------------------------------------------------------------------------
+    
+    
     // Update UI components that need same kind of intelligence
     //
     func updateUI() {
+        
+        // PASSWORD
+        self.passwdTextField.stringValue = self.getCurrentPassword()
+        
+
+        // FULL BIND USER
         var bindUser = ""
         if let letLDAP_Bind_User = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
             bindUser = letLDAP_Bind_User
@@ -144,6 +149,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         }
         self.bindUserID.stringValue = bindUser
         
+        // FULL URL
         var fullURL = ""
         if let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
             if ( !letLDAP_Host.isEmpty ) {                
@@ -182,8 +188,6 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
         
         userDefaults.setObject("", forKey: LUPADefaults.lupa_BIND_User)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_BIND_Password)
-
         userDefaults.setObject("", forKey: LUPADefaults.lupa_URLPrefix)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_BIND_UserStore)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Command)
@@ -200,12 +204,14 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_VoiceMob)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_Title)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_PictureURL)
-
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Search_CN)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Search_Desc)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Search_VoiceLin)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Search_VoiceInt)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Search_VoiceMob)
+        
+        // The following attribute has been *DEPRECATED*
+        userDefaults.removeObjectForKey(LUPADefaults.lupa_BIND_Password)
 
         self.updateUI()
     }
@@ -272,141 +278,35 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     }
     
     
-    
-    
-    // --------------------------------------------------------------------------------
-    //  MARK: Keychain for the Password
-    // --------------------------------------------------------------------------------
+    ///
+    // MARK: Password
     //
-    // Notice this is my own implementation, but much better framwork here: 
-    //  https://github.com/kishikawakatsumi/KeychainAccess
-    //
-
-    private let Class = String(kSecClass)
-    private let AttributeAccount = String(kSecAttrAccount)
-    
-
-    // Save the Password
-    //
-    func setInternetPassword(password: String, forServer server: String, account: String, port: Int, secProtocol: SecProtocolType ) {
-        let password_ns: NSString = password
-        let server_ns: NSString = server
-        let account_ns: NSString = account
-
-        // Attributes to store the oldPassword, if any
-        //
-        var oldPasswordPtrLength: UInt32 = 0
-        var oldPasswordPtr: UnsafeMutablePointer<Void> = nil
-        var itemRef : SecKeychainItemRef? = nil
-        
-        // First check whether there is already one in the keychain
-        //
-        let err : OSStatus = SecKeychainFindInternetPassword(
-            nil,
-            UInt32(server_ns.length), server_ns.UTF8String,
-            0, nil, /* security domain */
-            UInt32(account_ns.length), account_ns.UTF8String,
-            0, nil, /* path */
-            UInt16(port), /* port */
-            secProtocol,
-            SecAuthenticationType.Default,
-            &oldPasswordPtrLength, &oldPasswordPtr,
-            &itemRef) /* itemRef */
-
-        //
-        //
-        let passwordLength = password.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
-        if ( passwordLength > 0 ) {
-            
-            // Create the new password
-            //
-            if ( err != 0 ) {
-                let addStatus = SecKeychainAddInternetPassword(
-                    nil, /* default keychain */
-                    UInt32(server_ns.length), server_ns.UTF8String,
-                    0, nil, /* security domain */
-                    UInt32(account_ns.length), account_ns.UTF8String,
-                    0, nil, /* path */
-                    UInt16(port), /* port */
-                    secProtocol,
-                    SecAuthenticationType.Default,
-                    UInt32(password_ns.length), password_ns.UTF8String,
-                    nil)
-                
-                if addStatus != errSecSuccess {
-                    // print("Could not save password.")
-                    let msg = SecCopyErrorMessageString(addStatus, nil)
-                    print("\(msg)")
-                } else {
-                    // print("Added new Password: \(password)")
-                }
-
-            } else {
-                // Otherwise, modify existing, if different
-                //
-                var oldPassword = ""
-                if let str = NSString(bytes: oldPasswordPtr, length: Int(oldPasswordPtrLength), encoding: NSUTF8StringEncoding) as? String {
-                    oldPassword = str
-                }
-                if ( password != oldPassword ) {
-                    if let passRef = itemRef  {
-                        SecKeychainItemModifyContent(passRef, nil, UInt32(password_ns.length), password_ns.UTF8String)
-                        // print("Changed Password, old: \(oldPassword)  new: \(password)")
-                    }
-                }
-            }
-        } else {
-            if ( err == 0 ) {
-
-                // Asked to removed the password, let's go for it...
-                //
-                if let passRef = itemRef  {
-                    SecKeychainItemDelete(passRef)
-                    // print("Removed Password")
-                    // The following is not needed under Swift 2.1
-                    // CFRelease(passRef)
-                }
-            }
-        }
-    }
-
-    
-    // Read the Password
-    //
-    func internetPasswordForServer(server: String, account: String, port: Int, secProtocol: SecProtocolType) -> String? {
-        var passwordLength: UInt32 = 0
-        var passwordData: UnsafeMutablePointer<Void> = nil
-        
-        let server_ns: NSString = server
-        let account_ns: NSString = account
-        
-        let status = SecKeychainFindInternetPassword(nil,
-            UInt32(server_ns.length), server_ns.UTF8String,
-            0, nil, /* security domain */
-            UInt32(account_ns.length), account_ns.UTF8String,
-            0, nil, /* path */
-            UInt16(port), /* port */
-            secProtocol,
-            SecAuthenticationType.Default,
-            &passwordLength, &passwordData,
-            nil) /* itemRef */
-        
-        if status != errSecSuccess {
-            // print("Could not find password.")
-            return nil
-        }
-        
+    func getCurrentPassword() -> String {
         var password = ""
-        if let str = NSString(bytes: passwordData, length: Int(passwordLength), encoding: NSUTF8StringEncoding) as? String {
-            SecKeychainItemFreeContent(nil, passwordData);
-            password = str
+        // Get current password
+        //
+        guard let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String else {
+            return ""
         }
-        // print("Found Password: \(password)")
-
+        var letLDAP_Port = ""
+        if let letLDAP_Bind_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
+            letLDAP_Port = letLDAP_Bind_Port
+        }
+        var intLDAP_Port = 0
+        if let num = Int(letLDAP_Port) {
+            intLDAP_Port = num
+        }
+        if let letLDAP_Bind_User = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
+            guard let pass = internetPasswordForServer(letLDAP_Host, account: letLDAP_Bind_User, port: intLDAP_Port, secProtocol: SecProtocolType.LDAPS) else {
+                return ""
+            }
+            password = pass
+        }
         return password
     }
-
     
+    
+
 }
 
 
