@@ -42,8 +42,8 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
 
     //  Class attributes
     dynamic var ldapSearchResults = ""
-    var observableKeys_LDAPSearchResults = [ "self.ldapSearchFinished" ]
-    dynamic var ldapSearchFinished : Bool = false
+    var observableKeys_LDAPSearchResults = [ "self.ldapSearchHasFinished" ]
+    dynamic var ldapSearchHasFinished : Bool = false
     dynamic var users = [LPLdapUser]()
     dynamic var tmpUsers = [LPLdapUser]()
 
@@ -55,6 +55,9 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     var ldapSearchIsRunning : Bool = false
     var postfix_searchString = ""
     var minHeight = ikWINDOW_MIN_HEIGHT
+    
+    // Commander
+    let cmd = LPCommand()
     
     /// --------------------------------------------------------------------------------
     //  MARK: Main
@@ -74,7 +77,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         }
         
         // Spy when ldapsearch finishes...
-        self.loadKVO()
+        // self.loadKVO()
         
         // Calc the minimum Height possible for the
         // search window. It's exactly without the
@@ -398,7 +401,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     // Start the ldap search
     // Prepare the command....
     //
-    func startLDAPSearch() {
+    func ldapsearchStart() {
 
         // search string
         let searchString : String = searchField.stringValue
@@ -553,24 +556,6 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             commandString = commandString + letTheString
         }
         
-        // Got a command, lets log it. Notice that I REMOVE THE PASSWORD
-        //  print("Command: \(commandString)")
-        //  ToDO - investigate: if someone is looking at the process list (difficult I know)...
-        //  they will see the password while the command is being executed
-        var logString = ""
-        if let rangeBeforePassword = commandString.rangeOfString("-w", options: .BackwardsSearch) {
-            let index = rangeBeforePassword.startIndex
-            let stringBeforePassword = commandString.substringToIndex(index)
-            logString = stringBeforePassword
-        }
-        logString = logString + "-w \"PASSWORD_HIDDEN\" "
-        if let rangeAfterPassword = commandString.rangeOfString("-x", options: .BackwardsSearch) {
-            let index = rangeAfterPassword.startIndex
-            let stringAfterPassword = commandString.substringFromIndex(index)
-            logString = logString + stringAfterPassword
-       }
-        print("Command: \(logString)")
- 
         // Start the spinning...
         let mainQueue = LPQueue.Main
         mainQueue.async { () -> () in
@@ -583,17 +568,16 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         // this is done on purpose so the user doesn't start multiple ldapsearch
         // commands simultaneously. Future ToDO: async thread and kill previous?
         self.ldapSearchIsRunning = true
-        self.execcmdAndParse(commandString)
-        self.ldapSearchIsRunning = false
-
+        self.execCmdAndParse(commandString)
+        
     }
 
     
-     // Stop the Browser search
+    // search has Finished
     //
-    func stopLDAPSearch() {
-        // print("stopLDAPSearch(): FINISHED LDAP SEARCH <<<<<<<<-------------------")
-
+    func ldapsearchFinished() {
+        print("ldapsearchFinished")
+        
         // Stop visual UI
         //  self.textLabel.stringValue = ""
         self.stopUI_LDAPsearchInProgress()
@@ -632,6 +616,24 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         
     }
     
+    
+    // Stop the search
+    //
+    func ldapsearchStop() {
+        print("ldapsearchStop")
+        
+        // Stop visual UI
+        self.stopUI_LDAPsearchInProgress()
+        
+        // Ask current cmd to stop
+        self.cmd.terminate()
+        
+        // Search has been cancel
+        self.ldapSearchIsRunning = false
+        
+    }
+
+    
     /** @brief Gestión del Spinning wheel que indica que Abaco está trabajando
     *
     */
@@ -651,14 +653,15 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     //  MARK: Execute command from shell
     /// --------------------------------------------------------------------------------
 
-    // Execute shell command and parse its output
+    // Execute a cli command
     //
-    func execcmdAndParse(cmdname: String)
-    {
+    func execCmdAndParse(commandString: String) {
+        
+       
         var newUser: Bool = false
         let myAttributes = ["cn: ", "uid: ", "description: ", "co: ", "state: ", "telephoneNumber: ", "voicemail: ", "mobile: ", "publishpicture: ", "title: "]
         var user : LPLdapUser!
-
+        
         // I'll use userDefaults, however I'm setting even more defaults :)
         var description: String = "description: "
         var country: String = "c: "
@@ -667,7 +670,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         var voiceint: String = "telephoneInternal: "
         var voicemob: String = "mobile: "
         var title: String = "title: "
-        
+
         if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Desc) as? String {
             description = letTheString + ": "
         }
@@ -689,81 +692,126 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Title) as? String {
             title = letTheString + ": "
         }
-
+        
         
         // Clean start
         self.tmpUsers.removeAll()
         
-        // Analyses of every line
+        
+        // Got a command, lets log it. Notice that I REMOVE THE PASSWORD
+        //  print("Command: \(commandString)")
+        //  ToDO - investigate: if someone is looking at the process list (difficult I know)...
+        //  they will see the password while the command is being executed
+        var logString = ""
+        if let rangeBeforePassword = commandString.rangeOfString("-w", options: .BackwardsSearch) {
+            let index = rangeBeforePassword.startIndex
+            let stringBeforePassword = commandString.substringToIndex(index)
+            logString = stringBeforePassword
+        }
+        logString = logString + "-w \"PASSWORD_HIDDEN\" "
+        if let rangeAfterPassword = commandString.rangeOfString("-x", options: .BackwardsSearch) {
+            let index = rangeAfterPassword.startIndex
+            let stringAfterPassword = commandString.substringFromIndex(index)
+            logString = logString + stringAfterPassword
+        }
+        print("Command: \(logString)")
+        
+        
+        // Execute the command...
         //
-        for line in run(cmdname).lines() {
-        //for line in open("/Users/luis/fichero.ldapsearch").lines() {
+        // let cmd = LPCommand()
+        //        let lines = cmd.run(commandString).lines()
+        
+        
+        // DELETE ME !!!!
+        //let cmdDebugString = "/usr/local/duermeyhabla.sh"
+        //print("Command: \(cmdDebugString)")
 
-            // Do something with each line
-            if !line.hasPrefix("#") {
+        // Ahí que vamos... 
+        //self.cmd.run(cmdDebugString) { (success, output) -> Void in
+        self.cmd.run(commandString) { (success, output) -> Void in
 
-                // DN
-                if line.hasPrefix("dn: ") {
-                    newUser = true
+            if success {
+                
+                // Work the lines
+                for line in output {
+                    // print("completionHandler - LINE: \(line)")
                     
-                    var token = line.componentsSeparatedByString("dn: ")
-                    user = LPLdapUser()
-                    user.dn = token[1]
-                    self.tmpUsers.append(user)
-                } else {
-                    if ( newUser ) {
-                        for attr in myAttributes {
-                            if line.hasPrefix(attr) {
-                                var token = line.componentsSeparatedByString(attr)
-                                switch attr {
-
-                                case "cn: ":
-                                    user.cn = token[1]
-                                    break
-                                    
-                                case "uid: ":
-                                    user.uid = token[1]
-                                    break
-                                    
-                                case description:
-                                    user.desc = token[1]
-                                    break
-
-                                case country:
-                                    user.country = token[1]
-                                    break
-                                    
-                                case city:
-                                    user.city = token[1]
-                                    break
-                                    
-                                case voicelin:
-                                    user.voicetel = token[1]
-                                    break
-                                    
-                                case voiceint:
-                                    user.voiceint = token[1]
-                                    break
-                                    
-                                case voicemob:
-                                    user.voicemob = token[1]
-                                    break
-                                    
-                                case title:
-                                    user.title = token[1]
-                                    break
-                                    
-                                default:
-                                    break
+                    // Do something with each line
+                    if !line.hasPrefix("#") {
+                        
+                        // DN
+                        if line.hasPrefix("dn: ") {
+                            newUser = true
+                            
+                            var token = line.componentsSeparatedByString("dn: ")
+                            user = LPLdapUser()
+                            user.dn = token[1]
+                            self.tmpUsers.append(user)
+                        } else {
+                            if ( newUser ) {
+                                for attr in myAttributes {
+                                    if line.hasPrefix(attr) {
+                                        var token = line.componentsSeparatedByString(attr)
+                                        switch attr {
+                                            
+                                        case "cn: ":
+                                            user.cn = token[1]
+                                            break
+                                            
+                                        case "uid: ":
+                                            user.uid = token[1]
+                                            break
+                                            
+                                        case description:
+                                            user.desc = token[1]
+                                            break
+                                            
+                                        case country:
+                                            user.country = token[1]
+                                            break
+                                            
+                                        case city:
+                                            user.city = token[1]
+                                            break
+                                            
+                                        case voicelin:
+                                            user.voicetel = token[1]
+                                            break
+                                            
+                                        case voiceint:
+                                            user.voiceint = token[1]
+                                            break
+                                            
+                                        case voicemob:
+                                            user.voicemob = token[1]
+                                            break
+                                            
+                                        case title:
+                                            user.title = token[1]
+                                            break
+                                            
+                                        default:
+                                            break
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
+              
+            }
+            
+            // Say it, we finished
+            // print("TERMINÓ EL COMANDO, cambio self.ldapSearchHasFinished = true ")
+            let mainQueue = LPQueue.Main
+            mainQueue.async { () -> () in
+                self.ldapsearchFinished()
             }
         }
-
-        ldapSearchFinished = true
+            
+     
     }
     
 
@@ -805,8 +853,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
                 timerTextDidChange.invalidate()
                 
                 if ( self.ldapSearchIsRunning ) {
-                    print("FIX ME ... NEW TEXT BUT LDAP SEARCH IS STILL RUNNING. NEED TO BE ABLE TO STOP IT")
-                    self.stopLDAPSearch()
+                    self.ldapsearchStop()
                 }
             }
             timerTextDidChange = nil
@@ -825,100 +872,103 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             // LDAP Search -
             // Check if I'm asked for quick dirty ldap search
             //
-            self.startLDAPSearch()
+            self.ldapsearchStart()
             
         }
         previousSearchString=searchField.stringValue
     }
     
-   /// --------------------------------------------------------------------------------
-    //  MARK: KVO - Key Value Observing activation, de-activation and action
-    /// --------------------------------------------------------------------------------
-    
-    // Context (up=unsafe pointer)
-    private var up_LupaSearchWinCtrl_KVOContext_LDAPSearchResult = 0
-    
-    // Load and activate the Key Value Observing
-    //
-    func loadKVO () {
-        self.onObserver()
-    }
-    
-    // Activate the observer
-    //
-    func onObserver () {
-        for item in self.observableKeys_LDAPSearchResults {
-            self.addObserver(self, forKeyPath: item, options: [], context: &up_LupaSearchWinCtrl_KVOContext_LDAPSearchResult)
-        }
-    }
-    
-    // Deactivate and unload the Key Value Observing
-    //
-    func unloadKVO () {
-        self.offObserver()
-    }
-    
-    // Deactivate the observer
-    //
-    func offObserver () {
-        for item in self.observableKeys_LDAPSearchResults {
-            self.removeObserver(self, forKeyPath: item)
-        }
-    }
-    
-    // Actions when a change comes...
-    //
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>) {
-        
-        // Act on the appropiate context
-        if context == &up_LupaSearchWinCtrl_KVOContext_LDAPSearchResult {
-            
-
-            //	New guard statement to return early if there's no change.
-            guard let change = change else {
-                // print("No change, return")
-                return
-            }
-            
-            //  Identify the kind of change
-            //
-            if let rv = change[NSKeyValueChangeKindKey] as? UInt,
-                kind = NSKeyValueChange(rawValue: rv) {
-                    // print("Tipo de cambio: \(kind)")
-                    switch kind {
-                    case .Setting:
-                        // print(".Setting -> \(change[NSKeyValueChangeKindKey]) ")
-                        if ( keyPath == "self.ldapSearchFinished" ) {
-                            // Update UI
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.stopLDAPSearch()
-                                self.offObserver()
-                                self.ldapSearchFinished = false
-                                self.onObserver()
-                            }
-                        }
-                    case .Insertion:
-                        // print(".Insertion -> \(change[NSKeyValueChangeNewKey]) ")
-                        break
-                    case .Removal:
-                        // print(".Removal -> \(change[NSKeyValueChangeOldKey]) ")
-                        break
-                    case .Replacement:
-                        // print(".Replacement -> \(change[NSKeyValueChangeOldKey]) ")
-                        break
-                    }
-
-                    // Debug purposes
-                    //print("change[NSKeyValueChangeNewKey] -> \(change[NSKeyValueChangeNewKey]) ")
-                    //print("change[NSKeyValueChangeOldKey] -> \(change[NSKeyValueChangeOldKey]) ")
-                    //print("change[NSKeyValueChangeIndexesKey] -> \(change[NSKeyValueChangeIndexesKey]) ")
-                    //print("change[NSKeyValueChangeNotificationIsPriorKey] -> \(change[NSKeyValueChangeNotificationIsPriorKey]) ")
-            }
-            
-        } else {
-            // Defaults...
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
-        }
-    }
+//   /// --------------------------------------------------------------------------------
+//    //  MARK: KVO - Key Value Observing activation, de-activation and action
+//    /// --------------------------------------------------------------------------------
+//    
+//    // Context (up=unsafe pointer)
+//    private var up_LupaSearchWinCtrl_KVOContext_LDAPSearchResult = 0
+//    
+//    // Load and activate the Key Value Observing
+//    //
+//    func loadKVO () {
+//        self.onObserver()
+//    }
+//    
+//    // Activate the observer
+//    //
+//    func onObserver () {
+//        for item in self.observableKeys_LDAPSearchResults {
+//            self.addObserver(self, forKeyPath: item, options: [], context: &up_LupaSearchWinCtrl_KVOContext_LDAPSearchResult)
+//        }
+//    }
+//    
+//    // Deactivate and unload the Key Value Observing
+//    //
+//    func unloadKVO () {
+//        self.offObserver()
+//    }
+//    
+//    // Deactivate the observer
+//    //
+//    func offObserver () {
+//        for item in self.observableKeys_LDAPSearchResults {
+//            self.removeObserver(self, forKeyPath: item)
+//        }
+//    }
+//    
+//    // Actions when a change comes...
+//    //
+//    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>) {
+//        
+//        // Act on the appropiate context
+//        if context == &up_LupaSearchWinCtrl_KVOContext_LDAPSearchResult {
+//            
+//
+//            //	New guard statement to return early if there's no change.
+//            guard let change = change else {
+//                // print("No change, return")
+//                return
+//            }
+//            
+//            //  Identify the kind of change
+//            //
+//            if let rv = change[NSKeyValueChangeKindKey] as? UInt,
+//                kind = NSKeyValueChange(rawValue: rv) {
+//                    // print("Tipo de cambio: \(kind)")
+//                    switch kind {
+//                    case .Setting:
+//                        // print(".Setting -> \(change[NSKeyValueChangeKindKey]) ")
+//                        if ( keyPath == "self.ldapSearchHasFinished" ) {
+//                            // Update UI
+//                            dispatch_async(dispatch_get_main_queue()) {
+//                                
+//                                print("observeValueForKeyPath  EN TEORIA HA TERMINAADO self.ldapSearchDidFinished")
+//                                
+//                                self.ldapsearchFinished()
+//                                self.offObserver()
+//                                self.ldapSearchHasFinished = false
+//                                self.onObserver()
+//                            }
+//                        }
+//                    case .Insertion:
+//                        // print(".Insertion -> \(change[NSKeyValueChangeNewKey]) ")
+//                        break
+//                    case .Removal:
+//                        // print(".Removal -> \(change[NSKeyValueChangeOldKey]) ")
+//                        break
+//                    case .Replacement:
+//                        // print(".Replacement -> \(change[NSKeyValueChangeOldKey]) ")
+//                        break
+//                    }
+//
+//                    // Debug purposes
+//                    //print("change[NSKeyValueChangeNewKey] -> \(change[NSKeyValueChangeNewKey]) ")
+//                    //print("change[NSKeyValueChangeOldKey] -> \(change[NSKeyValueChangeOldKey]) ")
+//                    //print("change[NSKeyValueChangeIndexesKey] -> \(change[NSKeyValueChangeIndexesKey]) ")
+//                    //print("change[NSKeyValueChangeNotificationIsPriorKey] -> \(change[NSKeyValueChangeNotificationIsPriorKey]) ")
+//            }
+//            
+//        } else {
+//            // Defaults...
+//            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+//        }
+//    }
     
  }
