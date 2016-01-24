@@ -30,6 +30,8 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     
     @IBOutlet weak var ldapResultTableView: NSTableView!
     @IBOutlet weak var ldapResultStackView: NSStackView!
+    @IBOutlet weak var mainStackView: NSStackView!
+    @IBOutlet weak var searchStackView: NSStackView!
     
     @IBOutlet var arrayController: NSArrayController!
     
@@ -52,8 +54,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     var browserSearchIsRunning : Bool = false
     var ldapSearchIsRunning : Bool = false
     var postfix_searchString = ""
-    var firstTimeOnScreen = true
-    var baseFrame : NSRect = NSMakeRect(0.0, 0.0, 0.0, 0.0)
+    var minHeight = ikWINDOW_MIN_HEIGHT
     
     /// --------------------------------------------------------------------------------
     //  MARK: Main
@@ -75,8 +76,18 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         // Spy when ldapsearch finishes...
         self.loadKVO()
         
-        // Hide the results stackview
-        self.hideLdapResultsStackView()
+        // Calc the minimum Height possible for the
+        // search window. It's exactly without the
+        // message and ldap results stackviews
+        if let window = self.window {
+            self.minHeight = window.frame.size.height - self.mainStackView.frame.size.height + self.searchStackView.frame.size.height
+        }
+
+        // Now I can hide both msg/ldap stackviews
+        self.msgStackView.hidden = true
+        self.ldapResultStackView.hidden = true
+        self.updateWindowFrame()
+        
         
         // Subscribe myself so I'll receive(Get) Notifications
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -84,9 +95,6 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             name: NSWindowDidBecomeKeyNotification,
             object: nil)
 
-        // Hide alert views
-        self.hideAlert()
-        
         // Hide spinning
         self.spinningLDAP.hidden = true
         
@@ -118,15 +126,6 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     //  so the user can start typing a new search text (deleting the old one)
     //
     func handleWindowDidBecomeActiveNotification (note : NSNotification) {
-        
-        // Store frame
-        if ( self.firstTimeOnScreen == true ) {
-            if let window = self.window {
-                self.baseFrame = window.frame
-            }
-            self.firstTimeOnScreen = false
-        }
-
         // Everytime I do appear select the text
         self.searchField.selectText(self)
     }
@@ -139,18 +138,15 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     // Show the ldap results stack view
     //
     func showLdapResultsStackView() {
-        
-        // Show the stack view
         self.ldapResultStackView.hidden = false
-        self.updateSearchWindowFrarme()
+        self.updateWindowFrame()
     }
-    
 
     // Hide the ldap results stack view
     //
     func hideLdapResultsStackView() {
         self.ldapResultStackView.hidden = true
-        self.updateSearchWindowFrarme()
+        self.updateWindowFrame()
     }
 
     // Show Alert stack view
@@ -162,38 +158,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     
     func hideAlert() {
         self.msgStackView.hidden = true
-        self.updateSearchWindowFrarme()
-    }
-    
-    // Hide the stack view
-    func updateSearchWindowFrarme() {
-    
-        // Is the ldap resulta stack view hidden
-        if ( self.ldapResultStackView.hidden == true ) {
-            if let window = self.window {
-                var newSize = window.frame.size
-                newSize.height = ikWINDOW_MIN_HEIGHT
-                window.setContentSize(newSize)  // Only available under 10.10
-                window.setFrameOrigin(self.baseFrame.origin)
-            }
-        } else {
-            var windowHeight = ikWINDOW_MIN_HEIGHT
-            if ( self.users.count != 0 ) {
-                var max : CGFloat = 5.0
-                if ( self.users.count < 5 ) {
-                    max = CGFloat ( self.users.count )
-                }
-                windowHeight = ikWINDOW_MIN_HEIGHT + ( 57.0 * max )
-            }
-            // Execute the resize
-            if let window = self.window {
-                var newSize = window.frame.size
-                newSize.height = windowHeight
-                window.setContentSize(newSize)  // Only available under 10.10
-                // Ask the LPStatusItem to manifest
-                lpStatusItem.updateFrameStatusItemWindow()
-            }
-        }
+        self.updateWindowFrame()
     }
     
     // Start a timer that will hide the Alert information
@@ -201,7 +166,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     func startTimerHideAlert() {
         self.stopTimerHideAlert()
 
-        self.timerHideAlert = NSTimer.scheduledTimerWithTimeInterval(2.0,
+        self.timerHideAlert = NSTimer.scheduledTimerWithTimeInterval(2.5,
                 target: self,
                 selector: Selector("actionTimerHideAlert"),
                 userInfo: nil,
@@ -225,6 +190,41 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     func actionTimerHideAlert() {
         self.hideAlert()
     }
+
+    
+    // Update the Window Frame, basically resize
+    // its height based on what I'm showing...
+    func updateWindowFrame() {
+        
+        if ( self.ldapResultStackView.hidden == true ) {
+            
+            // LDAP RESULT's VIEW INACTIVE
+            if let window = self.window {
+                var newSize = window.frame.size
+                newSize.height = self.minHeight
+                window.setContentSize(newSize)  // Only available under 10.10
+            }
+
+        } else {
+            
+            // LDAP RESULT's VIEW ACTIVE
+            var windowHeight = self.minHeight
+            if ( self.users.count != 0 ) {
+                var max : CGFloat = 5.0
+                if ( self.users.count < 5 ) {
+                    max = CGFloat ( self.users.count )
+                }
+                windowHeight = self.minHeight + ( 57.0 * max )
+            }
+            if let window = self.window {
+                var newSize = window.frame.size
+                newSize.height = windowHeight
+                window.setContentSize(newSize)  // Only available under 10.10
+            }
+        }
+        lpStatusItem.updateFrameStatusItemWindow()
+    }
+    
 
     
     /// --------------------------------------------------------------------------------
@@ -379,7 +379,6 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         
         let selectedRow = self.ldapResultTableView.selectedRow
         if ( selectedRow != -1 ) {
-            print("\(self.arrayController.arrangedObjects[selectedRow])")
             if let user : LPLdapUser = self.arrayController.arrangedObjects[selectedRow] as? LPLdapUser {
                 if !user.cn.isEmpty {
                     self.postfix_searchString = user.cn
@@ -622,7 +621,11 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         }
         
         //
-        self.showLdapResultsStackView()
+        if ( self.users.count != 0 ) {
+            self.showLdapResultsStackView()
+        } else {
+            self.hideLdapResultsStackView()
+        }
         
         // Send a signal indicating that search was cancel
         self.ldapSearchIsRunning = false

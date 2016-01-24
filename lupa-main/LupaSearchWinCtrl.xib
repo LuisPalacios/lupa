@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15E27e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
@@ -10,10 +11,12 @@
                 <outlet property="arrayController" destination="CaR-wG-5SX" id="txb-5W-PbH"/>
                 <outlet property="ldapResultStackView" destination="q3n-rK-xfn" id="NIx-qp-U2q"/>
                 <outlet property="ldapResultTableView" destination="LMX-1P-cwF" id="QEH-Vi-VMa"/>
+                <outlet property="mainStackView" destination="IuU-6O-2fH" id="H9t-kU-DWe"/>
                 <outlet property="msgStackView" destination="his-mK-oec" id="KWp-Hl-VNo"/>
                 <outlet property="msgTextView" destination="o0e-zQ-bMK" id="w2f-Gr-HHW"/>
                 <outlet property="searchField" destination="mzq-eI-59F" id="MhW-lN-OTY"/>
                 <outlet property="searchFieldCell" destination="dCh-xu-EgJ" id="U3n-FV-ctH"/>
+                <outlet property="searchStackView" destination="vha-9z-dva" id="lWW-Zp-fJj"/>
                 <outlet property="spinningLDAP" destination="TqW-HL-zol" id="zMX-Kd-yKT"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -77,17 +80,19 @@
                                                     <rect key="frame" x="1" y="1" width="250" height="33"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="o0e-zQ-bMK">
+                                                        <textView editable="NO" selectable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="o0e-zQ-bMK">
                                                             <rect key="frame" x="0.0" y="0.0" width="250" height="33"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                             <size key="minSize" width="250" height="33"/>
                                                             <size key="maxSize" width="463" height="10000000"/>
                                                             <attributedString key="textStorage">
                                                                 <fragment content="Lorem ipsum...">
                                                                     <attributes>
+                                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <font key="NSFont" size="12" name="Helvetica"/>
-                                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                     </attributes>
                                                                 </fragment>
                                                             </attributedString>
@@ -282,7 +287,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="-1061" y="-1472"/>
+            <point key="canvasLocation" x="-1049" y="-2205"/>
         </window>
         <arrayController automaticallyPreparesContent="YES" automaticallyRearrangesObjects="YES" id="CaR-wG-5SX" userLabel="someUsersController">
             <connections>

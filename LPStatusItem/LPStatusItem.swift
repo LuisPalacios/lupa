@@ -204,13 +204,17 @@ import Cocoa
     // Show the status item window
     //
     func updateFrameStatusItemWindow() {
-        self.statusItemWindowController.updateWindowFrame()
+        if ( self.statusItemWindowController != nil ) {
+            self.statusItemWindowController.updateWindowFrame()
+        }
     }
     
     // Dismiss the status item window
     //
     func dismissStatusItemWindow() {
-        self.statusItemWindowController.dismissStatusItemWindow()
+        if ( self.statusItemWindowController != nil ) {
+            self.statusItemWindowController.dismissStatusItemWindow()
+        }
     }
     
     /// --------------------------------------------------------------------------------

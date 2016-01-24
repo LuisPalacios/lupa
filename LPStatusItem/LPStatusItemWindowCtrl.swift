@@ -246,6 +246,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
                         NSMinY(statusItemRect) - NSHeight(window.frame) - self.windowConfig.windowToStatusMargin,
                         window.frame.size.width,
                         window.frame.size.height)
+//                    print("Rect: \(windowFrame)")
                     window.setFrame(windowFrame, display: true)
                     window.appearance = NSAppearance.currentAppearance()
                 }
