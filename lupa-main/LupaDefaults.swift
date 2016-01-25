@@ -10,9 +10,9 @@ import Cocoa
 
 class LupaDefaults: NSWindowController, NSTextViewDelegate {
 
-    /// --------------------------------------------------------------------------------
-    //  MARK: Attributes
-    /// --------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------
+    // MARK: Attributes
+    // --------------------------------------------------------------------------------
     
     //  For the following attributes I'm using Implicitly Unwrapped Optional (!)
     //  they are optionals and no need to initialize them here, will do later.
@@ -77,15 +77,13 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         // Password special case:
         let pass = self.passwdTextField.stringValue
 
-        var intLDAP_Port = 0
-        var letLDAP_Port = "636" // Default
+        var intLDAP_Port = 636
         if let letLDAP_Bind_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
-            letLDAP_Port = letLDAP_Bind_Port
-            if let num = Int(letLDAP_Port) {
+            if let num = Int(letLDAP_Bind_Port) {
                 intLDAP_Port = num
             }
         } else {
-            print("ERROR: El campo Port está vacío")
+            print("WARNING, port empty or invalid, I'll use port number 636")
         }
 
         
@@ -107,16 +105,16 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
 
                     
                     } else {
-                        print("ERROR: El campo usuario está vacío")
+                        print("ERROR: User field is empty")
                     }
                 } else {
-                    print("ERROR: El campo usuario no existe...")
+                    print("ERROR: user field doesn't exist")
                 }
             } else {
-                print("ERROR: El campo server está vacío...")
+                print("ERROR: server field is empty")
             }
         } else {
-            print("ERROR, por favor pon antes el HOST !!!! ")
+            print("ERROR, server field doesn't exist")
         }
         
         // Update the UI
@@ -184,16 +182,36 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     // Clean up the fields
     //
     @IBAction func cleanDefaults(sender: AnyObject) {
-        // Save defaults from json
-        let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
         
+        
+        // Clean the Password
+        if let server = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
+            if ( !server.isEmpty ) {
+                if let sPort = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
+                    var port = 636
+                    if let num = Int(sPort) {
+                        port = num
+                    }
+                    if let user = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
+                        if ( !user.isEmpty ) {
+                            setInternetPassword("", forServer: server, account: user, port: port, secProtocol: SecProtocolType.LDAPS)
+                        }
+                    }
+                }
+            }
+        }
+
+        // Clean everything else...
+        let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
         userDefaults.setObject("", forKey: LUPADefaults.lupa_BIND_User)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_URLPrefix)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_BIND_UserStore)
+        userDefaults.setBool(false, forKey: LUPADefaults.lupa_LDAP_Support)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Command)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_BaseDN)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Host)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Port)
+        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Timeout)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Limit_Results)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_CN)
         userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_Desc)
@@ -250,6 +268,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
                             userDefaults.setObject(json[LUPADefaults.lupa_LDAP_BaseDN], forKey: LUPADefaults.lupa_LDAP_BaseDN)
                             userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Host], forKey: LUPADefaults.lupa_LDAP_Host)
                             userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Port], forKey: LUPADefaults.lupa_LDAP_Port)
+                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Timeout], forKey: LUPADefaults.lupa_LDAP_Timeout)
                             userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Limit_Results], forKey: LUPADefaults.lupa_LDAP_Limit_Results)
                             userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Attr_CN], forKey: LUPADefaults.lupa_LDAP_Attr_CN)
                             userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Attr_Desc], forKey: LUPADefaults.lupa_LDAP_Attr_Desc)
@@ -277,9 +296,12 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         }
     }
     
-    
-    ///
+    // --------------------------------------------------------------------------------
     // MARK: Password
+    // --------------------------------------------------------------------------------
+    
+
+    // Get current password from the Keychain
     //
     func getCurrentPassword() -> String {
         var password = ""
@@ -296,11 +318,13 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         if let num = Int(letLDAP_Port) {
             intLDAP_Port = num
         }
-        if let letLDAP_Bind_User = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
-            guard let pass = internetPasswordForServer(letLDAP_Host, account: letLDAP_Bind_User, port: intLDAP_Port, secProtocol: SecProtocolType.LDAPS) else {
-                return ""
+        if let user = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
+            if !user.isEmpty {
+                guard let pass = internetPasswordForServer(letLDAP_Host, account: user, port: intLDAP_Port, secProtocol: SecProtocolType.LDAPS) else {
+                    return ""
+                }
+                password = pass
             }
-            password = pass
         }
         return password
     }

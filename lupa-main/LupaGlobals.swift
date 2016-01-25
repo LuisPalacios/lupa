@@ -28,8 +28,10 @@ struct LUPADefaults {
     static let lupa_StatusBarMode           = "lupa_StatusBarMode"                  //
     static let lupa_TestMode                = "lupa_TestMode"                       // Doesn't call the Browser, just logs the URL
     static let lupa_Hotkey                  = "lupa_Hotkey"                         //
-    static let lupa_HotkeyEnabled           = "lupa_HotkeyEnabled"                  //
+    static let lupa_HotkeyEnabled           = "lupa_HotkeyEnabled"                  // Bool dictates the usage of keyboard hotkey to launch the search
 
+    static let lupa_LDAP_Support            = "lupa_LDAP_Support"                   // Bool Enable ldapsearch support
+    static let lupa_LDAP_Timeout            = "lupa_LDAP_Timeout"                   // Timeout before terminating current ldapsearch command
     static let lupa_BIND_User               = "lupa_BIND_User"                      // ldapsearch -D  CN=<lupa_BIND_User>, <lupa_BIND_UserStore>
     static let lupa_BIND_UserStore          = "lupa_BIND_UserStore"                 // ldapsearch -D  CN=<lupa_BIND_User>, <lupa_BIND_UserStore>
     static let lupa_LDAP_Command            = "lupa_LDAP_Command"                   // ldapsearch -x

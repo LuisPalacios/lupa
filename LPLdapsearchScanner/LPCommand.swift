@@ -15,8 +15,8 @@ class LPCommand : NSObject {
     
     // Attributes
     var task : NSTask!
-    private var _nextinput_: ReadableStreamType?
-//    var cmdState     : Bool = false
+    var taskTerminateRequested = false
+    // private var _nextinput_: ReadableStreamType?
     
     // --------------------------------------------------------------------------------
     // MARK: Execute
@@ -52,6 +52,9 @@ class LPCommand : NSObject {
                 // Create a new task
                 self.task = newtask(shellcommand)
                 
+                // Just created the task so initiatlize false
+                self.taskTerminateRequested = false
+                
                 // Pipe the standard out to an NSPipe, and set it to notify us when it gets data
                 let pipe = NSPipe()
                 task.standardOutput = pipe
@@ -83,7 +86,11 @@ class LPCommand : NSObject {
                             // We are done!, call notification handler
 //                            print("----------------------------------------- PIPE EOF")
                             notifCenter.removeObserver(obsrvData)
-                            completionHandler(success: true, output: lines )
+                            var ret = true
+                            if ( self.taskTerminateRequested == true ) {
+                                ret = false
+                            }
+                            completionHandler(success: ret, output: lines )
                         }
                         
                 })
@@ -102,7 +109,7 @@ class LPCommand : NSObject {
                 //
                 task.terminationHandler = {task -> Void in
 //                    print("----------------------------------------- TASK TERMINATION")
-
+//
                 }
 
                 // Launch the command
@@ -124,6 +131,7 @@ class LPCommand : NSObject {
 //        print("----------------------------------------- !!!!!!!!!!!!!!! TERMINATE CALLED !!!!!!!!!!!!")
         if ( self.task != nil ) {
             self.task.terminate()
+            self.taskTerminateRequested = true
         }
     }
     

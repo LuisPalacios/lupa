@@ -15,10 +15,9 @@ class LPStatusItemWindowCtrl: NSWindowController {
     /// --------------------------------------------------------------------------------
     
     //  For the following attributes I'm using Implicitly Unwrapped Optional (!) so
-    //  they are optionals and do not need to initialize them here, will do later.
+    //  not needed to initialize them here, will do later.
     var statusItem      : LPStatusItem!
     var windowConfig    : LPStatusItemWindowConfig!
-    
     var isWindowOpen    : Bool!
     
     
@@ -43,13 +42,12 @@ class LPStatusItemWindowCtrl: NSWindowController {
     }
 
     
-    //
+    // The window did load
     //    
     override func windowDidLoad() {
         // Swift.print("windowDidLoad")
         super.windowDidLoad()
     
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
 
 
@@ -57,82 +55,12 @@ class LPStatusItemWindowCtrl: NSWindowController {
     //  MARK: Initialize and Connect
     /// --------------------------------------------------------------------------------
     
-//    /// Initialize my own NSWindowController connecting it with both the LPStatusItem
-//    /// (statusItem) and the calling App custom NSViewController (contentViewController)
-//    ///
-//    init?( statusItem statusItemOrNil: LPStatusItem!, contentViewController contentViewControllerOrNil: NSViewController!, windowConfig windowConfigOrNil: LPStatusItemWindowConfig! ) throws {
-//
-//        // Initialize
-//        super.init(window: nil)
-//        
-//        // If I'm not passed valid arguments return
-//        if ( statusItemOrNil == nil ) {
-//            throw skStatusItemWindowCtrlNotReady.statusItemIsNil
-//        }
-//        if ( contentViewControllerOrNil == nil ) {
-//            throw skStatusItemWindowCtrlNotReady.contentViewControllerIsNil
-//        }
-//        if ( windowConfigOrNil == nil ) {
-//            throw skStatusItemWindowCtrlNotReady.windowConfigOrNil
-//        }
-//        
-//        // Check the right sizes are set...
-//        if ( contentViewControllerOrNil.preferredContentSize.width == 0 &&
-//            contentViewControllerOrNil.preferredContentSize.height == 0 ) {
-//                throw skStatusItemWindowCtrlNotReady.customViewControllerIncorrectSize
-//        }
-//        
-//        // Store the window configuration
-//        windowConfig = windowConfigOrNil
-//        
-//        // Prepare myself and make all connections
-//        self.isWindowOpen   = false
-//        self.statusItem     = statusItemOrNil // Connect to LPStatusItem
-//        
-//        
-//        
-//        /// !!! CREATE the NSWindow  !!!
-//        /// ============================
-//        if let letWindow = LPStatusItemWindow(windowConfig: windowConfigOrNil) {
-//            self.window = letWindow
-//        } else {
-//            throw skStatusItemWindowCtrlNotReady.cantCreateCustomWindow
-//        }
-//        
-//        /// !!! REPLACE contentViewController and its contentView !!!
-//        /// =========================================================
-//        /// Replace the content view controller with the custom NSViewController
-//        /// passed by the AppDelegate, it will replace also the contentView
-//        //
-//        //  I'm replacing here my Window's contentView controller and it
-//        //  will automatically change the view (contentView) controlled by him
-//        //
-//        //  It will automatically call the setContentView under
-//        //  LPStatusItemWindow.swift so I can put a background view in
-//        //  between to change it's aspect.
-//        //
-//        self.contentViewController = contentViewControllerOrNil
-//
-//
-//        // Subscribe myself so I'll receive(Get) Notifications
-//        NSNotificationCenter.defaultCenter().addObserver(self,
-//            selector: "handleWindowDidResignKeyNotification:",
-//            name: NSWindowDidResignKeyNotification,
-//            object: nil)
-//        
-//        NSDistributedNotificationCenter.defaultCenter().addObserver(self,
-//            selector: "handleAppleInterfaceThemeChangedNotification:",
-//            name: "AppleInterfaceThemeChangedNotification",
-//            object: nil)
-//    }
-
-    
-    
-    
-    /// Initialize my own NSWindowController connecting it with both the LPStatusItem
+    /// Initialize my own NSWindowController connecting with both the LPStatusItem
     /// (statusItem) and the calling App custom NSViewController (contentViewController)
     /// (option used by lupa)
-    init?( statusItem statusItemOrNil: LPStatusItem!, window windowOrNil: NSWindow!, windowConfig windowConfigOrNil: LPStatusItemWindowConfig! ) throws {
+    init?( statusItem statusItemOrNil: LPStatusItem!,
+        window windowOrNil: NSWindow!,
+        windowConfig windowConfigOrNil: LPStatusItemWindowConfig! ) throws {
         
         // Initialize
         super.init(window: nil)
@@ -158,14 +86,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
         /// !!! CONNECT the NSWindow  !!!
         /// ============================
         self.window = windowOrNil
-        
-//        // Log contentView constraints
-//        if let window = self.window {
-//            if let contentView = window.contentView {
-//                Swift.print("DESPUES contentView.constraints: \(contentView.constraints)")
-//            }
-//        }
-
+    
         // Subscribe myself so I'll receive(Get) Notifications
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "handleWindowDidResignKeyNotification:",
@@ -182,6 +103,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
     //  Hide the Window when loosing focus
     //
     func handleWindowDidResignKeyNotification (note : NSNotification) {
+        //print("handleWindowDidResignKeyNotification")
         var noteWindow : NSWindow
         if let letNoteWindow : AnyObject = note.object {
             noteWindow = letNoteWindow as! NSWindow
@@ -218,13 +140,11 @@ class LPStatusItemWindowCtrl: NSWindowController {
     // Dismiss the status item window
     //
     func dismissStatusItemWindow() {
+        // print("dismissStatusItemWindow")
         // TODO Review
         //if (self.animationIsRunning) return;
 
         // Dismiss the Window fading out...
-//        let window : LPStatusItemWindow = self.window as! LPStatusItemWindow
-//        self.animateWindow(window, fadeDirection: eFadeDirection.fadeOut)
-        
         if let window = self.window {
             self.animateWindow(window, fadeDirection: eFadeDirection.fadeOut)
         }
@@ -246,7 +166,6 @@ class LPStatusItemWindowCtrl: NSWindowController {
                         NSMinY(statusItemRect) - NSHeight(window.frame) - self.windowConfig.windowToStatusMargin,
                         window.frame.size.width,
                         window.frame.size.height)
-//                    print("Rect: \(windowFrame)")
                     window.setFrame(windowFrame, display: true)
                     window.appearance = NSAppearance.currentAppearance()
                 }
@@ -254,41 +173,6 @@ class LPStatusItemWindowCtrl: NSWindowController {
         }
     }
 
-    // Locate the Window in the right place in screen
-    //
-//    func updateContentViewController ( contentViewController contentViewControllerOrNil: NSViewController! ) {
-//        
-//        /// !!! CHANGE contentViewController and its contentView !!!
-//        /// =========================================================
-//        //
-//        self.contentViewController = nil
-//        
-//        self.contentViewController = contentViewControllerOrNil
-//        
-//        self.updateWindowFrame()
-//    }
-    
-    // Locate the Window in the right place in screen
-    //
-    func refreshContentViewController ( ) {
-        
-        /// !!! CHANGE contentViewController and its contentView !!!
-        /// =========================================================
-        //
-//        let actualViewController = self.contentViewController
-//        self.contentViewController = nil
-//        self.contentViewController = actualViewController
-//
-        let actualView = self.window?.contentView
-        self.window?.contentView = nil
-        self.window?.contentView = actualView
-        
-//        self.contentViewController?.view = nil
-//        self.contentViewController?.view = actualView
-        
-        self.showStatusItemWindow()
-    }
-    
     
     /// --------------------------------------------------------------------------------
     //  MARK: Window Animation
@@ -296,7 +180,6 @@ class LPStatusItemWindowCtrl: NSWindowController {
     
     // Start the animnation
     //
-//    func animateWindow ( window: LPStatusItemWindow, fadeDirection: eFadeDirection ) {
     func animateWindow ( window: NSWindow, fadeDirection: eFadeDirection ) {
         switch self.windowConfig.presentationTransition {
         
@@ -311,10 +194,8 @@ class LPStatusItemWindowCtrl: NSWindowController {
         }
     }
 
-    
-    // Start the animnation
+    // Start the animation
     //
-    // func animateWindow ( window: LPStatusItemWindow, fadeTransitionUsingfadeDirection: eFadeDirection ) {
     func animateWindow ( window: NSWindow, fadeTransitionUsingfadeDirection: eFadeDirection ) {
         
         let notificationName : String = ( fadeTransitionUsingfadeDirection == eFadeDirection.fadeIn ? skStatusItemWindowWillShowNotification : skStatusItemWindowWillDismissNotification)

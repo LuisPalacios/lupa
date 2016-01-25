@@ -10,12 +10,6 @@ import Cocoa
 
 class LupaSearchField: NSSearchField {
 
-    override func drawRect(dirtyRect: NSRect) {
-        super.drawRect(dirtyRect)
-
-        // Drawing code here.
-    }
-
     // Send a doCancelSearch: command to firstResponder
     //
     override func doCommandBySelector(aSelector: Selector) {

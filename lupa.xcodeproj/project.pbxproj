@@ -41,14 +41,11 @@
 		A0D474D81B99200D00D957FA /* LPStatusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D474D21B99200D00D957FA /* LPStatusItem.swift */; };
 		A0D474D91B99200D00D957FA /* LPStatusItemBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D474D31B99200D00D957FA /* LPStatusItemBackgroundView.swift */; };
 		A0D474DA1B99200D00D957FA /* LPStatusItemGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D474D41B99200D00D957FA /* LPStatusItemGlobals.swift */; };
-		A0D474DB1B99200D00D957FA /* LPStatusItemWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D474D51B99200D00D957FA /* LPStatusItemWindow.swift */; };
 		A0D474DC1B99200D00D957FA /* LPStatusItemWindowConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D474D61B99200D00D957FA /* LPStatusItemWindowConfig.swift */; };
 		A0D474DD1B99200D00D957FA /* LPStatusItemWindowCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D474D71B99200D00D957FA /* LPStatusItemWindowCtrl.swift */; };
 		A0E44B691B7E6BE100D0D5FA /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0E44B681B7E6BE100D0D5FA /* MASShortcut.framework */; };
 		A0E44B6E1B7E6DDD00D0D5FA /* MASShortcut.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A0E44B681B7E6BE100D0D5FA /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A0EFB0631BB83151007E3ED4 /* LPLdapUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB0621BB83151007E3ED4 /* LPLdapUser.swift */; };
-		A0EFB0691BB83EFD007E3ED4 /* LPStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB0681BB83EFD007E3ED4 /* LPStream.swift */; };
-		A0EFB06B1BB83F24007E3ED4 /* LPFileHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB06A1BB83F24007E3ED4 /* LPFileHandle.swift */; };
 		A0EFB06D1BB83F6D007E3ED4 /* LPFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB06C1BB83F6D007E3ED4 /* LPFiles.swift */; };
 		A0EFB06F1BB840D8007E3ED4 /* LPString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB06E1BB840D8007E3ED4 /* LPString.swift */; };
 		A0EFB0711BB841B7007E3ED4 /* LPCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EFB0701BB841B7007E3ED4 /* LPCommand.swift */; };
@@ -106,14 +103,11 @@
 		A0D474D21B99200D00D957FA /* LPStatusItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItem.swift; path = LPStatusItem/LPStatusItem.swift; sourceTree = "<group>"; };
 		A0D474D31B99200D00D957FA /* LPStatusItemBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemBackgroundView.swift; path = LPStatusItem/LPStatusItemBackgroundView.swift; sourceTree = "<group>"; };
 		A0D474D41B99200D00D957FA /* LPStatusItemGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemGlobals.swift; path = LPStatusItem/LPStatusItemGlobals.swift; sourceTree = "<group>"; };
-		A0D474D51B99200D00D957FA /* LPStatusItemWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindow.swift; path = LPStatusItem/LPStatusItemWindow.swift; sourceTree = "<group>"; };
 		A0D474D61B99200D00D957FA /* LPStatusItemWindowConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindowConfig.swift; path = LPStatusItem/LPStatusItemWindowConfig.swift; sourceTree = "<group>"; };
 		A0D474D71B99200D00D957FA /* LPStatusItemWindowCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStatusItemWindowCtrl.swift; path = LPStatusItem/LPStatusItemWindowCtrl.swift; sourceTree = "<group>"; };
 		A0E44B681B7E6BE100D0D5FA /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = Frameworks/MASShortcut.framework; sourceTree = "<group>"; };
 		A0E44B6B1B7E6CF700D0D5FA /* lupa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "lupa-Bridging-Header.h"; path = "lupa/lupa-Bridging-Header.h"; sourceTree = "<group>"; };
 		A0EFB0621BB83151007E3ED4 /* LPLdapUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPLdapUser.swift; path = LPLdapsearchScanner/LPLdapUser.swift; sourceTree = "<group>"; };
-		A0EFB0681BB83EFD007E3ED4 /* LPStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPStream.swift; path = LPLdapsearchScanner/LPStream.swift; sourceTree = "<group>"; };
-		A0EFB06A1BB83F24007E3ED4 /* LPFileHandle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPFileHandle.swift; path = LPLdapsearchScanner/LPFileHandle.swift; sourceTree = "<group>"; };
 		A0EFB06C1BB83F6D007E3ED4 /* LPFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPFiles.swift; path = LPLdapsearchScanner/LPFiles.swift; sourceTree = "<group>"; };
 		A0EFB06E1BB840D8007E3ED4 /* LPString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPString.swift; path = LPLdapsearchScanner/LPString.swift; sourceTree = "<group>"; };
 		A0EFB0701BB841B7007E3ED4 /* LPCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LPCommand.swift; path = LPLdapsearchScanner/LPCommand.swift; sourceTree = "<group>"; };
@@ -172,7 +166,6 @@
 				A0D474D41B99200D00D957FA /* LPStatusItemGlobals.swift */,
 				A0D474D21B99200D00D957FA /* LPStatusItem.swift */,
 				A0D474D31B99200D00D957FA /* LPStatusItemBackgroundView.swift */,
-				A0D474D51B99200D00D957FA /* LPStatusItemWindow.swift */,
 				A0D474D61B99200D00D957FA /* LPStatusItemWindowConfig.swift */,
 				A0D474D71B99200D00D957FA /* LPStatusItemWindowCtrl.swift */,
 			);
@@ -242,8 +235,6 @@
 			isa = PBXGroup;
 			children = (
 				A0EFB0621BB83151007E3ED4 /* LPLdapUser.swift */,
-				A0EFB0681BB83EFD007E3ED4 /* LPStream.swift */,
-				A0EFB06A1BB83F24007E3ED4 /* LPFileHandle.swift */,
 				A0EFB06C1BB83F6D007E3ED4 /* LPFiles.swift */,
 				A0EFB06E1BB840D8007E3ED4 /* LPString.swift */,
 				A0EFB0701BB841B7007E3ED4 /* LPCommand.swift */,
@@ -363,7 +354,6 @@
 			files = (
 				A062108D1BAECE49008DA0C9 /* LupaSearchWinCtrl.swift in Sources */,
 				A06210921BAECF9A008DA0C9 /* LupaPanel.swift in Sources */,
-				A0D474DB1B99200D00D957FA /* LPStatusItemWindow.swift in Sources */,
 				A00456BB1B80FCE100EF2A1D /* LupaVersion.swift in Sources */,
 				A06210901BAECEE9008DA0C9 /* LupaSearchField.swift in Sources */,
 				A0D474DD1B99200D00D957FA /* LPStatusItemWindowCtrl.swift in Sources */,
@@ -371,7 +361,6 @@
 				A0D474D91B99200D00D957FA /* LPStatusItemBackgroundView.swift in Sources */,
 				A073C4191C4F6FE4002B9945 /* ABGradientView.m in Sources */,
 				A0EFB0711BB841B7007E3ED4 /* LPCommand.swift in Sources */,
-				A0EFB0691BB83EFD007E3ED4 /* LPStream.swift in Sources */,
 				A0D474D81B99200D00D957FA /* LPStatusItem.swift in Sources */,
 				A052C7C01C5013DF0002A2AB /* LPQueue.swift in Sources */,
 				A05EDAC81B7A4466001B3F3C /* AppDelegate.swift in Sources */,
@@ -380,7 +369,6 @@
 				A0D474DC1B99200D00D957FA /* LPStatusItemWindowConfig.swift in Sources */,
 				A0EFB06D1BB83F6D007E3ED4 /* LPFiles.swift in Sources */,
 				A0D474DA1B99200D00D957FA /* LPStatusItemGlobals.swift in Sources */,
-				A0EFB06B1BB83F24007E3ED4 /* LPFileHandle.swift in Sources */,
 				A0B4BA511B7A647F00069614 /* LupaDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -4,7 +4,7 @@
 //
 //  Created by Luis Palacios on 20/9/15.
 //  Copyright © 2015 Luis Palacios. All rights reserved.
-//  LDAPTLS_REQCERT=allow /usr/bin/ldapsearch
+//
 
 import Cocoa
 import Foundation
@@ -55,9 +55,11 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     var ldapSearchIsRunning : Bool = false
     var postfix_searchString = ""
     var minHeight = ikWINDOW_MIN_HEIGHT
+
     
     // Commander
     let cmd = LPCommand()
+    var timerCmdTerminate : NSTimer!    //!< Ldap terminate timer
     
     /// --------------------------------------------------------------------------------
     //  MARK: Main
@@ -193,7 +195,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     func actionTimerHideAlert() {
         self.hideAlert()
     }
-
+    
     
     // Update the Window Frame, basically resize
     // its height based on what I'm showing...
@@ -401,7 +403,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     // Start the ldap search
     // Prepare the command....
     //
-    func ldapsearchStart() {
+    func ldapsearchStart(timeout : Int) {
 
         // search string
         let searchString : String = searchField.stringValue
@@ -418,7 +420,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             return
         }
         commandString = letLDAP_Command
-
+        
         // Host and port URL (-H ldaps://myhost.domain.com:636)
         //
         guard let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String else {
@@ -460,7 +462,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             
             
             guard let letLDAP_Bind_Password = internetPasswordForServer(letLDAP_Host, account: letLDAP_Bind_User, port: intLDAP_Port, secProtocol: SecProtocolType.LDAPS) else {
-                self.showAlert("ERROR: Missing the password")
+                self.showAlert("ERROR: Password is missing")
                 return
             }
             commandString = commandString + " -w \"" + letLDAP_Bind_Password + "\""
@@ -470,11 +472,13 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         // Search base (-x -b basedn)
         //
         guard let letLDAP_BaseDN = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_BaseDN) as? String else {
-            self.showAlert("ERROR: Missing the Base DN")
+            self.showAlert("ERROR: Base DN is missing")
             return
         }
         commandString = commandString + " -x -b \"" + letLDAP_BaseDN + "\""
-                            
+
+        // Here we go...
+        self.ldapSearchIsRunning = true
 
         // Prepare the Filters
         //
@@ -561,26 +565,54 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             self.startUI_LDAPsearchInProgress()
         }
         
-        // Let's go for the command....
-        //
-        // Launch the ldapsearch (it's done in the Main sync so it'll block, but
-        // this is done on purpose so the user doesn't start multiple ldapsearch
-        // commands simultaneously. Future ToDO: async thread and kill previous?
-        self.ldapSearchIsRunning = true
+        // Launch the ldapsearch, will be an async thread
         self.execCmdAndParse(commandString)
         
+        // Launch ldapsearch execution timeout. If program doesn't return
+        // after timeout seconds, send him a terminate signal
+        if ( timeout != 0 ) {
+            self.startTimerCmdTerminate(timeout)
+        }
+        
     }
+
+    // Command execution timer --------------------------------------------------
+    //
+    func startTimerCmdTerminate(timeout : Int) {
+        self.stopTimerCmdTerminate()
+        let dTimeout = Double(timeout)
+        self.timerCmdTerminate = NSTimer.scheduledTimerWithTimeInterval(dTimeout,
+            target: self,
+            selector: Selector("actionTimerCmdTerminate"),
+            userInfo: nil,
+            repeats: false)
+    }
+    func stopTimerCmdTerminate() {
+        if ( timerCmdTerminate != nil ) {
+            if (  self.timerCmdTerminate.valid ) {
+                self.timerCmdTerminate.invalidate()
+                
+            }
+            self.timerCmdTerminate = nil
+        }
+    }
+    func actionTimerCmdTerminate() {
+        // Ask current cmd to stop
+        print("TIMEOUT!!!")
+        self.cmd.terminate()
+    }
+    // --------------------------------------------------------------------------
 
     
     // search has Finished
     //
     func ldapsearchFinished(success: Bool) {
         
-        // Stop visual UI
-        //  self.textLabel.stringValue = ""
+        // Stop timers and visual UI
+        self.stopTimerCmdTerminate()
         self.stopUI_LDAPsearchInProgress()
 
-        //
+        // Go for it...
         if success {
             
             // Get the new list of users
@@ -613,7 +645,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             }
             
         } else {
-            print("ldapsearchFinished. Without success.\n")
+            print("ldapsearchFinished didn't succeed.\n")
             self.hideLdapResultsStackView()
         }
         
@@ -626,9 +658,9 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     // Stop the search
     //
     func ldapsearchStop() {
-        print("ldapsearchStop")
         
-        // Stop visual UI
+        // Stop timers and visual UI
+        self.stopTimerCmdTerminate()
         self.stopUI_LDAPsearchInProgress()
         
         // Ask current cmd to stop
@@ -820,19 +852,18 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     // Start a timer when text changes in the search box
     //
     func startTimerTextDidChange() {
-        // print("entered startTimerTextDidChange()")
         // Always cancel any pending search
         self.stopTimerTextDidChange()
-
         // Check if we've got something decent to search
         if !searchField.stringValue.isEmpty {
-
             // Start timer that may trigger the search
             timerTextDidChange = NSTimer.scheduledTimerWithTimeInterval(0.6,
                 target: self,
                 selector: Selector("actionTimerTextDidChange"),
                 userInfo: nil,
                 repeats: false)
+            
+        
         } else {
             if let letMyWindow = self.window {
                 let myWindow = letMyWindow
@@ -859,109 +890,24 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     //
     func actionTimerTextDidChange() {
 
-        // Check if I'm asked to search the same
-        if (  previousSearchString == searchField.stringValue ) {
-            // print("Me piden buscar el mismo string que la vez anterior, lo ingnoro")
-        } else {
-            // LDAP Search -
-            // Check if I'm asked for quick dirty ldap search
-            //
-            self.ldapsearchStart()
+        if let ldapSupport = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Support) as? Bool {
+            if ldapSupport {
+                
+                // Prepare the ldapsearch command timeout
+                var timeout = 10
+                if let str = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Timeout) as? String {
+                    if ( !str.isEmpty ) {
+                        if let theTimeout = Int(str) {
+                            timeout = theTimeout
+                        }
+                    }
+                }
+                
+                // Call command
+                self.ldapsearchStart(timeout)
+            }
         }
         previousSearchString=searchField.stringValue
     }
-    
-//   /// --------------------------------------------------------------------------------
-//    //  MARK: KVO - Key Value Observing activation, de-activation and action
-//    /// --------------------------------------------------------------------------------
-//    
-//    // Context (up=unsafe pointer)
-//    private var up_LupaSearchWinCtrl_KVOContext_LDAPSearchResult = 0
-//    
-//    // Load and activate the Key Value Observing
-//    //
-//    func loadKVO () {
-//        self.onObserver()
-//    }
-//    
-//    // Activate the observer
-//    //
-//    func onObserver () {
-//        for item in self.observableKeys_LDAPSearchResults {
-//            self.addObserver(self, forKeyPath: item, options: [], context: &up_LupaSearchWinCtrl_KVOContext_LDAPSearchResult)
-//        }
-//    }
-//    
-//    // Deactivate and unload the Key Value Observing
-//    //
-//    func unloadKVO () {
-//        self.offObserver()
-//    }
-//    
-//    // Deactivate the observer
-//    //
-//    func offObserver () {
-//        for item in self.observableKeys_LDAPSearchResults {
-//            self.removeObserver(self, forKeyPath: item)
-//        }
-//    }
-//    
-//    // Actions when a change comes...
-//    //
-//    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>) {
-//        
-//        // Act on the appropiate context
-//        if context == &up_LupaSearchWinCtrl_KVOContext_LDAPSearchResult {
-//            
-//
-//            //	New guard statement to return early if there's no change.
-//            guard let change = change else {
-//                // print("No change, return")
-//                return
-//            }
-//            
-//            //  Identify the kind of change
-//            //
-//            if let rv = change[NSKeyValueChangeKindKey] as? UInt,
-//                kind = NSKeyValueChange(rawValue: rv) {
-//                    // print("Tipo de cambio: \(kind)")
-//                    switch kind {
-//                    case .Setting:
-//                        // print(".Setting -> \(change[NSKeyValueChangeKindKey]) ")
-//                        if ( keyPath == "self.ldapSearchHasFinished" ) {
-//                            // Update UI
-//                            dispatch_async(dispatch_get_main_queue()) {
-//                                
-//                                print("observeValueForKeyPath  EN TEORIA HA TERMINAADO self.ldapSearchDidFinished")
-//                                
-//                                self.ldapsearchFinished()
-//                                self.offObserver()
-//                                self.ldapSearchHasFinished = false
-//                                self.onObserver()
-//                            }
-//                        }
-//                    case .Insertion:
-//                        // print(".Insertion -> \(change[NSKeyValueChangeNewKey]) ")
-//                        break
-//                    case .Removal:
-//                        // print(".Removal -> \(change[NSKeyValueChangeOldKey]) ")
-//                        break
-//                    case .Replacement:
-//                        // print(".Replacement -> \(change[NSKeyValueChangeOldKey]) ")
-//                        break
-//                    }
-//
-//                    // Debug purposes
-//                    //print("change[NSKeyValueChangeNewKey] -> \(change[NSKeyValueChangeNewKey]) ")
-//                    //print("change[NSKeyValueChangeOldKey] -> \(change[NSKeyValueChangeOldKey]) ")
-//                    //print("change[NSKeyValueChangeIndexesKey] -> \(change[NSKeyValueChangeIndexesKey]) ")
-//                    //print("change[NSKeyValueChangeNotificationIsPriorKey] -> \(change[NSKeyValueChangeNotificationIsPriorKey]) ")
-//            }
-//            
-//        } else {
-//            // Defaults...
-//            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
-//        }
-//    }
-    
- }
+
+}
