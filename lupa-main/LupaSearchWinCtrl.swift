@@ -408,7 +408,6 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         let searchWords = searchString.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
 
-        
         // Continue analysing each of the arguments...
         var commandString : String  = ""
         
@@ -575,39 +574,46 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     
     // search has Finished
     //
-    func ldapsearchFinished() {
-        print("ldapsearchFinished")
+    func ldapsearchFinished(success: Bool) {
         
         // Stop visual UI
         //  self.textLabel.stringValue = ""
         self.stopUI_LDAPsearchInProgress()
 
-        // Get the new list of users
-        self.users = self.tmpUsers
-        
-        // Post process the list of users
-        print("--\nFound \(users.count) users.\n")
-        for user in self.users {
-
-            if let letLupa_LDAP_PictureURL = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_PictureURL) as? String {
+        //
+        if success {
+            
+            // Get the new list of users
+            self.users = self.tmpUsers
+            
+            // Post process the list of users
+            print("ldapsearchFinished. Found \(users.count) users.\n")
+            for user in self.users {
                 
-                let mutableString = NSMutableString(string: letLupa_LDAP_PictureURL)
-                let regex = try! NSRegularExpression(pattern: "<CN>",
-                    options: [.CaseInsensitive])
-                regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.cn)
-                if let mySwiftString : String = mutableString as String {
-                    if let letURL = NSURL(string: mySwiftString) {
-                        user.picturl = letURL
+                if let letLupa_LDAP_PictureURL = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_PictureURL) as? String {
+                    
+                    let mutableString = NSMutableString(string: letLupa_LDAP_PictureURL)
+                    let regex = try! NSRegularExpression(pattern: "<CN>",
+                        options: [.CaseInsensitive])
+                    regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.cn)
+                    if let mySwiftString : String = mutableString as String {
+                        if let letURL = NSURL(string: mySwiftString) {
+                            user.picturl = letURL
+                        }
                     }
                 }
+                // print("\(user.cn) Photo: \(user.picturl)")
             }
-            // print("\(user.cn) Photo: \(user.picturl)")
-        }
-        
-        //
-        if ( self.users.count != 0 ) {
-            self.showLdapResultsStackView()
+            
+            //
+            if ( self.users.count != 0 ) {
+                self.showLdapResultsStackView()
+            } else {
+                self.hideLdapResultsStackView()
+            }
+            
         } else {
+            print("ldapsearchFinished. Without success.\n")
             self.hideLdapResultsStackView()
         }
         
@@ -716,19 +722,13 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         }
         print("Command: \(logString)")
         
-        
-        // Execute the command...
-        //
-        // let cmd = LPCommand()
-        //        let lines = cmd.run(commandString).lines()
-        
-        
+
         // DELETE ME !!!!
-        //let cmdDebugString = "/usr/local/duermeyhabla.sh"
-        //print("Command: \(cmdDebugString)")
+        // let cmdDebugString = "/usr/local/duermeyhabla.sh"
+        // print("Command: \(cmdDebugString)")
 
         // Ahí que vamos... 
-        //self.cmd.run(cmdDebugString) { (success, output) -> Void in
+        // self.cmd.run(cmdDebugString) { (success, output) -> Void in
         self.cmd.run(commandString) { (success, output) -> Void in
 
             if success {
@@ -807,11 +807,9 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             // print("TERMINÓ EL COMANDO, cambio self.ldapSearchHasFinished = true ")
             let mainQueue = LPQueue.Main
             mainQueue.async { () -> () in
-                self.ldapsearchFinished()
+                self.ldapsearchFinished(success)
             }
         }
-            
-     
     }
     
 
@@ -846,15 +844,12 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     // Stop the timer 
     //
     func stopTimerTextDidChange() {
-        // print("entered stopTimerTextDidChange()")
         if ( timerTextDidChange != nil ) {
             if (  timerTextDidChange.valid ) {
-                // print("stopTimerTextDidChange()")
                 timerTextDidChange.invalidate()
-                
-                if ( self.ldapSearchIsRunning ) {
-                    self.ldapsearchStop()
-                }
+            }
+            if ( self.ldapSearchIsRunning ) {
+                self.ldapsearchStop()
             }
             timerTextDidChange = nil
         }
@@ -868,12 +863,10 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         if (  previousSearchString == searchField.stringValue ) {
             // print("Me piden buscar el mismo string que la vez anterior, lo ingnoro")
         } else {
-            
             // LDAP Search -
             // Check if I'm asked for quick dirty ldap search
             //
             self.ldapsearchStart()
-            
         }
         previousSearchString=searchField.stringValue
     }
