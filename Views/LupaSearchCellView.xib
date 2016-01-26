@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15E33e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="LupaSearchCellView" customModule="lupa" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="247" height="52"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wzJ-W6-bee">
+                    <rect key="frame" x="0.0" y="2" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="48" id="2kG-AY-03v"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="LupaSinImagen" id="0iO-7Q-jx0"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cw5-49-lMy">
+                    <rect key="frame" x="54" y="35" width="35" height="14"/>
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Name" id="wZX-w1-jQb">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OMT-to-Jf1">
+                    <rect key="frame" x="54" y="19" width="21" height="14"/>
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="uid" id="RfS-Ne-6dB">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mPb-Nm-qXO">
+                    <rect key="frame" x="79" y="19" width="39" height="14"/>
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="mobile" id="sW1-KG-APc">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ldm-aV-lNi">
+                    <rect key="frame" x="54" y="4" width="21" height="11"/>
+                    <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="title" id="tTd-Yi-xg6">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="alternateSelectedControlColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="cw5-49-lMy" firstAttribute="leading" secondItem="wzJ-W6-bee" secondAttribute="trailing" constant="8" symbolic="YES" id="A43-Wf-gNH"/>
+                <constraint firstItem="Ldm-aV-lNi" firstAttribute="leading" secondItem="OMT-to-Jf1" secondAttribute="leading" id="CRK-W5-fcx"/>
+                <constraint firstAttribute="bottom" secondItem="Ldm-aV-lNi" secondAttribute="bottom" constant="4" id="Dkm-nd-0yX"/>
+                <constraint firstItem="wzJ-W6-bee" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="2" id="Fxf-a0-6oH"/>
+                <constraint firstItem="cw5-49-lMy" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="3" id="Tqp-y9-WDD"/>
+                <constraint firstItem="wzJ-W6-bee" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="ZKK-Wv-k69"/>
+                <constraint firstItem="wzJ-W6-bee" firstAttribute="centerY" secondItem="OMT-to-Jf1" secondAttribute="centerY" id="cPU-K1-kYH"/>
+                <constraint firstItem="OMT-to-Jf1" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="kif-vi-L0y"/>
+                <constraint firstItem="Ldm-aV-lNi" firstAttribute="top" secondItem="OMT-to-Jf1" secondAttribute="bottom" constant="4" id="kjA-JD-3tW"/>
+                <constraint firstItem="OMT-to-Jf1" firstAttribute="top" secondItem="cw5-49-lMy" secondAttribute="bottom" constant="2" id="lgq-Ca-ebz"/>
+                <constraint firstItem="mPb-Nm-qXO" firstAttribute="leading" secondItem="OMT-to-Jf1" secondAttribute="trailing" constant="8" symbolic="YES" id="sic-0Y-KE4"/>
+                <constraint firstItem="OMT-to-Jf1" firstAttribute="leading" secondItem="cw5-49-lMy" secondAttribute="leading" id="tn7-aj-5vk"/>
+                <constraint firstItem="mPb-Nm-qXO" firstAttribute="baseline" secondItem="OMT-to-Jf1" secondAttribute="baseline" id="yUw-ef-nl8"/>
+            </constraints>
+            <connections>
+                <outlet property="itemImage" destination="wzJ-W6-bee" id="P6z-D9-mCb"/>
+                <outlet property="itemJobTitle" destination="Ldm-aV-lNi" id="14w-6d-Fm0"/>
+                <outlet property="itemMobile" destination="mPb-Nm-qXO" id="71I-m2-yPA"/>
+                <outlet property="itemName" destination="cw5-49-lMy" id="qSq-Eg-x9c"/>
+                <outlet property="itemUID" destination="OMT-to-Jf1" id="Gj5-qC-3aq"/>
+            </connections>
+            <point key="canvasLocation" x="207.5" y="251"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="LupaSinImagen" width="128" height="128"/>
+    </resources>
+</document>

@@ -10,6 +10,17 @@ import Foundation
 import AppKit
 
 
+
+///  Application Contstants
+///
+struct Constants {
+    
+    struct SearchCtrl {
+        static let SearchCellViewID = "LupaSearchCellView"
+    }
+    
+}
+
 ///  Application preferences are stored under:
 ///
 ///  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
@@ -59,8 +70,9 @@ struct LUPADefaults {
     static let lupa_LDAP_Search_VoiceInt      = "lupa_LDAP_Search_VoiceInt"         // Include the voice mail 
     static let lupa_LDAP_Search_VoiceMob      = "lupa_LDAP_Search_VoiceMob"         // Include the mobile
     
-    static let lupa_LDAP_PictureURL         = "lupa_LDAP_PictureURL"                // Attribute for the URL pointing to the user picture
-    static let lupa_LDAP_Limit_Results       = "lupa_LDAP_Limit_Results"              // Max. num of returned results
+    static let lupa_LDAP_PictureURLMini      = "lupa_LDAP_PictureURLMini"           // Attribute for the URL pointing to the user picture (small form factor)
+    static let lupa_LDAP_PictureURLZoom      = "lupa_LDAP_PictureURLZoom"           // Attribute for the URL pointing to the user picture (zoomed form factor)
+    static let lupa_LDAP_Limit_Results       = "lupa_LDAP_Limit_Results"            // Max. num of returned results
 
     
     // The following attribute has been *DEPRECATED*

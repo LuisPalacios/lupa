@@ -17,17 +17,18 @@ class LPLdapUser: NSObject {
     //  For the following attributes I'm using Implicitly Unwrapped Optional (!) so
     //  they are optionals and do not need to initialize them here, will do later.
     
-    var dn:         String = ""
-    var cn:         String = ""
-    var uid:        String = ""
-    var desc:       String = ""
-    var country:    String = ""
-    var city:       String = ""
-    var voicetel:   String = ""
-    var voicemob:   String = ""
-    var voiceint:   String = ""
-    var title:      String = ""
-    var picturl:    NSURL!
+    var dn:             String = ""
+    var cn:             String = ""
+    var uid:            String = ""
+    var desc:           String = ""
+    var country:        String = ""
+    var city:           String = ""
+    var voicetel:       String = ""
+    var voicemob:       String = ""
+    var voiceint:       String = ""
+    var title:          String = ""
+    var picturlMini:    NSURL!
+    var picturlZoom:    NSURL!
     
     /// --------------------------------------------------------------------------------
     //  MARK: Main

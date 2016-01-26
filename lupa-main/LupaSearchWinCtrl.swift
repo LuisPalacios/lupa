@@ -11,8 +11,9 @@ import Foundation
 
 let ikWINDOW_MIN_HEIGHT : CGFloat = 77.0
 
-class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDelegate { // , NSSearchFieldDelegate {
 
+class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDelegate, NSTableViewDataSource, NSTableViewDelegate, LupaSearchTableviewDelegate, LupaPopoverDetailViewDelegate {
+    
     /// --------------------------------------------------------------------------------
     //  MARK: Attributes
     /// --------------------------------------------------------------------------------
@@ -28,12 +29,20 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     @IBOutlet var msgTextView: NSTextView!
     var timerHideAlert : NSTimer!                //!< Timer that the alert to be hidden
     
-    @IBOutlet weak var ldapResultTableView: NSTableView!
     @IBOutlet weak var ldapResultStackView: NSStackView!
     @IBOutlet weak var mainStackView: NSStackView!
     @IBOutlet weak var searchStackView: NSStackView!
     
-    @IBOutlet var arrayController: NSArrayController!
+    // TableView
+    @IBOutlet weak var ldapResultTableView: LupaSearchTableview!    // Tableview for the Search results
+    var ldapResultCellViewHeight : CGFloat = 17.0           // Tableview's cell height (notice it'll be calculated)
+    
+    // Popover with ldap result detail (right click)
+    @IBOutlet var popoverDetail: NSPopover!
+    @IBOutlet var lupaPopoverDetailView: LupaPopoverDetailView!
+
+    
+    
     
     //  In order to work with the user defaults, stored under:
     //  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
@@ -46,7 +55,8 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     dynamic var ldapSearchHasFinished : Bool = false
     dynamic var users = [LPLdapUser]()
     dynamic var tmpUsers = [LPLdapUser]()
-
+    dynamic var popoverSelectedUser : LPLdapUser!
+    
     // More attributes
     var textDidChangeInterval : NSTimeInterval = 0.0    //!< Time interval to calculate text did change trigger action
     var previousSearchString : String = ""              //!< Control if I'm asked to search the same string as before
@@ -70,6 +80,35 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     override func windowDidLoad() {
         super.windowDidLoad()
 
+        // Register the Cell View nib file so that the ldapResultTableView
+        // can use it to render cells,
+        if let nib = NSNib(nibNamed: Constants.SearchCtrl.SearchCellViewID, bundle: NSBundle.mainBundle()) {
+            
+            // Register the Cell
+            self.ldapResultTableView.registerNib(nib, forIdentifier: Constants.SearchCtrl.SearchCellViewID)
+            
+            // Find out Tableview's Cell height
+            var optViewArray:NSArray?
+            if nib.instantiateWithOwner(self, topLevelObjects: &optViewArray) {
+                if let viewArray = optViewArray {
+                    for view in viewArray {
+                        if view.isKindOfClass(LupaSearchCellView) {
+                            if let frame = view.frame {
+                                self.ldapResultCellViewHeight = frame.height
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Register as delegate to capture right click on ldap results
+        self.ldapResultTableView.lupaSearchTableviewDelegate = self
+        
+        // Register as delegate so I can exit detail ldap view when clicked
+        self.lupaPopoverDetailView.lupaPopoverDetailViewDelegate = self
+    
+        
         // Setup the window class
         if let letMyWindow = self.window {
             let myWindow = letMyWindow
@@ -77,9 +116,6 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             myWindow.hasShadow = true
             myWindow.backgroundColor = NSColor.clearColor()
         }
-        
-        // Spy when ldapsearch finishes...
-        // self.loadKVO()
         
         // Calc the minimum Height possible for the
         // search window. It's exactly without the
@@ -135,6 +171,43 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         self.searchField.selectText(self)
     }
 
+    
+    
+    /// --------------------------------------------------------------------------------
+    //  MARK: TableView NSSearchFieldDelegate, NSTableViewDataSource
+    /// --------------------------------------------------------------------------------
+    
+    
+    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+        return self.users.count
+    }
+    
+    func tableView(tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+        return self.ldapResultCellViewHeight
+    }
+    
+    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        
+        guard let cell = tableView.makeViewWithIdentifier(Constants.SearchCtrl.SearchCellViewID, owner: self) as? LupaSearchCellView else {
+            return nil
+        }
+
+        let user = self.users[row]
+        cell.itemName.stringValue = user.desc
+        cell.itemUID.stringValue = user.cn
+        cell.itemMobile.stringValue = user.voicemob
+        cell.itemJobTitle.stringValue = user.title
+        cell.itemImage.image = nil
+        let q = LPQueue()
+        q.async { () -> () in
+            if let url = user.picturlMini {
+                cell.itemImage.image = NSImage(contentsOfURL: url)
+            }
+        }
+        
+        return cell
+    }
+    
     
     /// --------------------------------------------------------------------------------
     //  MARK: UI
@@ -219,7 +292,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
                 if ( self.users.count < 5 ) {
                     max = CGFloat ( self.users.count )
                 }
-                windowHeight = self.minHeight + ( 57.0 * max )
+                windowHeight = self.minHeight + ( (self.ldapResultCellViewHeight + 2.0) * max ) + 12.0
             }
             if let window = self.window {
                 var newSize = window.frame.size
@@ -383,30 +456,45 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     @IBAction func rowSelected(sender: AnyObject) {
         
         let selectedRow = self.ldapResultTableView.selectedRow
-        if ( selectedRow != -1 ) {
-            if let user : LPLdapUser = self.arrayController.arrangedObjects[selectedRow] as? LPLdapUser {
-                if !user.cn.isEmpty {
-                    self.postfix_searchString = user.cn
-                    self.startBrowserSearch()
-                } else {
-                    print ("ERROR: user cn is empty")
-                }
+        if ( selectedRow != -1 && selectedRow < self.users.count ) {
+            let user = self.users[selectedRow]
+            if !user.cn.isEmpty {
+                self.postfix_searchString = user.cn
+                self.startBrowserSearch()
+            } else {
+                print ("ERROR: user cn is empty")
             }
         }
     }
-    
-//    /// --------------------------------------------------------------------------------
-//    //  MARK: Tableview Datasource
-//    /// --------------------------------------------------------------------------------
-//    
-//    
-//    func tableView(tableView: NSTableView, viewForTableColumn: NSTableColumn, row: Int) -> NSView
-//    {
-//        var cell = tableView.makeViewWithIdentifier("List", owner: self) as NSTableCellView
-//        cell.textField.stringValue = "test"
-//        return cell;
-//    }
 
+    
+    /// --------------------------------------------------------------------------------
+    //  MARK: TableView LupaSearchTableviewDelegate (POPOVER with detail)
+    /// --------------------------------------------------------------------------------
+
+    // Right Clicked a row to show details
+    //
+    func tableView(tableview: NSTableView, clickedRow: NSInteger, clickedColumn: NSInteger, clickedPoint: NSPoint, clickedRect: NSRect) {
+        self.popoverSelectedUser = nil
+        self.popoverDetail.showRelativeToRect(clickedRect, ofView: tableview, preferredEdge: NSRectEdge.MinY)
+        let q = LPQueue()
+        q.async { () -> () in
+            self.popoverSelectedUser = self.users[clickedRow]
+        }
+    }
+
+    
+    /// --------------------------------------------------------------------------------
+    //  MARK: LupaPopoverDetailViewDelegate
+    /// --------------------------------------------------------------------------------
+    
+    // Clicked on the popoverDetail
+    //
+    func popoverClicked() {
+       self.popoverDetail.close()
+    }
+
+    
     /// --------------------------------------------------------------------------------
     //  MARK: LDAP search
     /// --------------------------------------------------------------------------------
@@ -637,30 +725,35 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             }
             
             
-            let mainQueue = LPQueue.Main
-            mainQueue.async { () -> () in
+            // Post process the list of users
+            print("ldapsearchFinished. Found \(self.users.count) users.\n")
+            for user in self.users {
                 
-                // Post process the list of users
-                print("ldapsearchFinished. Found \(self.users.count) users.\n")
-                for user in self.users {
-                    
-                    if let letLupa_LDAP_PictureURL = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_PictureURL) as? String {
-                        
-                        let mutableString = NSMutableString(string: letLupa_LDAP_PictureURL)
-                        let regex = try! NSRegularExpression(pattern: "<CN>",
-                            options: [.CaseInsensitive])
-                        regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.cn)
-                        if let mySwiftString : String = mutableString as String {
-                            if let letURL = NSURL(string: mySwiftString) {
-                                user.picturl = letURL
-                            }
+                if let pict = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_PictureURLMini) as? String {
+                    let mutableString = NSMutableString(string: pict)
+                    let regex = try! NSRegularExpression(pattern: "<CN>",
+                        options: [.CaseInsensitive])
+                    regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.cn)
+                    if let mySwiftString : String = mutableString as String {
+                        if let letURL = NSURL(string: mySwiftString) {
+                            user.picturlMini = letURL
                         }
                     }
-                    // print("\(user.cn) Photo: \(user.picturl)")
                 }
-                
-                self.ldapResultTableView.reloadData()
+                if let pict = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_PictureURLZoom) as? String {
+                    let mutableString = NSMutableString(string: pict)
+                    let regex = try! NSRegularExpression(pattern: "<CN>",
+                        options: [.CaseInsensitive])
+                    regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.cn)
+                    if let mySwiftString : String = mutableString as String {
+                        if let letURL = NSURL(string: mySwiftString) {
+                            user.picturlZoom = letURL
+                        }
+                    }
+                }
             }
+            
+            self.ldapResultTableView.reloadData()
             
             
         } else {
@@ -716,10 +809,10 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         
        
         var newUser: Bool = false
-        let myAttributes = ["cn: ", "uid: ", "description: ", "co: ", "state: ", "telephoneNumber: ", "voicemail: ", "mobile: ", "publishpicture: ", "title: "]
         var user : LPLdapUser!
         
         // I'll use userDefaults, however I'm setting even more defaults :)
+        var cn: String = "cn: "
         var description: String = "description: "
         var country: String = "c: "
         var city: String = "city: "
@@ -730,6 +823,9 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
 
         if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Desc) as? String {
             description = letTheString + ": "
+        }
+        if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_CN) as? String {
+            cn = letTheString + ": "
         }
         if let letTheString = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Attr_Country) as? String {
             country = letTheString + ": "
@@ -750,6 +846,9 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             title = letTheString + ": "
         }
         
+
+        let myAttributes = [cn, "uid: ", description, country, city, voicelin, voicemob, voiceint, title]
+
         
         // Clean start
         self.tmpUsers.removeAll()
@@ -806,7 +905,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
                                         var token = line.componentsSeparatedByString(attr)
                                         switch attr {
                                             
-                                        case "cn: ":
+                                        case cn:
                                             user.cn = token[1]
                                             break
                                             
