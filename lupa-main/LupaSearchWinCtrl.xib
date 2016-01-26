@@ -287,7 +287,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="-1049" y="-2205"/>
+            <point key="canvasLocation" x="-1349" y="-2411"/>
         </window>
         <arrayController automaticallyPreparesContent="YES" automaticallyRearrangesObjects="YES" id="CaR-wG-5SX" userLabel="someUsersController">
             <connections>

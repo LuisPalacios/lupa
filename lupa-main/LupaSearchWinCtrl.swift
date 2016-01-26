@@ -395,6 +395,17 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         }
     }
     
+//    /// --------------------------------------------------------------------------------
+//    //  MARK: Tableview Datasource
+//    /// --------------------------------------------------------------------------------
+//    
+//    
+//    func tableView(tableView: NSTableView, viewForTableColumn: NSTableColumn, row: Int) -> NSView
+//    {
+//        var cell = tableView.makeViewWithIdentifier("List", owner: self) as NSTableCellView
+//        cell.textField.stringValue = "test"
+//        return cell;
+//    }
 
     /// --------------------------------------------------------------------------------
     //  MARK: LDAP search
@@ -618,31 +629,39 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             // Get the new list of users
             self.users = self.tmpUsers
             
-            // Post process the list of users
-            print("ldapsearchFinished. Found \(users.count) users.\n")
-            for user in self.users {
-                
-                if let letLupa_LDAP_PictureURL = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_PictureURL) as? String {
-                    
-                    let mutableString = NSMutableString(string: letLupa_LDAP_PictureURL)
-                    let regex = try! NSRegularExpression(pattern: "<CN>",
-                        options: [.CaseInsensitive])
-                    regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.cn)
-                    if let mySwiftString : String = mutableString as String {
-                        if let letURL = NSURL(string: mySwiftString) {
-                            user.picturl = letURL
-                        }
-                    }
-                }
-                // print("\(user.cn) Photo: \(user.picturl)")
-            }
-            
-            //
+            // Show (or hide) the results view
             if ( self.users.count != 0 ) {
                 self.showLdapResultsStackView()
             } else {
                 self.hideLdapResultsStackView()
             }
+            
+            
+            let mainQueue = LPQueue.Main
+            mainQueue.async { () -> () in
+                
+                // Post process the list of users
+                print("ldapsearchFinished. Found \(self.users.count) users.\n")
+                for user in self.users {
+                    
+                    if let letLupa_LDAP_PictureURL = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_PictureURL) as? String {
+                        
+                        let mutableString = NSMutableString(string: letLupa_LDAP_PictureURL)
+                        let regex = try! NSRegularExpression(pattern: "<CN>",
+                            options: [.CaseInsensitive])
+                        regex.replaceMatchesInString(mutableString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.cn)
+                        if let mySwiftString : String = mutableString as String {
+                            if let letURL = NSURL(string: mySwiftString) {
+                                user.picturl = letURL
+                            }
+                        }
+                    }
+                    // print("\(user.cn) Photo: \(user.picturl)")
+                }
+                
+                self.ldapResultTableView.reloadData()
+            }
+            
             
         } else {
             print("ldapsearchFinished didn't succeed.\n")

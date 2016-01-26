@@ -232,18 +232,18 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="SsD-rq-YWV"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="gJB-Fe-5lP"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Attr_Desc" id="y0r-Mx-MZJ">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="gJB-Fe-5lP"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OCx-LK-SiD">
                                         <rect key="frame" x="6" y="149" width="80" height="11"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="76" id="rgY-7c-zRJ"/>
+                                            <constraint firstAttribute="width" constant="76" id="Cta-4s-Pye"/>
                                         </constraints>
                                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Attr 'CN'" id="zWl-g3-cf0">
                                             <font key="font" metaFont="miniSystem"/>
@@ -257,7 +257,7 @@
                                     <textField toolTip="Attribute that represents the Common Name  in the ldapsearch request" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yhG-JP-5HD">
                                         <rect key="frame" x="92" y="143" width="106" height="22"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="106" id="qL0-52-QrE"/>
+                                            <constraint firstAttribute="width" constant="106" id="cXf-Xr-QKk"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Z54-Md-0J1">
                                             <font key="font" metaFont="smallSystem"/>
@@ -266,12 +266,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="nTM-FL-VDP"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="awN-q0-9kT"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Attr_CN" id="78c-p6-oMG">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="awN-q0-9kT"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vdH-xc-3sf">
@@ -294,12 +294,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="b08-D8-EQN"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="T7I-LH-rmH"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Attr_Country" id="yMe-f8-lf0">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="T7I-LH-rmH"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LIK-Iq-faF">
@@ -322,12 +322,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="eN2-pG-Acw"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="c9n-5R-RSI"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Attr_City" id="PxV-LU-jLl">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="c9n-5R-RSI"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CJh-NE-xfI">
@@ -350,12 +350,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="deE-By-S9L"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="10b-gw-nJC"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_BIND_UserStore" id="p4I-nv-OT7">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="10b-gw-nJC"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CSm-V7-ItR">
@@ -389,18 +389,18 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="wAo-qw-UOj"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="ZUn-JF-1kN"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Limit_Results" id="s1D-wl-3Yg">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="ZUn-JF-1kN"/>
                                         </connections>
                                     </textField>
                                     <textField toolTip="Timeout before terminating current ldapsearch command" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rzk-Gi-V6Z">
                                         <rect key="frame" x="300" y="225" width="39" height="22"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="39" id="m3R-T1-eg8"/>
+                                            <constraint firstAttribute="width" constant="39" id="KSk-qL-kq8"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="6" drawsBackground="YES" id="2OK-iA-SZU">
                                             <font key="font" metaFont="smallSystem"/>
@@ -422,12 +422,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="9C2-re-514"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="PGG-5P-kt9"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Command" id="zhh-e5-D4g">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="PGG-5P-kt9"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NG8-N4-1JJ">
@@ -444,7 +444,7 @@
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oq3-Wq-DN6">
                                         <rect key="frame" x="243" y="229" width="51" height="14"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="47" id="a3A-yf-a67"/>
+                                            <constraint firstAttribute="width" constant="47" id="ClR-Dc-hFP"/>
                                         </constraints>
                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Timeout" id="uDk-ou-eU3">
                                             <font key="font" metaFont="smallSystem"/>
@@ -475,12 +475,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="9dP-DO-rgU"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="Fg9-RP-ZYJ"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_BaseDN" id="jE3-iL-UxY">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="Fg9-RP-ZYJ"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z5N-0x-rBw">
@@ -514,18 +514,18 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="q2D-NX-N3k"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="Eei-0r-IIT"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Host" id="4N5-f0-ACp">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="Eei-0r-IIT"/>
                                         </connections>
                                     </textField>
                                     <textField toolTip="LDAP SSL Port" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ThO-lL-95a">
                                         <rect key="frame" x="199" y="225" width="38" height="22"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="38" id="un3-dm-DWq"/>
+                                            <constraint firstAttribute="width" constant="38" id="7tv-Dc-2tr"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="636" drawsBackground="YES" id="gjQ-iR-dYe">
                                             <font key="font" metaFont="smallSystem"/>
@@ -534,12 +534,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="rYM-QJ-0zS"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="UN9-XE-4cV"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Port" id="uBu-Qe-zaj">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="UN9-XE-4cV"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M97-VB-V9f">
@@ -564,20 +564,6 @@
                                             <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="vad-71-OOd"/>
                                         </connections>
                                     </textField>
-                                    <textField toolTip="What will be use to BIND into ldap (-D)" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3SQ-Rz-XFw">
-                                        <rect key="frame" x="65" y="204" width="396" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="12" id="wLP-jD-QbL"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Full URL" id="FeX-Qr-F2k">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                        <connections>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="7of-Yk-1rU"/>
-                                        </connections>
-                                    </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LZS-QP-CQ7">
                                         <rect key="frame" x="7" y="42" width="50" height="14"/>
                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Picture" id="zpO-2O-MtW">
@@ -598,12 +584,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="t2i-rI-T4D"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="by8-2m-SAE"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_PictureURL" id="vrR-Qf-nhF">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="by8-2m-SAE"/>
                                         </connections>
                                     </textField>
                                     <button toolTip="Include CN in the Search Filter" translatesAutoresizingMaskIntoConstraints="NO" id="Nj6-2X-1ay">
@@ -613,8 +599,8 @@
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="QFh-v0-yli"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Search_CN" id="tvx-b3-G2P"/>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="QFh-v0-yli"/>
                                         </connections>
                                     </button>
                                     <button toolTip="Include Description in the Search Filter" translatesAutoresizingMaskIntoConstraints="NO" id="O4i-AW-7Fy">
@@ -624,14 +610,14 @@
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="ty1-Kj-8c5"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Search_Desc" id="yJg-F6-4VA"/>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="ty1-Kj-8c5"/>
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yfk-Lg-a9K">
                                         <rect key="frame" x="230" y="150" width="80" height="11"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="76" id="iYF-ER-kya"/>
+                                            <constraint firstAttribute="width" constant="76" id="V3F-4X-ssg"/>
                                         </constraints>
                                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Attr 'Tlf Line'" id="Cth-YY-crB">
                                             <font key="font" metaFont="miniSystem"/>
@@ -651,12 +637,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="lge-vc-HbS"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="IHg-fi-GK9"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Attr_VoiceLin" id="gIk-TT-Gqo">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="IHg-fi-GK9"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DgV-uV-M08">
@@ -679,12 +665,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="a7v-r3-8ls"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="VEP-Yv-i6T"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Attr_VoiceInt" id="M0L-SW-oP9">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="VEP-Yv-i6T"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Or9-WY-9Hr">
@@ -707,12 +693,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="48Z-tc-4WD"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="gOj-sq-uLE"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Attr_VoiceMob" id="mFQ-nw-XGr">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="gOj-sq-uLE"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Kc-ji-9Hw">
@@ -735,12 +721,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="RVq-ae-b2d"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="jKt-dg-v2w"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Attr_Title" id="GK4-Cu-aWc">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="jKt-dg-v2w"/>
                                         </connections>
                                     </textField>
                                     <button toolTip="Include Fixed Telephone in the Search Filter" translatesAutoresizingMaskIntoConstraints="NO" id="YAE-NC-V0t">
@@ -750,8 +736,8 @@
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="hwD-Gk-3Oh"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Search_VoiceLin" id="Ez4-b4-i7K"/>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="hwD-Gk-3Oh"/>
                                         </connections>
                                     </button>
                                     <button toolTip="Include Voicemail in the Search Filter" translatesAutoresizingMaskIntoConstraints="NO" id="VAI-WZ-F2c">
@@ -761,8 +747,8 @@
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="AhI-oI-VE9"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Search_VoiceInt" id="Niq-9K-9pm"/>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="AhI-oI-VE9"/>
                                         </connections>
                                     </button>
                                     <button toolTip="Include Mobile in the Search Filter" translatesAutoresizingMaskIntoConstraints="NO" id="Hb4-jg-faI">
@@ -772,8 +758,8 @@
                                             <font key="font" metaFont="smallSystem"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="Ygy-DG-eJM"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_Search_VoiceMob" id="NAA-XW-f9e"/>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="Ygy-DG-eJM"/>
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gjj-rc-46t">
@@ -790,7 +776,7 @@
                                     <textField toolTip="The user ID to bind into ldap" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bvo-8R-jMd">
                                         <rect key="frame" x="42" y="307" width="86" height="22"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="86" id="x3e-pe-KQ4"/>
+                                            <constraint firstAttribute="width" constant="86" id="jAz-mn-6lH"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="UserId" drawsBackground="YES" id="tXi-3Z-zlC">
                                             <font key="font" metaFont="smallSystem"/>
@@ -799,12 +785,12 @@
                                         </textFieldCell>
                                         <connections>
                                             <action selector="fieldChanged:" target="-2" id="BdR-I7-yau"/>
-                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="qr5-kr-CGB"/>
                                             <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_BIND_User" id="VUw-QE-6J4">
                                                 <dictionary key="options">
                                                     <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="qr5-kr-CGB"/>
                                         </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3v7-7a-BCV">
@@ -821,7 +807,7 @@
                                     <secureTextField toolTip="Directory password" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6CF-cB-QOA">
                                         <rect key="frame" x="169" y="307" width="86" height="22"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="86" id="FfQ-WF-PSo"/>
+                                            <constraint firstAttribute="width" constant="86" id="DJ8-hg-QUT"/>
                                         </constraints>
                                         <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="3Xi-fi-Utz">
                                             <font key="font" metaFont="system"/>
@@ -839,7 +825,7 @@
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9mk-Jd-JhF">
                                         <rect key="frame" x="257" y="300" width="75" height="32"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="63" id="Z2s-E9-pB5"/>
+                                            <constraint firstAttribute="width" constant="63" id="em6-tx-2iO"/>
                                         </constraints>
                                         <buttonCell key="cell" type="push" title="Clean" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cFe-qF-q59">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -867,162 +853,172 @@ Gw
                                             <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="6XN-Nl-JQu"/>
                                         </connections>
                                     </button>
+                                    <textField toolTip="What will be use to BIND into ldap (-D)" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3SQ-Rz-XFw">
+                                        <rect key="frame" x="65" y="202" width="396" height="14"/>
+                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Full URL" id="FeX-Qr-F2k">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="7of-Yk-1rU"/>
+                                        </connections>
+                                    </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="Yfn-WR-bzY" firstAttribute="top" secondItem="5mR-hm-eBy" secondAttribute="bottom" constant="12" id="0aj-0s-dsC"/>
-                                    <constraint firstItem="hnl-n2-xT3" firstAttribute="top" secondItem="WHC-te-6Wk" secondAttribute="bottom" constant="2" id="1jO-6O-kJh"/>
-                                    <constraint firstItem="Or9-WY-9Hr" firstAttribute="centerY" secondItem="3aT-kx-cAY" secondAttribute="centerY" id="1nF-LK-cw3"/>
-                                    <constraint firstItem="Z5N-0x-rBw" firstAttribute="leading" secondItem="CJh-NE-xfI" secondAttribute="leading" id="2ZG-I7-zdl"/>
-                                    <constraint firstItem="3v7-7a-BCV" firstAttribute="baseline" secondItem="6CF-cB-QOA" secondAttribute="baseline" id="2wl-0A-bxB"/>
-                                    <constraint firstItem="3v7-7a-BCV" firstAttribute="leading" secondItem="bvo-8R-jMd" secondAttribute="trailing" constant="8" symbolic="YES" id="3I9-hR-aMh"/>
-                                    <constraint firstItem="Hb4-jg-faI" firstAttribute="leading" secondItem="3aT-kx-cAY" secondAttribute="trailing" constant="8" symbolic="YES" id="45a-WJ-XWG"/>
-                                    <constraint firstItem="Yfk-Lg-a9K" firstAttribute="baseline" secondItem="yhG-JP-5HD" secondAttribute="firstBaseline" id="48A-Ne-zHu"/>
-                                    <constraint firstItem="GZg-8M-KyO" firstAttribute="top" secondItem="FAI-nf-Nuh" secondAttribute="bottom" constant="8" id="4jU-hW-I2N"/>
-                                    <constraint firstItem="LZS-QP-CQ7" firstAttribute="top" secondItem="LIK-Iq-faF" secondAttribute="bottom" constant="19" id="4rk-kD-Xpq"/>
-                                    <constraint firstItem="FAI-nf-Nuh" firstAttribute="top" secondItem="Fph-W6-eVV" secondAttribute="bottom" constant="2" id="58r-OP-FKP"/>
-                                    <constraint firstItem="3SQ-Rz-XFw" firstAttribute="leading" secondItem="j35-Pr-Rhw" secondAttribute="leading" id="5Po-SO-oPM"/>
-                                    <constraint firstItem="dq1-Ui-EdE" firstAttribute="centerX" secondItem="YAE-NC-V0t" secondAttribute="centerX" id="5hz-qK-EqH"/>
-                                    <constraint firstAttribute="trailing" secondItem="GZg-8M-KyO" secondAttribute="trailing" constant="8" id="5ka-lQ-fVJ"/>
-                                    <constraint firstItem="9mk-Jd-JhF" firstAttribute="baseline" secondItem="HLL-aF-Apq" secondAttribute="baseline" id="5uS-rR-YXa"/>
-                                    <constraint firstItem="Nj6-2X-1ay" firstAttribute="baseline" secondItem="yhG-JP-5HD" secondAttribute="baseline" id="68o-a9-MDA"/>
-                                    <constraint firstItem="gjN-yk-vNp" firstAttribute="top" secondItem="bvo-8R-jMd" secondAttribute="bottom" constant="13" id="6Pj-gc-eH7"/>
-                                    <constraint firstItem="9mk-Jd-JhF" firstAttribute="baseline" secondItem="6CF-cB-QOA" secondAttribute="baseline" id="7Hm-Si-viu"/>
-                                    <constraint firstItem="Yfk-Lg-a9K" firstAttribute="firstBaseline" secondItem="WHC-te-6Wk" secondAttribute="firstBaseline" id="7J9-Eh-88V"/>
-                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="leading" secondItem="Hb4-jg-faI" secondAttribute="leading" id="7pG-lO-LpY"/>
-                                    <constraint firstItem="OCx-LK-SiD" firstAttribute="baseline" secondItem="Nj6-2X-1ay" secondAttribute="firstBaseline" id="8gz-j2-mbB"/>
-                                    <constraint firstItem="ThO-lL-95a" firstAttribute="firstBaseline" secondItem="Mcr-OV-hqQ" secondAttribute="firstBaseline" id="9Cl-mL-c01"/>
-                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="leading" secondItem="YAE-NC-V0t" secondAttribute="leading" id="9aN-xh-zjf"/>
-                                    <constraint firstItem="YAE-NC-V0t" firstAttribute="leading" secondItem="WHC-te-6Wk" secondAttribute="trailing" constant="8" symbolic="YES" id="AJs-57-lP7"/>
-                                    <constraint firstItem="GZg-8M-KyO" firstAttribute="baseline" secondItem="LZS-QP-CQ7" secondAttribute="baseline" id="AuY-Ql-NBn"/>
-                                    <constraint firstItem="Yfk-Lg-a9K" firstAttribute="leading" secondItem="Nj6-2X-1ay" secondAttribute="trailing" constant="8" symbolic="YES" id="AuY-ZE-Jal"/>
-                                    <constraint firstItem="dq1-Ui-EdE" firstAttribute="baseline" secondItem="NG8-N4-1JJ" secondAttribute="baseline" id="BMm-S0-Pjf"/>
-                                    <constraint firstItem="EDU-FR-IkO" firstAttribute="leading" secondItem="GZg-8M-KyO" secondAttribute="leading" id="BOI-iu-xoo"/>
-                                    <constraint firstItem="gjN-yk-vNp" firstAttribute="leading" secondItem="1ep-pv-fo8" secondAttribute="leading" constant="8" id="BTn-6U-u43"/>
-                                    <constraint firstItem="DgV-uV-M08" firstAttribute="centerY" secondItem="O4i-AW-7Fy" secondAttribute="centerY" id="BnM-b7-hcO"/>
-                                    <constraint firstItem="Nj6-2X-1ay" firstAttribute="top" secondItem="Yfk-Lg-a9K" secondAttribute="top" id="BxN-oc-wOj"/>
-                                    <constraint firstItem="ThO-lL-95a" firstAttribute="baseline" secondItem="Mcr-OV-hqQ" secondAttribute="baseline" id="C02-TD-jLH"/>
-                                    <constraint firstAttribute="bottom" secondItem="EDU-FR-IkO" secondAttribute="bottom" constant="9" id="CDp-vR-56v"/>
-                                    <constraint firstItem="FAI-nf-Nuh" firstAttribute="firstBaseline" secondItem="5xp-x7-nIZ" secondAttribute="firstBaseline" id="CSm-AZ-k6G"/>
-                                    <constraint firstItem="tWu-12-z4E" firstAttribute="baseline" secondItem="DgV-uV-M08" secondAttribute="baseline" id="D4j-Mi-4ww"/>
-                                    <constraint firstItem="yhG-JP-5HD" firstAttribute="leading" secondItem="OCx-LK-SiD" secondAttribute="trailing" constant="8" symbolic="YES" id="Df4-4v-ie2"/>
-                                    <constraint firstItem="M97-VB-V9f" firstAttribute="top" secondItem="Epw-Gr-jBo" secondAttribute="bottom" constant="12" id="EMO-Dj-dAn"/>
-                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="top" secondItem="YAE-NC-V0t" secondAttribute="bottom" constant="9" id="EV7-cS-b94"/>
-                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="top" secondItem="IZ7-dp-MuC" secondAttribute="bottom" constant="3" id="Eae-L6-Sad"/>
-                                    <constraint firstItem="IZ7-dp-MuC" firstAttribute="leading" secondItem="tWu-12-z4E" secondAttribute="trailing" constant="8" symbolic="YES" id="Fyu-Lb-Ojv"/>
-                                    <constraint firstItem="3SQ-Rz-XFw" firstAttribute="top" secondItem="Mcr-OV-hqQ" secondAttribute="bottom" constant="9" id="HHR-Lr-4EE"/>
-                                    <constraint firstItem="6CF-cB-QOA" firstAttribute="leading" secondItem="3v7-7a-BCV" secondAttribute="trailing" constant="8" symbolic="YES" id="HLJ-w6-i4z"/>
-                                    <constraint firstItem="dq1-Ui-EdE" firstAttribute="trailing" secondItem="3SQ-Rz-XFw" secondAttribute="trailing" id="ILq-sL-OrO"/>
-                                    <constraint firstItem="Mcr-OV-hqQ" firstAttribute="leading" secondItem="3SQ-Rz-XFw" secondAttribute="leading" id="Ibi-Ha-iGa"/>
-                                    <constraint firstItem="5mR-hm-eBy" firstAttribute="trailing" secondItem="Yfn-WR-bzY" secondAttribute="trailing" id="Iee-pL-Gwg"/>
-                                    <constraint firstItem="5mR-hm-eBy" firstAttribute="baseline" secondItem="3SQ-Rz-XFw" secondAttribute="firstBaseline" id="J9s-eo-LGY"/>
-                                    <constraint firstItem="vdH-xc-3sf" firstAttribute="leading" secondItem="tWu-12-z4E" secondAttribute="leading" id="JAW-vE-gXK"/>
-                                    <constraint firstItem="WHC-te-6Wk" firstAttribute="baseline" secondItem="Nj6-2X-1ay" secondAttribute="baseline" id="JJo-df-Zgc"/>
-                                    <constraint firstItem="ThO-lL-95a" firstAttribute="leading" secondItem="Mcr-OV-hqQ" secondAttribute="trailing" constant="8" symbolic="YES" id="Jrw-4j-XFg"/>
-                                    <constraint firstItem="IZ7-dp-MuC" firstAttribute="centerY" secondItem="O4i-AW-7Fy" secondAttribute="centerY" id="K95-bo-7Zx"/>
-                                    <constraint firstItem="HLL-aF-Apq" firstAttribute="trailing" secondItem="rql-Mt-W3C" secondAttribute="trailing" id="Kvh-qY-hKp"/>
-                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="trailing" secondItem="IZ7-dp-MuC" secondAttribute="trailing" id="LAu-0K-UyA"/>
-                                    <constraint firstItem="EDU-FR-IkO" firstAttribute="top" secondItem="GZg-8M-KyO" secondAttribute="bottom" constant="8" id="LVr-LQ-jBb"/>
-                                    <constraint firstItem="CSm-V7-ItR" firstAttribute="top" secondItem="LZS-QP-CQ7" secondAttribute="bottom" constant="15" id="Ljo-NE-KYS"/>
-                                    <constraint firstItem="Nj6-2X-1ay" firstAttribute="leading" secondItem="yhG-JP-5HD" secondAttribute="trailing" constant="8" symbolic="YES" id="MYf-it-zQ5"/>
-                                    <constraint firstAttribute="trailing" secondItem="5xp-x7-nIZ" secondAttribute="trailing" constant="46" id="Mld-cW-yLy"/>
-                                    <constraint firstItem="Z5N-0x-rBw" firstAttribute="leading" secondItem="5mR-hm-eBy" secondAttribute="leading" id="Mn2-Nj-3jz"/>
-                                    <constraint firstItem="dq1-Ui-EdE" firstAttribute="trailing" secondItem="Epw-Gr-jBo" secondAttribute="trailing" id="N4t-0R-yeU"/>
-                                    <constraint firstItem="rzk-Gi-V6Z" firstAttribute="firstBaseline" secondItem="dq1-Ui-EdE" secondAttribute="firstBaseline" id="N9T-YY-0SR"/>
-                                    <constraint firstItem="Or9-WY-9Hr" firstAttribute="leading" secondItem="Fph-W6-eVV" secondAttribute="trailing" constant="34" id="O1V-mD-kGW"/>
-                                    <constraint firstItem="GZg-8M-KyO" firstAttribute="centerX" secondItem="EDU-FR-IkO" secondAttribute="centerX" id="O4k-QW-jiV"/>
-                                    <constraint firstItem="OCx-LK-SiD" firstAttribute="firstBaseline" secondItem="Nj6-2X-1ay" secondAttribute="firstBaseline" id="O6I-2U-VpV"/>
-                                    <constraint firstItem="DgV-uV-M08" firstAttribute="leading" secondItem="O4i-AW-7Fy" secondAttribute="trailing" constant="8" symbolic="YES" id="ORR-kz-iA4"/>
-                                    <constraint firstItem="Gjj-rc-46t" firstAttribute="leading" secondItem="1ep-pv-fo8" secondAttribute="leading" constant="9" id="Oz2-8B-PeH"/>
-                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="trailing" secondItem="Hb4-jg-faI" secondAttribute="trailing" id="QDQ-qE-quZ"/>
-                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="leading" secondItem="IZ7-dp-MuC" secondAttribute="leading" id="Qm0-je-Rit"/>
-                                    <constraint firstItem="dq1-Ui-EdE" firstAttribute="leading" secondItem="NG8-N4-1JJ" secondAttribute="trailing" constant="8" symbolic="YES" id="RCa-bH-a9e"/>
-                                    <constraint firstItem="rql-Mt-W3C" firstAttribute="top" secondItem="9mk-Jd-JhF" secondAttribute="bottom" constant="8" symbolic="YES" id="RV1-xc-XgD"/>
-                                    <constraint firstItem="FAI-nf-Nuh" firstAttribute="leading" secondItem="LIK-Iq-faF" secondAttribute="trailing" constant="8" symbolic="YES" id="RXW-KD-srF"/>
-                                    <constraint firstItem="LZS-QP-CQ7" firstAttribute="leading" secondItem="CSm-V7-ItR" secondAttribute="leading" id="Rd4-ZB-Bvz"/>
-                                    <constraint firstItem="Or9-WY-9Hr" firstAttribute="leading" secondItem="DgV-uV-M08" secondAttribute="leading" id="Rnd-WZ-r2i"/>
-                                    <constraint firstItem="LIK-Iq-faF" firstAttribute="leading" secondItem="vdH-xc-3sf" secondAttribute="leading" id="RsD-Ze-nCc"/>
-                                    <constraint firstItem="bvo-8R-jMd" firstAttribute="top" secondItem="1ep-pv-fo8" secondAttribute="top" constant="7" id="S06-8y-Qtc"/>
-                                    <constraint firstItem="Epw-Gr-jBo" firstAttribute="trailing" secondItem="rql-Mt-W3C" secondAttribute="trailing" id="SLi-eR-qMT"/>
-                                    <constraint firstItem="M97-VB-V9f" firstAttribute="leading" secondItem="Mcr-OV-hqQ" secondAttribute="trailing" constant="2" id="Tiy-wM-CnM"/>
-                                    <constraint firstItem="Hb4-jg-faI" firstAttribute="baseline" secondItem="vdH-xc-3sf" secondAttribute="firstBaseline" id="Wou-I0-ANC"/>
-                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="baseline" secondItem="IZ7-dp-MuC" secondAttribute="firstBaseline" id="X0t-Vp-Fdk"/>
-                                    <constraint firstItem="ThO-lL-95a" firstAttribute="firstBaseline" secondItem="rzk-Gi-V6Z" secondAttribute="firstBaseline" id="X3K-Bk-PBz"/>
-                                    <constraint firstItem="Yfk-Lg-a9K" firstAttribute="baseline" secondItem="YAE-NC-V0t" secondAttribute="firstBaseline" id="XBU-gy-GvV"/>
-                                    <constraint firstItem="O4i-AW-7Fy" firstAttribute="leading" secondItem="IZ7-dp-MuC" secondAttribute="trailing" constant="8" symbolic="YES" id="XQa-25-K5d"/>
-                                    <constraint firstItem="Oq3-Wq-DN6" firstAttribute="baseline" secondItem="M97-VB-V9f" secondAttribute="firstBaseline" id="XWW-Hn-Rwh"/>
-                                    <constraint firstItem="gjN-yk-vNp" firstAttribute="baseline" secondItem="rql-Mt-W3C" secondAttribute="baseline" id="Yg1-gW-ixK"/>
-                                    <constraint firstItem="EDU-FR-IkO" firstAttribute="centerX" secondItem="j35-Pr-Rhw" secondAttribute="centerX" id="Z5t-1C-Lac"/>
-                                    <constraint firstItem="Hb4-jg-faI" firstAttribute="centerY" secondItem="Or9-WY-9Hr" secondAttribute="centerY" id="Z8n-Iw-Bwh"/>
-                                    <constraint firstItem="IZ7-dp-MuC" firstAttribute="leading" secondItem="yhG-JP-5HD" secondAttribute="leading" id="ZuK-Jz-ucl"/>
-                                    <constraint firstItem="EDU-FR-IkO" firstAttribute="leading" secondItem="CSm-V7-ItR" secondAttribute="trailing" constant="9" id="aAy-6P-Efk"/>
-                                    <constraint firstItem="Z5N-0x-rBw" firstAttribute="baseline" secondItem="Mcr-OV-hqQ" secondAttribute="baseline" id="aJW-l2-5L5"/>
-                                    <constraint firstItem="FAI-nf-Nuh" firstAttribute="baseline" secondItem="5xp-x7-nIZ" secondAttribute="baseline" id="aZP-17-D2v"/>
-                                    <constraint firstItem="Mcr-OV-hqQ" firstAttribute="top" secondItem="Epw-Gr-jBo" secondAttribute="bottom" constant="8" symbolic="YES" id="atL-M0-waT"/>
-                                    <constraint firstItem="Or9-WY-9Hr" firstAttribute="leading" secondItem="1Kc-ji-9Hw" secondAttribute="leading" id="b0P-UX-epp"/>
-                                    <constraint firstItem="CJh-NE-xfI" firstAttribute="baseline" secondItem="Epw-Gr-jBo" secondAttribute="baseline" id="bv8-Pw-QvC"/>
-                                    <constraint firstItem="3v7-7a-BCV" firstAttribute="baseline" secondItem="bvo-8R-jMd" secondAttribute="baseline" id="bzj-Vo-ld3"/>
-                                    <constraint firstItem="IZ7-dp-MuC" firstAttribute="baseline" secondItem="O4i-AW-7Fy" secondAttribute="baseline" id="c1s-1C-aJo"/>
-                                    <constraint firstItem="Yfk-Lg-a9K" firstAttribute="centerY" secondItem="YAE-NC-V0t" secondAttribute="centerY" id="eDd-tY-isg"/>
-                                    <constraint firstItem="bvo-8R-jMd" firstAttribute="baseline" secondItem="Gjj-rc-46t" secondAttribute="baseline" id="eDf-rS-Ldv"/>
-                                    <constraint firstItem="3SQ-Rz-XFw" firstAttribute="trailing" secondItem="j35-Pr-Rhw" secondAttribute="trailing" id="epO-9R-I2i"/>
-                                    <constraint firstItem="ThO-lL-95a" firstAttribute="centerY" secondItem="M97-VB-V9f" secondAttribute="centerY" id="exK-6I-i9n"/>
-                                    <constraint firstItem="rzk-Gi-V6Z" firstAttribute="leading" secondItem="Oq3-Wq-DN6" secondAttribute="trailing" constant="8" symbolic="YES" id="f1F-4b-pbf"/>
-                                    <constraint firstItem="FAI-nf-Nuh" firstAttribute="centerY" secondItem="LIK-Iq-faF" secondAttribute="centerY" id="fDx-GG-vvO"/>
-                                    <constraint firstItem="Epw-Gr-jBo" firstAttribute="top" secondItem="rql-Mt-W3C" secondAttribute="bottom" constant="8" symbolic="YES" id="fH4-Zf-4Te"/>
-                                    <constraint firstItem="rql-Mt-W3C" firstAttribute="leading" secondItem="Epw-Gr-jBo" secondAttribute="leading" id="ffw-Ux-RPP"/>
-                                    <constraint firstItem="j35-Pr-Rhw" firstAttribute="top" secondItem="3SQ-Rz-XFw" secondAttribute="bottom" constant="9" id="g6e-Vn-Qqq"/>
-                                    <constraint firstItem="EDU-FR-IkO" firstAttribute="trailing" secondItem="j35-Pr-Rhw" secondAttribute="trailing" id="gFJ-5i-yiD"/>
-                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="trailing" secondItem="YAE-NC-V0t" secondAttribute="trailing" id="gSS-FE-Azz"/>
-                                    <constraint firstItem="Or9-WY-9Hr" firstAttribute="baseline" secondItem="Fph-W6-eVV" secondAttribute="firstBaseline" id="gp4-r8-wYK"/>
-                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="leading" secondItem="hnl-n2-xT3" secondAttribute="trailing" constant="8" symbolic="YES" id="hU1-gx-SvW"/>
-                                    <constraint firstItem="Yfn-WR-bzY" firstAttribute="leading" secondItem="5mR-hm-eBy" secondAttribute="leading" id="htL-tx-ZQN"/>
-                                    <constraint firstItem="yhG-JP-5HD" firstAttribute="centerY" secondItem="OCx-LK-SiD" secondAttribute="centerY" id="i0i-Ij-mrV"/>
-                                    <constraint firstItem="LIK-Iq-faF" firstAttribute="top" secondItem="vdH-xc-3sf" secondAttribute="bottom" constant="13" id="ih2-Y2-vgr"/>
-                                    <constraint firstItem="3aT-kx-cAY" firstAttribute="leading" secondItem="Or9-WY-9Hr" secondAttribute="trailing" constant="8" symbolic="YES" id="j53-gw-Auz"/>
-                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="leading" secondItem="vdH-xc-3sf" secondAttribute="trailing" constant="8" symbolic="YES" id="k9L-CE-Trr"/>
-                                    <constraint firstItem="FAI-nf-Nuh" firstAttribute="trailing" secondItem="Fph-W6-eVV" secondAttribute="trailing" id="kKp-3o-hGH"/>
-                                    <constraint firstItem="Mcr-OV-hqQ" firstAttribute="leading" secondItem="Z5N-0x-rBw" secondAttribute="trailing" constant="13" id="kXe-ez-oif"/>
-                                    <constraint firstItem="WHC-te-6Wk" firstAttribute="leading" secondItem="Yfk-Lg-a9K" secondAttribute="trailing" constant="8" symbolic="YES" id="l3c-5Q-iRr"/>
-                                    <constraint firstItem="CJh-NE-xfI" firstAttribute="leading" secondItem="gjN-yk-vNp" secondAttribute="leading" id="lGy-ud-AnP"/>
-                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="leading" secondItem="FAI-nf-Nuh" secondAttribute="leading" id="lQL-Fc-bto"/>
-                                    <constraint firstItem="DgV-uV-M08" firstAttribute="centerY" secondItem="hnl-n2-xT3" secondAttribute="centerY" id="lbK-pV-jXT"/>
-                                    <constraint firstItem="3aT-kx-cAY" firstAttribute="centerY" secondItem="vdH-xc-3sf" secondAttribute="centerY" id="le6-kz-j9k"/>
-                                    <constraint firstItem="HLL-aF-Apq" firstAttribute="leading" secondItem="9mk-Jd-JhF" secondAttribute="trailing" constant="12" symbolic="YES" id="mmN-fR-Wd9"/>
-                                    <constraint firstItem="Oq3-Wq-DN6" firstAttribute="leading" secondItem="ThO-lL-95a" secondAttribute="trailing" constant="8" symbolic="YES" id="mnF-of-uWL"/>
-                                    <constraint firstItem="OCx-LK-SiD" firstAttribute="leading" secondItem="tWu-12-z4E" secondAttribute="leading" id="mrU-AE-pgl"/>
-                                    <constraint firstItem="GZg-8M-KyO" firstAttribute="top" secondItem="1Kc-ji-9Hw" secondAttribute="bottom" constant="13" id="nM3-y9-Txt"/>
-                                    <constraint firstItem="GZg-8M-KyO" firstAttribute="leading" secondItem="LZS-QP-CQ7" secondAttribute="trailing" constant="13" id="ny0-Hd-cVX"/>
-                                    <constraint firstItem="tWu-12-z4E" firstAttribute="baseline" secondItem="DgV-uV-M08" secondAttribute="firstBaseline" id="oqF-TR-sRt"/>
-                                    <constraint firstItem="WHC-te-6Wk" firstAttribute="leading" secondItem="hnl-n2-xT3" secondAttribute="leading" id="ou1-4s-64f"/>
-                                    <constraint firstItem="OCx-LK-SiD" firstAttribute="leading" secondItem="Yfn-WR-bzY" secondAttribute="leading" id="p1v-4t-5m2"/>
-                                    <constraint firstItem="j35-Pr-Rhw" firstAttribute="baseline" secondItem="Yfn-WR-bzY" secondAttribute="baseline" id="piR-XS-MIw"/>
-                                    <constraint firstItem="hnl-n2-xT3" firstAttribute="leading" secondItem="3aT-kx-cAY" secondAttribute="leading" id="qRd-v9-YZW"/>
-                                    <constraint firstItem="9mk-Jd-JhF" firstAttribute="leading" secondItem="6CF-cB-QOA" secondAttribute="trailing" constant="8" symbolic="YES" id="qaB-kb-BYg"/>
-                                    <constraint firstItem="DgV-uV-M08" firstAttribute="leading" secondItem="Yfk-Lg-a9K" secondAttribute="leading" id="rQg-8e-yDZ"/>
-                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="centerY" secondItem="vdH-xc-3sf" secondAttribute="centerY" id="sKC-Mc-wEf"/>
-                                    <constraint firstItem="Mcr-OV-hqQ" firstAttribute="leading" secondItem="Epw-Gr-jBo" secondAttribute="leading" id="sNM-aP-98k"/>
-                                    <constraint firstItem="5xp-x7-nIZ" firstAttribute="leading" secondItem="1Kc-ji-9Hw" secondAttribute="trailing" constant="8" symbolic="YES" id="seZ-zN-Sib"/>
-                                    <constraint firstItem="IZ7-dp-MuC" firstAttribute="top" secondItem="yhG-JP-5HD" secondAttribute="bottom" constant="3" id="sgA-dF-TW1"/>
-                                    <constraint firstItem="5xp-x7-nIZ" firstAttribute="leading" secondItem="3aT-kx-cAY" secondAttribute="leading" id="shA-ad-fcx"/>
-                                    <constraint firstItem="Z5N-0x-rBw" firstAttribute="trailing" secondItem="5mR-hm-eBy" secondAttribute="trailing" id="spg-uo-LcG"/>
-                                    <constraint firstItem="1Kc-ji-9Hw" firstAttribute="centerY" secondItem="5xp-x7-nIZ" secondAttribute="centerY" id="srX-rC-u7S"/>
-                                    <constraint firstItem="ThO-lL-95a" firstAttribute="baseline" secondItem="rzk-Gi-V6Z" secondAttribute="baseline" id="svK-hm-STu"/>
-                                    <constraint firstItem="O4i-AW-7Fy" firstAttribute="leading" secondItem="Nj6-2X-1ay" secondAttribute="leading" id="tJE-in-rx1"/>
-                                    <constraint firstItem="rzk-Gi-V6Z" firstAttribute="baseline" secondItem="NG8-N4-1JJ" secondAttribute="baseline" id="uPK-la-IxH"/>
-                                    <constraint firstItem="hnl-n2-xT3" firstAttribute="leading" secondItem="DgV-uV-M08" secondAttribute="trailing" constant="8" symbolic="YES" id="ufC-7K-yLB"/>
-                                    <constraint firstItem="yhG-JP-5HD" firstAttribute="top" secondItem="j35-Pr-Rhw" secondAttribute="bottom" constant="8" id="vBg-0z-Mhg"/>
-                                    <constraint firstItem="M97-VB-V9f" firstAttribute="baseline" secondItem="Oq3-Wq-DN6" secondAttribute="baseline" id="viX-n7-qTe"/>
-                                    <constraint firstItem="bvo-8R-jMd" firstAttribute="leading" secondItem="Gjj-rc-46t" secondAttribute="trailing" constant="8" symbolic="YES" id="wOa-fn-f0l"/>
-                                    <constraint firstItem="bvo-8R-jMd" firstAttribute="top" secondItem="6CF-cB-QOA" secondAttribute="top" id="xDO-BA-kRU"/>
-                                    <constraint firstAttribute="trailing" secondItem="YAE-NC-V0t" secondAttribute="trailing" constant="20" symbolic="YES" id="xGj-rb-9Yq"/>
-                                    <constraint firstItem="Epw-Gr-jBo" firstAttribute="leading" secondItem="CJh-NE-xfI" secondAttribute="trailing" constant="9" id="xny-rR-Pgy"/>
-                                    <constraint firstItem="NG8-N4-1JJ" firstAttribute="leading" secondItem="rzk-Gi-V6Z" secondAttribute="trailing" constant="8" symbolic="YES" id="xrp-et-yCC"/>
-                                    <constraint firstItem="Yfk-Lg-a9K" firstAttribute="baseline" secondItem="WHC-te-6Wk" secondAttribute="firstBaseline" id="y5z-R3-k4R"/>
-                                    <constraint firstItem="LZS-QP-CQ7" firstAttribute="leading" secondItem="Gjj-rc-46t" secondAttribute="leading" id="yvU-wr-mI9"/>
-                                    <constraint firstItem="Hb4-jg-faI" firstAttribute="firstBaseline" secondItem="3aT-kx-cAY" secondAttribute="firstBaseline" id="yxp-hf-VmH"/>
-                                    <constraint firstItem="EDU-FR-IkO" firstAttribute="centerY" secondItem="CSm-V7-ItR" secondAttribute="centerY" id="zOz-fl-u9x"/>
-                                    <constraint firstItem="3aT-kx-cAY" firstAttribute="trailing" secondItem="5xp-x7-nIZ" secondAttribute="trailing" id="zcc-ug-6fV"/>
-                                    <constraint firstItem="DgV-uV-M08" firstAttribute="baseline" secondItem="O4i-AW-7Fy" secondAttribute="firstBaseline" id="zym-Kc-zwv"/>
+                                    <constraint firstItem="OCx-LK-SiD" firstAttribute="baseline" secondItem="Nj6-2X-1ay" secondAttribute="firstBaseline" id="0Jx-I1-xei"/>
+                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="trailing" secondItem="IZ7-dp-MuC" secondAttribute="trailing" id="1OT-NV-9F1"/>
+                                    <constraint firstItem="CJh-NE-xfI" firstAttribute="leading" secondItem="gjN-yk-vNp" secondAttribute="leading" id="22N-OZ-NdK"/>
+                                    <constraint firstItem="j35-Pr-Rhw" firstAttribute="trailing" secondItem="EDU-FR-IkO" secondAttribute="trailing" id="29N-ev-iRb"/>
+                                    <constraint firstItem="EDU-FR-IkO" firstAttribute="centerY" secondItem="CSm-V7-ItR" secondAttribute="centerY" id="2BB-bC-1ZB"/>
+                                    <constraint firstItem="YAE-NC-V0t" firstAttribute="centerY" secondItem="Yfk-Lg-a9K" secondAttribute="centerY" id="2Er-FZ-a7k"/>
+                                    <constraint firstItem="yhG-JP-5HD" firstAttribute="leading" secondItem="IZ7-dp-MuC" secondAttribute="leading" id="3nA-0E-eKp"/>
+                                    <constraint firstItem="Nj6-2X-1ay" firstAttribute="leading" secondItem="yhG-JP-5HD" secondAttribute="trailing" constant="8" symbolic="YES" id="474-1v-jAJ"/>
+                                    <constraint firstItem="yhG-JP-5HD" firstAttribute="top" secondItem="j35-Pr-Rhw" secondAttribute="bottom" constant="8" id="4GR-Ah-FxB"/>
+                                    <constraint firstItem="bvo-8R-jMd" firstAttribute="baseline" secondItem="3v7-7a-BCV" secondAttribute="baseline" id="4wQ-np-SAK"/>
+                                    <constraint firstItem="M97-VB-V9f" firstAttribute="baseline" secondItem="Oq3-Wq-DN6" secondAttribute="baseline" id="52Z-AT-cOj"/>
+                                    <constraint firstItem="6CF-cB-QOA" firstAttribute="leading" secondItem="3v7-7a-BCV" secondAttribute="trailing" constant="8" symbolic="YES" id="5qZ-hm-Jla"/>
+                                    <constraint firstItem="M97-VB-V9f" firstAttribute="top" secondItem="Epw-Gr-jBo" secondAttribute="bottom" constant="12" id="5qk-eb-bgz"/>
+                                    <constraint firstItem="rzk-Gi-V6Z" firstAttribute="baseline" secondItem="ThO-lL-95a" secondAttribute="baseline" id="5rN-zE-Mli"/>
+                                    <constraint firstItem="DgV-uV-M08" firstAttribute="leading" secondItem="Or9-WY-9Hr" secondAttribute="leading" id="6fe-qy-eYQ"/>
+                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="leading" secondItem="hnl-n2-xT3" secondAttribute="trailing" constant="8" symbolic="YES" id="6ny-n2-MdQ"/>
+                                    <constraint firstItem="5xp-x7-nIZ" firstAttribute="trailing" secondItem="3aT-kx-cAY" secondAttribute="trailing" id="7QZ-YN-efs"/>
+                                    <constraint firstItem="Or9-WY-9Hr" firstAttribute="centerY" secondItem="Hb4-jg-faI" secondAttribute="centerY" id="84Z-mU-CSV"/>
+                                    <constraint firstItem="3aT-kx-cAY" firstAttribute="leading" secondItem="Or9-WY-9Hr" secondAttribute="trailing" constant="8" symbolic="YES" id="8Im-Ra-eds"/>
+                                    <constraint firstItem="3SQ-Rz-XFw" firstAttribute="baseline" secondItem="5mR-hm-eBy" secondAttribute="baseline" id="9IJ-WB-05k"/>
+                                    <constraint firstItem="GZg-8M-KyO" firstAttribute="top" secondItem="1Kc-ji-9Hw" secondAttribute="bottom" constant="13" id="A1f-Ar-5j7"/>
+                                    <constraint firstItem="Z5N-0x-rBw" firstAttribute="baseline" secondItem="Mcr-OV-hqQ" secondAttribute="baseline" id="AP5-vm-gW3"/>
+                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="leading" secondItem="FAI-nf-Nuh" secondAttribute="leading" id="AsC-E0-yBd"/>
+                                    <constraint firstItem="9mk-Jd-JhF" firstAttribute="baseline" secondItem="6CF-cB-QOA" secondAttribute="baseline" id="BRZ-7c-zcb"/>
+                                    <constraint firstItem="Epw-Gr-jBo" firstAttribute="trailing" secondItem="rql-Mt-W3C" secondAttribute="trailing" id="BX3-TZ-Htx"/>
+                                    <constraint firstItem="YAE-NC-V0t" firstAttribute="leading" secondItem="WHC-te-6Wk" secondAttribute="trailing" constant="8" symbolic="YES" id="BaM-Nw-yFK"/>
+                                    <constraint firstItem="dq1-Ui-EdE" firstAttribute="baseline" secondItem="NG8-N4-1JJ" secondAttribute="baseline" id="BgS-2I-sMf"/>
+                                    <constraint firstItem="3aT-kx-cAY" firstAttribute="centerY" secondItem="Or9-WY-9Hr" secondAttribute="centerY" id="Bpb-ax-4XG"/>
+                                    <constraint firstItem="FAI-nf-Nuh" firstAttribute="centerY" secondItem="LIK-Iq-faF" secondAttribute="centerY" id="CtK-vP-VDd"/>
+                                    <constraint firstItem="OCx-LK-SiD" firstAttribute="centerY" secondItem="yhG-JP-5HD" secondAttribute="centerY" id="EJL-f2-Peh"/>
+                                    <constraint firstItem="Oq3-Wq-DN6" firstAttribute="leading" secondItem="ThO-lL-95a" secondAttribute="trailing" constant="8" symbolic="YES" id="EZc-0A-Mcv"/>
+                                    <constraint firstItem="EDU-FR-IkO" firstAttribute="top" secondItem="GZg-8M-KyO" secondAttribute="bottom" constant="8" id="EjN-0c-WmH"/>
+                                    <constraint firstItem="HLL-aF-Apq" firstAttribute="baseline" secondItem="9mk-Jd-JhF" secondAttribute="baseline" id="Eqm-9i-HsD"/>
+                                    <constraint firstItem="tWu-12-z4E" firstAttribute="baseline" secondItem="DgV-uV-M08" secondAttribute="firstBaseline" id="F1p-mL-FgO"/>
+                                    <constraint firstItem="GZg-8M-KyO" firstAttribute="leading" secondItem="EDU-FR-IkO" secondAttribute="leading" id="F8x-cw-deO"/>
+                                    <constraint firstItem="rql-Mt-W3C" firstAttribute="leading" secondItem="Epw-Gr-jBo" secondAttribute="leading" id="FKi-jO-itq"/>
+                                    <constraint firstItem="WHC-te-6Wk" firstAttribute="firstBaseline" secondItem="Yfk-Lg-a9K" secondAttribute="firstBaseline" id="FrX-6h-O7G"/>
+                                    <constraint firstItem="IZ7-dp-MuC" firstAttribute="leading" secondItem="tWu-12-z4E" secondAttribute="trailing" constant="8" symbolic="YES" id="GYm-Kv-U4D"/>
+                                    <constraint firstItem="DgV-uV-M08" firstAttribute="baseline" secondItem="O4i-AW-7Fy" secondAttribute="firstBaseline" id="HC0-aZ-ufM"/>
+                                    <constraint firstItem="Yfk-Lg-a9K" firstAttribute="leading" secondItem="DgV-uV-M08" secondAttribute="leading" id="HqJ-1G-Fkm"/>
+                                    <constraint firstItem="yhG-JP-5HD" firstAttribute="baseline" secondItem="Nj6-2X-1ay" secondAttribute="baseline" id="IGt-dW-eOW"/>
+                                    <constraint firstItem="5mR-hm-eBy" firstAttribute="leading" secondItem="Z5N-0x-rBw" secondAttribute="leading" id="IN9-Vf-Ny5"/>
+                                    <constraint firstItem="CJh-NE-xfI" firstAttribute="leading" secondItem="Z5N-0x-rBw" secondAttribute="leading" id="IQi-lX-6cP"/>
+                                    <constraint firstAttribute="trailing" secondItem="YAE-NC-V0t" secondAttribute="trailing" constant="20" symbolic="YES" id="IS4-L7-l8X"/>
+                                    <constraint firstItem="gjN-yk-vNp" firstAttribute="leading" secondItem="1ep-pv-fo8" secondAttribute="leading" constant="8" id="IST-2V-YEp"/>
+                                    <constraint firstItem="YAE-NC-V0t" firstAttribute="centerX" secondItem="dq1-Ui-EdE" secondAttribute="centerX" id="Idw-1Y-T0d"/>
+                                    <constraint firstItem="Yfk-Lg-a9K" firstAttribute="leading" secondItem="Nj6-2X-1ay" secondAttribute="trailing" constant="8" symbolic="YES" id="Ip2-Mw-w0P"/>
+                                    <constraint firstItem="Yfk-Lg-a9K" firstAttribute="baseline" secondItem="YAE-NC-V0t" secondAttribute="firstBaseline" id="MFK-Mu-hdL"/>
+                                    <constraint firstItem="Yfn-WR-bzY" firstAttribute="leading" secondItem="OCx-LK-SiD" secondAttribute="leading" id="MJk-MT-Fpj"/>
+                                    <constraint firstItem="IZ7-dp-MuC" firstAttribute="centerY" secondItem="O4i-AW-7Fy" secondAttribute="centerY" id="MS7-Hg-8xX"/>
+                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="trailing" secondItem="FAI-nf-Nuh" secondAttribute="trailing" id="NAa-Zp-l17"/>
+                                    <constraint firstItem="1Kc-ji-9Hw" firstAttribute="leading" secondItem="Or9-WY-9Hr" secondAttribute="leading" id="NQy-nv-QmW"/>
+                                    <constraint firstItem="vdH-xc-3sf" firstAttribute="centerY" secondItem="3aT-kx-cAY" secondAttribute="centerY" id="NhN-O5-DWD"/>
+                                    <constraint firstItem="Epw-Gr-jBo" firstAttribute="baseline" secondItem="CJh-NE-xfI" secondAttribute="baseline" id="OVU-Ql-gpE"/>
+                                    <constraint firstItem="dq1-Ui-EdE" firstAttribute="trailing" secondItem="Epw-Gr-jBo" secondAttribute="trailing" id="OWs-f2-9AJ"/>
+                                    <constraint firstItem="bvo-8R-jMd" firstAttribute="top" secondItem="1ep-pv-fo8" secondAttribute="top" constant="7" id="Ocj-Rs-sUo"/>
+                                    <constraint firstItem="HLL-aF-Apq" firstAttribute="leading" secondItem="9mk-Jd-JhF" secondAttribute="trailing" constant="12" symbolic="YES" id="Okt-kJ-ZOG"/>
+                                    <constraint firstItem="Hb4-jg-faI" firstAttribute="leading" secondItem="3aT-kx-cAY" secondAttribute="trailing" constant="8" symbolic="YES" id="PBJ-Cs-fsY"/>
+                                    <constraint firstItem="tWu-12-z4E" firstAttribute="leading" secondItem="vdH-xc-3sf" secondAttribute="leading" id="Pd0-h3-qHZ"/>
+                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="baseline" secondItem="IZ7-dp-MuC" secondAttribute="firstBaseline" id="Plm-in-q8D"/>
+                                    <constraint firstItem="OCx-LK-SiD" firstAttribute="leading" secondItem="tWu-12-z4E" secondAttribute="leading" id="Q3r-Z7-1JX"/>
+                                    <constraint firstItem="5xp-x7-nIZ" firstAttribute="leading" secondItem="1Kc-ji-9Hw" secondAttribute="trailing" constant="8" symbolic="YES" id="Q4I-Bb-s33"/>
+                                    <constraint firstItem="6CF-cB-QOA" firstAttribute="baseline" secondItem="3v7-7a-BCV" secondAttribute="baseline" id="R8E-Mz-m19"/>
+                                    <constraint firstItem="Mcr-OV-hqQ" firstAttribute="top" secondItem="Epw-Gr-jBo" secondAttribute="bottom" constant="8" symbolic="YES" id="RKU-YL-xfm"/>
+                                    <constraint firstItem="WHC-te-6Wk" firstAttribute="leading" secondItem="hnl-n2-xT3" secondAttribute="leading" id="Rgr-QG-vcm"/>
+                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="top" secondItem="YAE-NC-V0t" secondAttribute="bottom" constant="9" id="S8U-bg-vRe"/>
+                                    <constraint firstItem="Nj6-2X-1ay" firstAttribute="top" secondItem="Yfk-Lg-a9K" secondAttribute="top" id="S9Y-gG-WTI"/>
+                                    <constraint firstItem="Yfn-WR-bzY" firstAttribute="leading" secondItem="5mR-hm-eBy" secondAttribute="leading" id="SUx-Fi-Ttl"/>
+                                    <constraint firstItem="EDU-FR-IkO" firstAttribute="leading" secondItem="CSm-V7-ItR" secondAttribute="trailing" constant="9" id="Snf-Bm-v9k"/>
+                                    <constraint firstItem="FAI-nf-Nuh" firstAttribute="top" secondItem="Fph-W6-eVV" secondAttribute="bottom" constant="2" id="Tp7-dm-h5x"/>
+                                    <constraint firstItem="GZg-8M-KyO" firstAttribute="top" secondItem="FAI-nf-Nuh" secondAttribute="bottom" constant="8" id="Tq8-Uz-qOc"/>
+                                    <constraint firstItem="Hb4-jg-faI" firstAttribute="baseline" secondItem="vdH-xc-3sf" secondAttribute="firstBaseline" id="UGG-a9-y7Y"/>
+                                    <constraint firstItem="5mR-hm-eBy" firstAttribute="trailing" secondItem="Z5N-0x-rBw" secondAttribute="trailing" id="UP5-MP-28S"/>
+                                    <constraint firstItem="LIK-Iq-faF" firstAttribute="top" secondItem="vdH-xc-3sf" secondAttribute="bottom" constant="13" id="UVD-a8-3EF"/>
+                                    <constraint firstItem="rql-Mt-W3C" firstAttribute="baseline" secondItem="gjN-yk-vNp" secondAttribute="baseline" id="UiA-vL-K5r"/>
+                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="trailing" secondItem="Hb4-jg-faI" secondAttribute="trailing" id="UvQ-rQ-AUQ"/>
+                                    <constraint firstItem="hnl-n2-xT3" firstAttribute="leading" secondItem="DgV-uV-M08" secondAttribute="trailing" constant="8" symbolic="YES" id="VDs-hM-kDT"/>
+                                    <constraint firstItem="DgV-uV-M08" firstAttribute="baseline" secondItem="tWu-12-z4E" secondAttribute="baseline" id="VIq-Wv-06S"/>
+                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="leading" secondItem="IZ7-dp-MuC" secondAttribute="leading" id="VaX-sA-AFZ"/>
+                                    <constraint firstItem="gjN-yk-vNp" firstAttribute="top" secondItem="bvo-8R-jMd" secondAttribute="bottom" constant="13" id="ViJ-Ge-dOX"/>
+                                    <constraint firstItem="3v7-7a-BCV" firstAttribute="leading" secondItem="bvo-8R-jMd" secondAttribute="trailing" constant="8" symbolic="YES" id="WKe-IS-igE"/>
+                                    <constraint firstAttribute="bottom" secondItem="EDU-FR-IkO" secondAttribute="bottom" constant="9" id="X0Q-xI-pZE"/>
+                                    <constraint firstItem="Epw-Gr-jBo" firstAttribute="leading" secondItem="CJh-NE-xfI" secondAttribute="trailing" constant="9" id="X0S-YQ-nh0"/>
+                                    <constraint firstItem="EDU-FR-IkO" firstAttribute="centerX" secondItem="GZg-8M-KyO" secondAttribute="centerX" id="XEh-Lv-2iv"/>
+                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="centerY" secondItem="vdH-xc-3sf" secondAttribute="centerY" id="XPC-bh-aKg"/>
+                                    <constraint firstItem="ThO-lL-95a" firstAttribute="leading" secondItem="Mcr-OV-hqQ" secondAttribute="trailing" constant="8" symbolic="YES" id="XZR-Ie-FVa"/>
+                                    <constraint firstItem="3aT-kx-cAY" firstAttribute="leading" secondItem="5xp-x7-nIZ" secondAttribute="leading" id="Xjp-Kx-nO3"/>
+                                    <constraint firstItem="WHC-te-6Wk" firstAttribute="leading" secondItem="Yfk-Lg-a9K" secondAttribute="trailing" constant="8" symbolic="YES" id="YWa-Gn-G6r"/>
+                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="leading" secondItem="YAE-NC-V0t" secondAttribute="leading" id="Yxf-xb-YNC"/>
+                                    <constraint firstItem="hnl-n2-xT3" firstAttribute="top" secondItem="WHC-te-6Wk" secondAttribute="bottom" constant="2" id="ZeM-51-fVH"/>
+                                    <constraint firstItem="Mcr-OV-hqQ" firstAttribute="firstBaseline" secondItem="ThO-lL-95a" secondAttribute="firstBaseline" id="aJv-VR-pdj"/>
+                                    <constraint firstAttribute="trailing" secondItem="GZg-8M-KyO" secondAttribute="trailing" constant="8" id="aTO-el-0aZ"/>
+                                    <constraint firstItem="Yfn-WR-bzY" firstAttribute="trailing" secondItem="5mR-hm-eBy" secondAttribute="trailing" id="anf-ot-MJT"/>
+                                    <constraint firstItem="Yfn-WR-bzY" firstAttribute="top" secondItem="5mR-hm-eBy" secondAttribute="bottom" constant="12" id="av3-Gq-JuR"/>
+                                    <constraint firstItem="3aT-kx-cAY" firstAttribute="leading" secondItem="hnl-n2-xT3" secondAttribute="leading" id="b7a-jN-G3J"/>
+                                    <constraint firstItem="Epw-Gr-jBo" firstAttribute="top" secondItem="rql-Mt-W3C" secondAttribute="bottom" constant="8" symbolic="YES" id="bSt-NS-JKe"/>
+                                    <constraint firstItem="5xp-x7-nIZ" firstAttribute="centerY" secondItem="1Kc-ji-9Hw" secondAttribute="centerY" id="ba7-S3-IR7"/>
+                                    <constraint firstItem="j35-Pr-Rhw" firstAttribute="leading" secondItem="3SQ-Rz-XFw" secondAttribute="leading" id="bfc-Nt-yDO"/>
+                                    <constraint firstItem="FAI-nf-Nuh" firstAttribute="firstBaseline" secondItem="5xp-x7-nIZ" secondAttribute="firstBaseline" id="buk-Gx-P3s"/>
+                                    <constraint firstItem="Or9-WY-9Hr" firstAttribute="leading" secondItem="Fph-W6-eVV" secondAttribute="trailing" constant="34" id="buy-Zr-i10"/>
+                                    <constraint firstItem="DgV-uV-M08" firstAttribute="centerY" secondItem="hnl-n2-xT3" secondAttribute="centerY" id="c3o-aA-G2b"/>
+                                    <constraint firstItem="3SQ-Rz-XFw" firstAttribute="top" secondItem="Mcr-OV-hqQ" secondAttribute="bottom" constant="9" id="dLU-03-avx"/>
+                                    <constraint firstItem="Oq3-Wq-DN6" firstAttribute="baseline" secondItem="M97-VB-V9f" secondAttribute="firstBaseline" id="dPd-q9-SXO"/>
+                                    <constraint firstItem="ThO-lL-95a" firstAttribute="firstBaseline" secondItem="rzk-Gi-V6Z" secondAttribute="firstBaseline" id="dcf-83-XNm"/>
+                                    <constraint firstItem="rql-Mt-W3C" firstAttribute="trailing" secondItem="HLL-aF-Apq" secondAttribute="trailing" id="eKP-nC-CwE"/>
+                                    <constraint firstItem="rzk-Gi-V6Z" firstAttribute="leading" secondItem="Oq3-Wq-DN6" secondAttribute="trailing" constant="8" symbolic="YES" id="eYs-JP-lyJ"/>
+                                    <constraint firstItem="Yfk-Lg-a9K" firstAttribute="baseline" secondItem="WHC-te-6Wk" secondAttribute="firstBaseline" id="edh-EC-H9R"/>
+                                    <constraint firstItem="j35-Pr-Rhw" firstAttribute="top" secondItem="3SQ-Rz-XFw" secondAttribute="bottom" constant="7" id="exA-Hz-nWH"/>
+                                    <constraint firstAttribute="trailing" secondItem="5xp-x7-nIZ" secondAttribute="trailing" constant="46" id="fPH-Ig-yj4"/>
+                                    <constraint firstItem="LZS-QP-CQ7" firstAttribute="top" secondItem="LIK-Iq-faF" secondAttribute="bottom" constant="19" id="fSd-yF-Wnu"/>
+                                    <constraint firstItem="VAI-WZ-F2c" firstAttribute="leading" secondItem="Hb4-jg-faI" secondAttribute="leading" id="ffo-4Q-i3G"/>
+                                    <constraint firstItem="Mcr-OV-hqQ" firstAttribute="leading" secondItem="Epw-Gr-jBo" secondAttribute="leading" id="g11-up-SRY"/>
+                                    <constraint firstItem="9mk-Jd-JhF" firstAttribute="leading" secondItem="6CF-cB-QOA" secondAttribute="trailing" constant="8" symbolic="YES" id="gGc-hc-n4Z"/>
+                                    <constraint firstItem="O4i-AW-7Fy" firstAttribute="centerY" secondItem="DgV-uV-M08" secondAttribute="centerY" id="gVv-Zi-yrX"/>
+                                    <constraint firstItem="CSm-V7-ItR" firstAttribute="leading" secondItem="LZS-QP-CQ7" secondAttribute="leading" id="guW-kt-n87"/>
+                                    <constraint firstItem="Nj6-2X-1ay" firstAttribute="firstBaseline" secondItem="OCx-LK-SiD" secondAttribute="firstBaseline" id="iNC-VL-tho"/>
+                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="top" secondItem="IZ7-dp-MuC" secondAttribute="bottom" constant="3" id="ijY-uQ-leQ"/>
+                                    <constraint firstItem="3SQ-Rz-XFw" firstAttribute="trailing" secondItem="dq1-Ui-EdE" secondAttribute="trailing" id="ipw-qV-41O"/>
+                                    <constraint firstItem="LZS-QP-CQ7" firstAttribute="leading" secondItem="Gjj-rc-46t" secondAttribute="leading" id="jQ3-hT-AvD"/>
+                                    <constraint firstItem="ThO-lL-95a" firstAttribute="centerY" secondItem="M97-VB-V9f" secondAttribute="centerY" id="jZY-Ag-o6q"/>
+                                    <constraint firstItem="Nj6-2X-1ay" firstAttribute="leading" secondItem="O4i-AW-7Fy" secondAttribute="leading" id="keo-A7-AN4"/>
+                                    <constraint firstItem="Hb4-jg-faI" firstAttribute="firstBaseline" secondItem="3aT-kx-cAY" secondAttribute="firstBaseline" id="kge-xl-HM7"/>
+                                    <constraint firstItem="j35-Pr-Rhw" firstAttribute="trailing" secondItem="3SQ-Rz-XFw" secondAttribute="trailing" id="l0u-fI-U3l"/>
+                                    <constraint firstItem="vdH-xc-3sf" firstAttribute="leading" secondItem="LIK-Iq-faF" secondAttribute="leading" id="lTl-V1-Eof"/>
+                                    <constraint firstItem="rzk-Gi-V6Z" firstAttribute="firstBaseline" secondItem="dq1-Ui-EdE" secondAttribute="firstBaseline" id="laL-Bb-fhe"/>
+                                    <constraint firstItem="Fph-W6-eVV" firstAttribute="leading" secondItem="vdH-xc-3sf" secondAttribute="trailing" constant="8" symbolic="YES" id="lgH-NM-XAS"/>
+                                    <constraint firstItem="Gjj-rc-46t" firstAttribute="baseline" secondItem="bvo-8R-jMd" secondAttribute="baseline" id="lin-V3-eAa"/>
+                                    <constraint firstItem="yhG-JP-5HD" firstAttribute="leading" secondItem="OCx-LK-SiD" secondAttribute="trailing" constant="8" symbolic="YES" id="m6G-Zl-Lyo"/>
+                                    <constraint firstItem="M97-VB-V9f" firstAttribute="leading" secondItem="Mcr-OV-hqQ" secondAttribute="trailing" constant="2" id="mXW-Ma-S17"/>
+                                    <constraint firstItem="NG8-N4-1JJ" firstAttribute="baseline" secondItem="rzk-Gi-V6Z" secondAttribute="baseline" id="nhc-kX-Yrp"/>
+                                    <constraint firstItem="Mcr-OV-hqQ" firstAttribute="leading" secondItem="3SQ-Rz-XFw" secondAttribute="leading" id="nzS-5B-FT6"/>
+                                    <constraint firstItem="GZg-8M-KyO" firstAttribute="leading" secondItem="LZS-QP-CQ7" secondAttribute="trailing" constant="13" id="o8w-rd-TPA"/>
+                                    <constraint firstItem="DgV-uV-M08" firstAttribute="leading" secondItem="O4i-AW-7Fy" secondAttribute="trailing" constant="8" symbolic="YES" id="okw-GM-Qfq"/>
+                                    <constraint firstItem="IZ7-dp-MuC" firstAttribute="top" secondItem="yhG-JP-5HD" secondAttribute="bottom" constant="3" id="poH-32-ywf"/>
+                                    <constraint firstItem="FAI-nf-Nuh" firstAttribute="baseline" secondItem="5xp-x7-nIZ" secondAttribute="baseline" id="q1V-P0-ADj"/>
+                                    <constraint firstItem="IZ7-dp-MuC" firstAttribute="baseline" secondItem="O4i-AW-7Fy" secondAttribute="baseline" id="qFv-aQ-nLq"/>
+                                    <constraint firstItem="GZg-8M-KyO" firstAttribute="baseline" secondItem="LZS-QP-CQ7" secondAttribute="baseline" id="rGl-Vh-eAJ"/>
+                                    <constraint firstItem="YAE-NC-V0t" firstAttribute="trailing" secondItem="VAI-WZ-F2c" secondAttribute="trailing" id="tjF-X2-d9k"/>
+                                    <constraint firstItem="rql-Mt-W3C" firstAttribute="top" secondItem="9mk-Jd-JhF" secondAttribute="bottom" constant="8" symbolic="YES" id="u0d-fO-LHM"/>
+                                    <constraint firstItem="ThO-lL-95a" firstAttribute="baseline" secondItem="Mcr-OV-hqQ" secondAttribute="baseline" id="uRc-B8-h9h"/>
+                                    <constraint firstItem="O4i-AW-7Fy" firstAttribute="leading" secondItem="IZ7-dp-MuC" secondAttribute="trailing" constant="8" symbolic="YES" id="ukc-5c-AsO"/>
+                                    <constraint firstItem="EDU-FR-IkO" firstAttribute="centerX" secondItem="j35-Pr-Rhw" secondAttribute="centerX" id="uku-yn-iM3"/>
+                                    <constraint firstItem="Yfn-WR-bzY" firstAttribute="baseline" secondItem="j35-Pr-Rhw" secondAttribute="baseline" id="urq-Ia-hmZ"/>
+                                    <constraint firstItem="Gjj-rc-46t" firstAttribute="leading" secondItem="1ep-pv-fo8" secondAttribute="leading" constant="9" id="vMr-6b-jeg"/>
+                                    <constraint firstItem="bvo-8R-jMd" firstAttribute="leading" secondItem="Gjj-rc-46t" secondAttribute="trailing" constant="8" symbolic="YES" id="vSJ-pX-xqD"/>
+                                    <constraint firstItem="NG8-N4-1JJ" firstAttribute="leading" secondItem="rzk-Gi-V6Z" secondAttribute="trailing" constant="8" symbolic="YES" id="vql-lG-Rik"/>
+                                    <constraint firstItem="FAI-nf-Nuh" firstAttribute="leading" secondItem="LIK-Iq-faF" secondAttribute="trailing" constant="8" symbolic="YES" id="wHy-vu-UEZ"/>
+                                    <constraint firstItem="6CF-cB-QOA" firstAttribute="top" secondItem="bvo-8R-jMd" secondAttribute="top" id="wNI-vr-R2m"/>
+                                    <constraint firstItem="CSm-V7-ItR" firstAttribute="top" secondItem="LZS-QP-CQ7" secondAttribute="bottom" constant="15" id="xYQ-ey-ifN"/>
+                                    <constraint firstItem="Nj6-2X-1ay" firstAttribute="baseline" secondItem="WHC-te-6Wk" secondAttribute="baseline" id="xm5-i6-45Q"/>
+                                    <constraint firstItem="dq1-Ui-EdE" firstAttribute="leading" secondItem="NG8-N4-1JJ" secondAttribute="trailing" constant="8" symbolic="YES" id="yD1-RS-QYN"/>
+                                    <constraint firstItem="Yfk-Lg-a9K" firstAttribute="baseline" secondItem="yhG-JP-5HD" secondAttribute="firstBaseline" id="yqd-2B-u9K"/>
+                                    <constraint firstItem="Mcr-OV-hqQ" firstAttribute="leading" secondItem="Z5N-0x-rBw" secondAttribute="trailing" constant="13" id="zyf-7e-IqI"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
@@ -1061,7 +1057,7 @@ Gw
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3ad-vt-O06">
                                 <rect key="frame" x="238" y="25" width="32" height="11"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="qCS-MS-9QU">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="qCS-MS-9QU">
                                     <font key="font" metaFont="miniSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
