@@ -26,6 +26,12 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     @IBOutlet weak var okButton: NSButton!
     @IBOutlet weak var passwdTextField: NSSecureTextField!
     
+    // Dynamic resizing
+    @IBOutlet weak var disclosureLDAP: NSButton!
+    @IBOutlet weak var stackViewLDAP: NSStackView!
+    @IBOutlet weak var stackViewHeightLDAP: NSLayoutConstraint!
+    
+    
     //  In order to work with the user defaults, stored under:
     let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
@@ -132,38 +138,42 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     func updateUI() {
         
         // PASSWORD
-        self.passwdTextField.stringValue = self.getCurrentPassword()
-        
-
-        // FULL BIND USER
-        var bindUser = ""
-        if let letLDAP_Bind_User = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
-            bindUser = letLDAP_Bind_User
-            if ( !bindUser.isEmpty ) {
-                if let letLDAP_Bind_UserStore = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_UserStore) as? String {
-                    bindUser = "CN=" + bindUser + "," + letLDAP_Bind_UserStore
+        if ( self.passwdTextField != nil ) {
+            
+            self.passwdTextField.stringValue = self.getCurrentPassword()
+            
+            
+            // FULL BIND USER
+            var bindUser = ""
+            if let letLDAP_Bind_User = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
+                bindUser = letLDAP_Bind_User
+                if ( !bindUser.isEmpty ) {
+                    if let letLDAP_Bind_UserStore = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_UserStore) as? String {
+                        bindUser = "CN=" + bindUser + "," + letLDAP_Bind_UserStore
+                    }
                 }
             }
-        }
-        self.bindUserID.stringValue = bindUser
-        
-        // FULL URL
-        var fullURL = ""
-        if let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
-            if ( !letLDAP_Host.isEmpty ) {                
-                fullURL = "ldaps://" + letLDAP_Host
-                if let letLDAP_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
-                    fullURL = fullURL + ":" + letLDAP_Port
+            self.bindUserID.stringValue = bindUser
+            
+            // FULL URL
+            var fullURL = ""
+            if let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
+                if ( !letLDAP_Host.isEmpty ) {
+                    fullURL = "ldaps://" + letLDAP_Host
+                    if let letLDAP_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
+                        fullURL = fullURL + ":" + letLDAP_Port
+                    }
                 }
             }
+            self.fullURL.stringValue = fullURL
+            
+            // Remove the focus ring from where it's now and
+            // pass it to the OK button (activates with space)
+            if let window = self.window {
+                window.makeFirstResponder(self.okButton)
+            }
         }
-        self.fullURL.stringValue = fullURL
-
-        // Remove the focus ring from where it's now and 
-        // pass it to the OK button (activates with space)
-        if let window = self.window {
-            window.makeFirstResponder(self.okButton)
-        }
+        
     }
 
     /// --------------------------------------------------------------------------------
@@ -331,6 +341,28 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         return password
     }
     
+    
+    // --------------------------------------------------------------------------------
+    // MARK: Resizings
+    // --------------------------------------------------------------------------------
+    
+    @IBAction func actionDisclosureDAP(sender: AnyObject) {
+        if self.disclosureLDAP.state == NSOnState {
+            
+            // ON
+            self.stackViewLDAP.hidden = false
+            self.stackViewHeightLDAP.constant = 468
+            
+            
+        } else {
+            
+            // OFF
+            self.stackViewLDAP.hidden = true
+            self.stackViewHeightLDAP.constant = 0
+            
+        }
+        
+    }
     
 
 }

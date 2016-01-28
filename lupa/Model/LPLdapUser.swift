@@ -14,9 +14,8 @@ class LPLdapUser: NSObject {
     //  MARK: Attributes
     /// --------------------------------------------------------------------------------
     
-    //  For the following attributes I'm using Implicitly Unwrapped Optional (!) so
-    //  they are optionals and do not need to initialize them here, will do later.
-    
+    //  LDAP search results will be mapped to these fields
+    //
     var dn:             String = ""
     var cn:             String = ""
     var uid:            String = ""

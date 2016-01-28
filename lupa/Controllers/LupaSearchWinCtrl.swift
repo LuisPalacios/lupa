@@ -488,12 +488,29 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     //  MARK: LupaPopoverDetailViewDelegate
     /// --------------------------------------------------------------------------------
     
-    // Clicked on the popoverDetail
+    // Mouse left click on top of the Popover Detail View
     //
-    func popoverClicked() {
-       self.popoverDetail.close()
+    func popoverDetailViewClicked() {
+        
+        // Rule is: Dismiss and Browse the user
+        self.popoverDetail.close()
+        let user = self.popoverSelectedUser
+        if !user.cn.isEmpty {
+            self.postfix_searchString = user.cn
+            self.startBrowserSearch()
+        } else {
+            print ("ERROR: user cn is empty")
+        }
     }
-
+    
+    // Mouse right click on top of the Popover Detail View
+    //
+    func popoverDetailViewRightClicked() {
+        
+        // Rule is: Dismiss the view
+        self.popoverDetail.close()
+    }
+    
     
     /// --------------------------------------------------------------------------------
     //  MARK: LDAP search

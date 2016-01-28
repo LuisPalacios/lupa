@@ -62,6 +62,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
 
+        
+        // Ask to visualize the mutually exclusive constraints
+        let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults.setBool(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
+        
         // NOTE: In order for the Icon disapear from the Dock and also disapear 
         //       from the CMD-ALT list I also modified the Info.plist and added:
         //
