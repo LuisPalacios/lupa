@@ -29,7 +29,8 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     // Dynamic resizing
     @IBOutlet weak var disclosureLDAP: NSButton!
     @IBOutlet weak var stackViewLDAP: NSStackView!
-    @IBOutlet weak var stackViewHeightLDAP: NSLayoutConstraint!
+    @IBOutlet weak var disclosurePref: NSButton!
+    @IBOutlet weak var stackViewPref: NSStackView!
     
     
     //  In order to work with the user defaults, stored under:
@@ -43,6 +44,9 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     override func windowDidLoad() {
         super.windowDidLoad()
 
+        self.actionDisclosureLDAP(self)
+        self.actionDisclosurePref(self)
+
         // Set the version
         self.version.stringValue = programLongName()
         
@@ -53,8 +57,16 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         // Enable or disable the view according to checkbox state
         customShortcutView.bind("enabled", toObject: userDefaults, withKeyPath: LUPADefaults.lupa_HotkeyEnabled, options: nil)
  
-        //
+        // Settle down ui
         self.updateUI()
+        
+        // Future ToDo - place it as a popover
+        //        if let window = self.window {
+        //            var point = lpStatusItem.getPositioningPoint()
+        //            let width = window.frame.size.width
+        //            point.x = point.x - (width/2)
+        //            window.setFrameOrigin(point)
+        //        }
     }
 
  
@@ -346,26 +358,27 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     // MARK: Resizings
     // --------------------------------------------------------------------------------
     
-    @IBAction func actionDisclosureDAP(sender: AnyObject) {
-        print("PipPop")
+    @IBAction func actionDisclosureLDAP(sender: AnyObject) {
         if self.disclosureLDAP.state == NSOnState {
-            
             // ON
             self.stackViewLDAP.hidden = false
-//            self.stackViewHeightLDAP.constant = 468
-            
-            
         } else {
-            
             // OFF
             self.stackViewLDAP.hidden = true
-//            self.stackViewHeightLDAP.constant = 0
-            
         }
-        
+
+    }
+
+    @IBAction func actionDisclosurePref(sender: AnyObject) {
+        if self.disclosurePref.state == NSOnState {
+            // ON
+            self.stackViewPref.hidden = false
+        } else {
+            // OFF
+            self.stackViewPref.hidden = true
+        }
     }
     
-
 }
 
 

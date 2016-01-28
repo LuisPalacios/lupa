@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //  For the following attributes I'm using Implicitly Unwrapped Optional (!)
     //  they are optionals and no need to initialize them here, will do later.
 
-    var searchWinCtrl           : LupaSearchWinCtrl!    // My Window for the status bar
+    var lupaSearchCtrl           : LupaSearchWinCtrl!    // My Window for the status bar
     var lupaDefaultsController  : LupaDefaults!         // Preferences Window
     var defaultWindow           : NSWindow!             // Find out the main window (to hide it)
 
@@ -184,7 +184,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let searchWinNibName = NSStringFromClass(LupaSearchWinCtrl).componentsSeparatedByString(".").last!
         
         // ..and create custom Win Controller
-        searchWinCtrl = LupaSearchWinCtrl(windowNibName: searchWinNibName)
+        lupaSearchCtrl = LupaSearchWinCtrl(windowNibName: searchWinNibName)
 
     }
     
@@ -199,12 +199,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //      the custom view controller
         //      the custom icon
         //
-        if ( searchWinCtrl != nil ) {
+        if ( lupaSearchCtrl != nil ) {
             
             if let letItemImage = NSImage(named: "LupaOn_18x18") {
                 let itemImage = letItemImage
 
-                lpStatusItem.activateStatusItemWithMenuImageWindow(self.statusMenu, itemImage: itemImage, winController: searchWinCtrl)
+                lpStatusItem.activateStatusItemWithMenuImageWindow(self.statusMenu, itemImage: itemImage, winController: lupaSearchCtrl)
                 
             } else {
                 throw skControllerNotReady.cannotAccessIconImage

@@ -898,6 +898,8 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         // self.cmd.run(cmdDebugString) { (success, output) -> Void in
         self.cmd.run(commandString) { (success, output) -> Void in
 
+            //print("output:\n\(output)\n")
+            
             if success {
                 
                 // Work the lines

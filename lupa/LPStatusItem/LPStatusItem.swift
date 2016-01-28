@@ -224,17 +224,29 @@ import Cocoa
     // Show the menu
     //
     func showStatusItemMenu() {
+        self.statusMenu.popUpMenuPositioningItem(nil, atLocation: self.getPositioningPoint(), inView: nil)
+    }
+    
+    
+    // Get the positioning point on the status bar
+    //
+    func getPositioningPoint() -> NSPoint {
         
-        // Find Screen Coordinates of the NSStatusItem Frame 
+        // ToDo: Just in case I'm assign dummy default...
+        var point = NSMakePoint(100.0, 100.0)
+
+        // Find Screen Coordinates of the NSStatusItem Frame
         let rectInWindow : NSRect = self.button.convertRect(self.button.bounds, toView: nil)
         
         // Position the menu in the right place in screen
         if let letButtonWindow = self.button.window {
             let buttonWindow = letButtonWindow
             let screenRect : NSRect = buttonWindow.convertRectToScreen(rectInWindow)
-            let point : NSPoint = NSMakePoint(screenRect.origin.x, screenRect.origin.y - 3.0)
-            self.statusMenu.popUpMenuPositioningItem(nil, atLocation: point, inView: nil)
+            point = NSMakePoint(screenRect.origin.x, screenRect.origin.y - 3.0)
         }
+        
+        return point
     }
+
 }
 
