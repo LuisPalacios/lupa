@@ -348,20 +348,20 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     
     @IBAction func actionDisclosureDAP(sender: AnyObject) {
         print("PipPop")
-//        if self.disclosureLDAP.state == NSOnState {
-//            
-//            // ON
-//            self.stackViewLDAP.hidden = false
+        if self.disclosureLDAP.state == NSOnState {
+            
+            // ON
+            self.stackViewLDAP.hidden = false
 //            self.stackViewHeightLDAP.constant = 468
-//            
-//            
-//        } else {
-//            
-//            // OFF
-//            self.stackViewLDAP.hidden = true
+            
+            
+        } else {
+            
+            // OFF
+            self.stackViewLDAP.hidden = true
 //            self.stackViewHeightLDAP.constant = 0
-//            
-//        }
+            
+        }
         
     }
     
