@@ -228,13 +228,13 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     }
 
     // Show Alert stack view
-    func showAlert(msg: String) {
+    func showMessage(msg: String) {
         self.msgTextView.string = msg
         self.msgStackView.hidden = false
         self.startTimerHideAlert()
     }
     
-    func hideAlert() {
+    func hideMessage() {
         self.msgStackView.hidden = true
         self.updateWindowFrame()
     }
@@ -266,7 +266,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     // Action to execute when the timer finishes
     //
     func actionTimerHideAlert() {
-        self.hideAlert()
+        self.hideMessage()
     }
     
     
@@ -532,7 +532,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         // CLI Command (LDAPTLS_REQCERT=allow /usr/bin/ldapsearch)
         //
         guard let letLDAP_Command = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Command) as? String else {
-            self.showAlert("ERROR: Missing LDAP command")
+            self.showMessage("ERROR: Missing LDAP command")
             return
         }
         commandString = letLDAP_Command
@@ -540,7 +540,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         // Host and port URL (-H ldaps://myhost.domain.com:636)
         //
         guard let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String else {
-            self.showAlert("ERROR: Missing Host")
+            self.showMessage("ERROR: Missing Host")
             return
         }
         var letLDAP_Port = "636" // Default
@@ -570,7 +570,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         if let letLDAP_Bind_User = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
             var bindUser = letLDAP_Bind_User
             guard let letLDAP_Bind_UserStore = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_UserStore) as? String else {
-                self.showAlert("ERROR: Missing User store")
+                self.showMessage("ERROR: Missing User store")
                 return
             }
             bindUser = "CN=" + bindUser + "," + letLDAP_Bind_UserStore
@@ -578,7 +578,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             
             
             guard let letLDAP_Bind_Password = internetPasswordForServer(letLDAP_Host, account: letLDAP_Bind_User, port: intLDAP_Port, secProtocol: SecProtocolType.LDAPS) else {
-                self.showAlert("ERROR: Password is missing")
+                self.showMessage("ERROR: Password is missing")
                 return
             }
             commandString = commandString + " -w \"" + letLDAP_Bind_Password + "\""
@@ -588,7 +588,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         // Search base (-x -b basedn)
         //
         guard let letLDAP_BaseDN = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_BaseDN) as? String else {
-            self.showAlert("ERROR: Base DN is missing")
+            self.showMessage("ERROR: Base DN is missing")
             return
         }
         commandString = commandString + " -x -b \"" + letLDAP_BaseDN + "\""
@@ -714,7 +714,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     }
     func actionTimerCmdTerminate() {
         // Ask current cmd to stop
-        print("TIMEOUT!!!")
+        self.showMessage("'ldapsearch' or network timeout!")
         self.cmd.terminate()
     }
     // --------------------------------------------------------------------------

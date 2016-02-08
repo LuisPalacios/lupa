@@ -71,12 +71,12 @@ class LPCommand : NSObject {
                     queue: NSOperationQueue.mainQueue(),
                     usingBlock: { ( notification ) -> Void in
                         
-//                        print("----------------------------------------- PIPE DATA")
+                        print("----------------------------------------- PIPE DATA")
                         let data = outHandle.availableData
                         if data.length > 0 {
                             if let nsstr = NSString(data: data, encoding: NSUTF8StringEncoding) {
-                                // Store the new lines
-//                                print("\(nsstr)")
+//                                // Store the new lines
+                                print("\(nsstr)")
                                 let str : String = nsstr as String
                                 let newLines = str.characters.split { $0 == "\n" || $0 == "\r\n" }.map(String.init)
                                 lines.appendContentsOf(newLines)
@@ -84,12 +84,14 @@ class LPCommand : NSObject {
                             outHandle.waitForDataInBackgroundAndNotify()
                         } else {
                             // We are done!, call notification handler
-//                            print("----------------------------------------- PIPE EOF")
+                            print("----------------------------------------- PIPE EOF")
                             notifCenter.removeObserver(obsrvData)
                             var ret = true
                             if ( self.taskTerminateRequested == true ) {
                                 ret = false
                             }
+                            let terminationStatus = self.task.terminationStatus
+                            print("Termination Status: \(terminationStatus)")
                             completionHandler(success: ret, output: lines )
                         }
                         
@@ -100,7 +102,7 @@ class LPCommand : NSObject {
                 var obsrvTerm : NSObjectProtocol!
                 obsrvTerm = notifCenter.addObserverForName(NSTaskDidTerminateNotification,
                     object: task, queue: nil) { notification -> Void in
-//                        print("----------------------------------------- PIPE TERMINATION")
+                        print("----------------------------------------- PIPE TERMINATION")
                         notifCenter.removeObserver(obsrvTerm)
                 }
                 
@@ -108,8 +110,8 @@ class LPCommand : NSObject {
                 // Fire the following when task terminates
                 //
                 task.terminationHandler = {task -> Void in
-//                    print("----------------------------------------- TASK TERMINATION")
-//
+                    print("----------------------------------------- TASK TERMINATION:  \(task.terminationStatus)")
+
                 }
 
                 // Launch the command
