@@ -153,8 +153,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             NSApplication.sharedApplication().activateIgnoringOtherApps(true)
             window.makeKeyAndOrderFront(self)
             window.center()
+            if let h = NSScreen.mainScreen()?.visibleFrame.size.height {
+                let newOrigin = CGPointMake(window.frame.origin.x, h-window.frame.size.height)
+                window.setFrameOrigin(newOrigin)
+            }
         }
-        
     }
     
     //

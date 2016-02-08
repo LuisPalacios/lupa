@@ -50,12 +50,14 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
     //  Class attributes
+    var stringToSearch = ""
     dynamic var ldapSearchResults = ""
     var observableKeys_LDAPSearchResults = [ "self.ldapSearchHasFinished" ]
     dynamic var ldapSearchHasFinished : Bool = false
     dynamic var users = [LPLdapUser]()
     dynamic var tmpUsers = [LPLdapUser]()
     dynamic var popoverSelectedUser : LPLdapUser!
+    var tmpErrors : [String] = []
     
     // More attributes
     var textDidChangeInterval : NSTimeInterval = 0.0    //!< Time interval to calculate text did change trigger action
@@ -244,7 +246,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     func startTimerHideAlert() {
         self.stopTimerHideAlert()
 
-        self.timerHideAlert = NSTimer.scheduledTimerWithTimeInterval(2.5,
+        self.timerHideAlert = NSTimer.scheduledTimerWithTimeInterval(4,
                 target: self,
                 selector: Selector("actionTimerHideAlert"),
                 userInfo: nil,
@@ -336,19 +338,24 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         
         switch commandSelector {
         case "insertNewline:":
+            
             // BROWSER Search -
             //
-            if !searchField.stringValue.isEmpty {
-                self.postfix_searchString = self.searchField.stringValue
+            self.stringToSearch = searchField.stringValue.trim()
+            if !self.stringToSearch.isEmptyOrWhitespace() {
+                self.postfix_searchString = self.stringToSearch
                 self.startBrowserSearch()
             } else {
                 // print ("Search string empty, ignore it...")
             }
+            self.previousSearchString=self.stringToSearch
+
             // retval = true causes Apple to NOT fire the default enter action
             // so if true, searchFieldModified() will NOT be called
             retValue = true
     
         case "cancelOperation:":
+
             // Handle ESCAPE Key when pressed from the NSSearchField
             //
             lpStatusItem.dismissStatusItemWindow()
@@ -358,6 +365,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             retValue = true
             
         default:
+
             //Swift.print("Llegó otro comando y lo ignoro: \(commandSelector)")
             break
         }
@@ -394,7 +402,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
                     if ( searchSeparatorEnabled ) {
                         if let letSearchSeparator = self.userDefaults.objectForKey(LUPADefaults.lupa_SearchSeparator) as? String {
                             let searchSeparator = letSearchSeparator
-                            searchString = searchField.stringValue.stringByReplacingOccurrencesOfString(" ", withString: searchSeparator, options: NSStringCompareOptions.LiteralSearch, range: nil)
+                            searchString = self.stringToSearch.stringByReplacingOccurrencesOfString(" ", withString: searchSeparator, options: NSStringCompareOptions.LiteralSearch, range: nil)
                         }
                     }
                 }
@@ -522,7 +530,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     func ldapsearchStart(timeout : Int) {
 
         // search string
-        let searchString : String = searchField.stringValue
+        let searchString : String = self.stringToSearch
         let searchWords = searchString.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
 
@@ -774,7 +782,10 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             
             
         } else {
-            print("ldapsearchFinished didn't succeed. Exit: \(exit)\n")
+            // print("ldapsearchFinished didn't succeed. Exit: \(exit)\nErrors: \(self.tmpErrors)")
+            if ( self.tmpErrors.count > 0 ) {
+                self.showMessage(self.tmpErrors[0])
+            }
             self.hideLdapResultsStackView()
         }
         
@@ -897,8 +908,24 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         // Ahí que vamos... 
         self.cmd.run(commandString) { (exit, stdout, stderr) -> Void in
 
-            //print("output:\n\(output)\n")
-            
+            // Just for Logging
+            //            print("---------------------------------- STANDARD OUTPUT -------- STAR")
+            //            for line in stdout {
+            //                print(line)
+            //            }
+            //            print("---------------------------------- STANDARD OUTPUT -------- END")
+            //            print("---------------------------------- STANDARD ERROR  -------- START")
+            //            for line in stderr {
+            //                print(line)
+            //            }
+            //            print("---------------------------------- STANDARD ERROR  -------- END")
+            //            print("exit: \(exit)")
+            //            print("")
+
+            // Clean up future buffers
+            self.tmpErrors.removeAll()
+
+            // Let's see if we end up fine or with errors
             if ( exit == 0 ) {
                 
                 // Work the lines
@@ -968,7 +995,10 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
                         }
                     }
                 }
-              
+            } else {
+                for line in stderr {
+                    self.tmpErrors.append(line)
+                }
             }
             
             // Say it, we finished
@@ -988,23 +1018,20 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     // Start a timer when text changes in the search box
     //
     func startTimerTextDidChange() {
+        self.stringToSearch = searchField.stringValue.trim()
+
         // Always cancel any pending search
         self.stopTimerTextDidChange()
+        
         // Check if we've got something decent to search
-        if !searchField.stringValue.isEmpty {
-            // Start timer that may trigger the search
+        if self.stringToSearch.isEmptyOrWhitespace() {
+            self.hideLdapResultsStackView()
+        } else {
             timerTextDidChange = NSTimer.scheduledTimerWithTimeInterval(0.6,
                 target: self,
                 selector: Selector("actionTimerTextDidChange"),
                 userInfo: nil,
                 repeats: false)
-            
-        
-        } else {
-            if let letMyWindow = self.window {
-                let myWindow = letMyWindow
-                myWindow.orderBack(self)
-            }
         }
     }
     
@@ -1025,7 +1052,6 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     // Action to execute when the timer finishes
     //
     func actionTimerTextDidChange() {
-
         if let ldapSupport = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Support) as? Bool {
             if ldapSupport {
                 
@@ -1043,7 +1069,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
                 self.ldapsearchStart(timeout)
             }
         }
-        previousSearchString=searchField.stringValue
+        self.previousSearchString=self.stringToSearch
     }
 
 }

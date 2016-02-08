@@ -64,4 +64,17 @@ extension String {
         }
         return (self,"","")
     }
+
+    // Returns true if string is either empty or has only spaces
+    func isEmptyOrWhitespace() -> Bool {
+        
+        if(self.isEmpty) {
+            return true
+        }
+        
+        return (self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "")
+    }
+    
+
+    
 }

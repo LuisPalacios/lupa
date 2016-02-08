@@ -44,7 +44,11 @@ class LPCommand : NSObject {
         completionHandler: ( exit: Int, stdout: [String], stderr: [String] ) -> Void ) {
     
             //
-            var lines : [String] = []
+            var linesStandardOutput : [String]  = []
+            //var hasStandardOutput               = false
+            var linesStandardError  : [String]  = []
+            //var hasStandardError                = false
+
             
             // Go for it
             if shellcommand != "" {
@@ -55,54 +59,95 @@ class LPCommand : NSObject {
                 // Just created the task so initiatlize false
                 self.taskTerminateRequested = false
                 
-                // Pipe the standard out to an NSPipe, and set it to notify us when it gets data
-                let pipe = NSPipe()
-                task.standardOutput = pipe
-                let outHandle = pipe.fileHandleForReading
-                outHandle.waitForDataInBackgroundAndNotify()
-                
                 // Shortcut to notification center
                 let notifCenter = NSNotificationCenter.defaultCenter()
                 
-                // Observe for PIPE DATA
-                var obsrvData : NSObjectProtocol!
-                obsrvData = notifCenter.addObserverForName(NSFileHandleDataAvailableNotification,
-                    object: outHandle,
+                // ---- STANDARD OUTPUT -------
+                // Pipe the stdout (Standard Output) to an NSPipe, 
+                // and set it to notify us when it gets data
+                let pipeStandardOutput = NSPipe()
+                task.standardOutput = pipeStandardOutput
+                let stdoutHandle = pipeStandardOutput.fileHandleForReading
+                stdoutHandle.waitForDataInBackgroundAndNotify()
+                
+                // Observe for DATA on the Standard Output
+                var obsrvStdoutData : NSObjectProtocol!
+                obsrvStdoutData = notifCenter.addObserverForName(NSFileHandleDataAvailableNotification,
+                    object: stdoutHandle,
                     queue: NSOperationQueue.mainQueue(),
                     usingBlock: { ( notification ) -> Void in
                         
-                        print("----------------------------------------- PIPE DATA")
-                        let data = outHandle.availableData
+                        // print("----------------------------------------- pipeStandardOutput DATA")
+                        let data = stdoutHandle.availableData
                         if data.length > 0 {
                             if let nsstr = NSString(data: data, encoding: NSUTF8StringEncoding) {
-//                                // Store the new lines
-                                print("\(nsstr)")
+                                // Store the new lines
+                                // print("<stdout>\(nsstr)</stdout>")
                                 let str : String = nsstr as String
                                 let newLines = str.characters.split { $0 == "\n" || $0 == "\r\n" }.map(String.init)
-                                lines.appendContentsOf(newLines)
+                                linesStandardOutput.appendContentsOf(newLines)
+                                //hasStandardOutput = true
                             }
-                            outHandle.waitForDataInBackgroundAndNotify()
+                            stdoutHandle.waitForDataInBackgroundAndNotify()
                         } else {
                             // We are done!, call notification handler
-                            print("----------------------------------------- PIPE EOF")
-                            notifCenter.removeObserver(obsrvData)
-                            var ret = true
-                            if ( self.taskTerminateRequested == true ) {
-                                ret = false
+                            // print("----------------------------------------- pipeStandardOutput EOF")
+                            notifCenter.removeObserver(obsrvStdoutData)
+                            var terminationStatus : Int = 0
+                            if ( self.taskTerminateRequested == true ||
+                                self.task.terminationStatus == 255 ) {
+                                terminationStatus = Int(self.task.terminationStatus)
                             }
-                            let terminationStatus : Int = Int(self.task.terminationStatus)
-                            print("SUCCESS:\(ret) terminationStatus:\(terminationStatus)")
-                            completionHandler(exit: terminationStatus, stdout: lines, stderr: [] )
+                            // print("terminationStatus:\(terminationStatus)")
+                            completionHandler(exit: terminationStatus, stdout: linesStandardOutput, stderr: linesStandardError )
                         }
                         
                 })
                 
-                // Observe for PIPE TERMINATION
+                
+                // ---- STANDARD ERROR -------
+                // Pipe the stderr (Standard Error) to a different NSPipe,
+                // and set it to notify us when it gets data
+                let pipeStandardError = NSPipe()
+                task.standardError = pipeStandardError
+                let stderrHandle = pipeStandardError.fileHandleForReading
+                stderrHandle.waitForDataInBackgroundAndNotify()
+                
+                
+                // Observe for DATA on the Standard Error
+                var obsrvStderrData : NSObjectProtocol!
+                obsrvStderrData = notifCenter.addObserverForName(NSFileHandleDataAvailableNotification,
+                    object: stderrHandle,
+                    queue: NSOperationQueue.mainQueue(),
+                    usingBlock: { ( notification ) -> Void in
+                        
+                        // print("----------------------------------------- pipeStandardError DATA")
+                        let data = stderrHandle.availableData
+                        if data.length > 0 {
+                            if let nsstr = NSString(data: data, encoding: NSUTF8StringEncoding) {
+                                // Store the new lines
+                                // print("<stderr>\(nsstr)</stderr>")
+                                let str : String = nsstr as String
+                                let newLines = str.characters.split { $0 == "\n" || $0 == "\r\n" }.map(String.init)
+                                linesStandardError.appendContentsOf(newLines)
+                                //hasStandardError = true
+                            }
+                            stderrHandle.waitForDataInBackgroundAndNotify()
+                        } else {
+                            // We are done!, remove observer
+                            // print("----------------------------------------- pipeStandardError EOF")
+                            //print("<stderrLinesError>\(linesStandardError)</stderrLinesError>")
+                            notifCenter.removeObserver(obsrvStderrData)
+                        }
+                        
+                })
+                
+                // Observe for TASK TERMINATION
                 //
                 var obsrvTerm : NSObjectProtocol!
                 obsrvTerm = notifCenter.addObserverForName(NSTaskDidTerminateNotification,
                     object: task, queue: nil) { notification -> Void in
-                        print("----------------------------------------- PIPE TERMINATION")
+                        // print("----------------------------------------- TASK TERMINATION (no status)")
                         notifCenter.removeObserver(obsrvTerm)
                 }
                 
@@ -110,8 +155,7 @@ class LPCommand : NSObject {
                 // Fire the following when task terminates
                 //
                 task.terminationHandler = {task -> Void in
-                    print("----------------------------------------- TASK TERMINATION:  \(task.terminationStatus)")
-
+                    // print("----------------------------------------- TASK TERMINATION:  \(task.terminationStatus)")
                 }
 
                 // Launch the command
@@ -130,7 +174,7 @@ class LPCommand : NSObject {
     
     // Interrupt command sending SIGTERM (aka kill -15)
     func terminate () {
-//        print("----------------------------------------- !!!!!!!!!!!!!!! TERMINATE CALLED !!!!!!!!!!!!")
+        // print("----------------------------------------- !!!!!!!!!!!!!!! TERMINATE CALLED !!!!!!!!!!!!")
         if ( self.task != nil ) {
             self.task.terminate()
             self.taskTerminateRequested = true
@@ -139,7 +183,7 @@ class LPCommand : NSObject {
     
     // Interrupt command sending CTRL-C (aka kill -2)
     func interrupt () {
-//        print("----------------------------------------- !!!!!!!!!!!!!!! INTERRUPT CALLED !!!!!!!!!!!!")
+        // print("----------------------------------------- !!!!!!!!!!!!!!! INTERRUPT CALLED !!!!!!!!!!!!")
         if ( self.task != nil ) {
             self.task.interrupt()
         }
