@@ -35,13 +35,13 @@ class LPCommand : NSObject {
  
     
     // --------------------------------------------------------------------------------
-    // MARK: Run...
+    // MARK: Execute command
     // --------------------------------------------------------------------------------
     
-    /// Go ahead and run the command...
+    /// Go ahead and execute the command...
     ///
     func run( shellcommand: String,
-        completionHandler: ( success: Bool, output: [String] ) -> Void ) {
+        completionHandler: ( exit: Int, stdout: [String], stderr: [String] ) -> Void ) {
     
             //
             var lines : [String] = []
@@ -90,9 +90,9 @@ class LPCommand : NSObject {
                             if ( self.taskTerminateRequested == true ) {
                                 ret = false
                             }
-                            let terminationStatus = self.task.terminationStatus
-                            print("Termination Status: \(terminationStatus)")
-                            completionHandler(success: ret, output: lines )
+                            let terminationStatus : Int = Int(self.task.terminationStatus)
+                            print("SUCCESS:\(ret) terminationStatus:\(terminationStatus)")
+                            completionHandler(exit: terminationStatus, stdout: lines, stderr: [] )
                         }
                         
                 })
@@ -128,7 +128,7 @@ class LPCommand : NSObject {
     // terminate() SIGTERM = Signal 15
     // SIGKILL = Signal 9
     
-    // Interrupt running command sending SIGTERM (aka kill -15)
+    // Interrupt command sending SIGTERM (aka kill -15)
     func terminate () {
 //        print("----------------------------------------- !!!!!!!!!!!!!!! TERMINATE CALLED !!!!!!!!!!!!")
         if ( self.task != nil ) {
@@ -137,7 +137,7 @@ class LPCommand : NSObject {
         }
     }
     
-    // Interrupt running command sending CTRL-C (aka kill -2)
+    // Interrupt command sending CTRL-C (aka kill -2)
     func interrupt () {
 //        print("----------------------------------------- !!!!!!!!!!!!!!! INTERRUPT CALLED !!!!!!!!!!!!")
         if ( self.task != nil ) {

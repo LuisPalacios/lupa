@@ -140,10 +140,6 @@ class LPStatusItemWindowCtrl: NSWindowController {
     // Dismiss the status item window
     //
     func dismissStatusItemWindow() {
-        // print("dismissStatusItemWindow")
-        // TODO Review
-        //if (self.animationIsRunning) return;
-
         // Dismiss the Window fading out...
         if let window = self.window {
             self.animateWindow(window, fadeDirection: eFadeDirection.fadeOut)

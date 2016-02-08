@@ -722,14 +722,14 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     
     // search has Finished
     //
-    func ldapsearchFinished(success: Bool) {
+    func ldapsearchFinished(exit: Int) {
         
         // Stop timers and visual UI
         self.stopTimerCmdTerminate()
         self.stopUI_LDAPsearchInProgress()
 
         // Go for it...
-        if success {
+        if ( exit == 0 ) {
             
             // Get the new list of users
             self.users = self.tmpUsers
@@ -774,7 +774,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             
             
         } else {
-            print("ldapsearchFinished didn't succeed.\n")
+            print("ldapsearchFinished didn't succeed. Exit: \(exit)\n")
             self.hideLdapResultsStackView()
         }
         
@@ -895,15 +895,14 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         // print("Command: \(cmdDebugString)")
 
         // Ahí que vamos... 
-        // self.cmd.run(cmdDebugString) { (success, output) -> Void in
-        self.cmd.run(commandString) { (success, output) -> Void in
+        self.cmd.run(commandString) { (exit, stdout, stderr) -> Void in
 
             //print("output:\n\(output)\n")
             
-            if success {
+            if ( exit == 0 ) {
                 
                 // Work the lines
-                for line in output {
+                for line in stdout {
                     // print("completionHandler - LINE: \(line)")
                     
                     // Do something with each line
@@ -976,7 +975,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             // print("TERMINÓ EL COMANDO, cambio self.ldapSearchHasFinished = true ")
             let mainQueue = LPQueue.Main
             mainQueue.async { () -> () in
-                self.ldapsearchFinished(success)
+                self.ldapsearchFinished(exit)
             }
         }
     }
