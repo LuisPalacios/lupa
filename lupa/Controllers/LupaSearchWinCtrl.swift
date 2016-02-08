@@ -737,7 +737,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         self.stopUI_LDAPsearchInProgress()
 
         // Go for it...
-        if ( exit == 0 ) {
+        if ( exit == 0 && tmpErrors.count == 0 ) {
             
             // Get the new list of users
             self.users = self.tmpUsers
@@ -925,8 +925,8 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             // Clean up future buffers
             self.tmpErrors.removeAll()
 
-            // Let's see if we end up fine or with errors
-            if ( exit == 0 ) {
+            // Let's see if we end up without errors
+            if ( exit == 0 && stderr.count == 0 ) {
                 
                 // Work the lines
                 for line in stdout {
