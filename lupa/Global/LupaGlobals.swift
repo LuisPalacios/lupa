@@ -25,7 +25,7 @@ struct Constants {
 ///
 ///  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
 ///
-///  To check that file's content from command line:
+///  To check this content from command line:
 ///
 ///  defaults read parchis.org.lupa.plist
 ///

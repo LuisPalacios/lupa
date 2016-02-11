@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15E33e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15E39c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <objects>
@@ -68,7 +68,7 @@
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="http://your.company.com/query.php?&amp;q=" drawsBackground="YES" id="S6w-fd-76l">
                                                                     <font key="font" metaFont="smallSystem"/>
                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                                 <connections>
                                                                     <action selector="fieldChanged:" target="-2" id="6jV-my-3hT"/>
@@ -105,9 +105,9 @@
                                                         <integer key="value" value="1"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="roundedRadius">
-                                                        <integer key="value" value="8"/>
+                                                        <integer key="value" value="3"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedShape" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedTop" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="globalMargin">
                                                         <integer key="value" value="0"/>
                                                     </userDefinedRuntimeAttribute>
@@ -155,6 +155,7 @@
                                                                 </buttonCell>
                                                                 <connections>
                                                                     <action selector="actionDisclosureLDAP:" target="-2" id="bLx-oK-bPx"/>
+                                                                    <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_DisclosureTriangle_LDAPSupport" id="aHz-CM-7J0"/>
                                                                 </connections>
                                                             </button>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qis-5R-Lbu">
@@ -224,9 +225,9 @@
                                                         <integer key="value" value="1"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="roundedRadius">
-                                                        <integer key="value" value="8"/>
+                                                        <integer key="value" value="3"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedShape" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedTop" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="globalMargin">
                                                         <integer key="value" value="0"/>
                                                     </userDefinedRuntimeAttribute>
@@ -291,7 +292,7 @@
                                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="UserId" drawsBackground="YES" id="tXi-3Z-zlC">
                                                                                     <font key="font" metaFont="smallSystem"/>
                                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 </textFieldCell>
                                                                                 <connections>
                                                                                     <action selector="fieldChanged:" target="-2" id="BdR-I7-yau"/>
@@ -335,7 +336,7 @@
                                                                                 <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="3Xi-fi-Utz">
                                                                                     <font key="font" metaFont="system"/>
                                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                                     <allowedInputSourceLocales>
                                                                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                                                                     </allowedInputSourceLocales>
@@ -390,7 +391,7 @@
                                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="ldap.firm.com" drawsBackground="YES" id="bBo-kh-3qO">
                                                                                     <font key="font" metaFont="smallSystem"/>
                                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 </textFieldCell>
                                                                                 <connections>
                                                                                     <action selector="fieldChanged:" target="-2" id="q2D-NX-N3k"/>
@@ -421,7 +422,7 @@
                                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="636" drawsBackground="YES" id="gjQ-iR-dYe">
                                                                                     <font key="font" metaFont="smallSystem"/>
                                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 </textFieldCell>
                                                                                 <connections>
                                                                                     <action selector="fieldChanged:" target="-2" id="rYM-QJ-0zS"/>
@@ -469,7 +470,7 @@
                                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="6" drawsBackground="YES" id="2OK-iA-SZU">
                                                                                     <font key="font" metaFont="smallSystem"/>
                                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 </textFieldCell>
                                                                                 <connections>
                                                                                     <action selector="fieldChanged:" target="-2" id="4gn-yx-Rcw"/>
@@ -509,7 +510,7 @@
                                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="20" drawsBackground="YES" id="7eU-nM-tZ5">
                                                                                     <font key="font" metaFont="smallSystem"/>
                                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 </textFieldCell>
                                                                                 <connections>
                                                                                     <action selector="fieldChanged:" target="-2" id="wAo-qw-UOj"/>
@@ -562,7 +563,7 @@
                                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="ou=employees,ou=users,dc=company,dc=com" drawsBackground="YES" id="qqb-7w-rSJ">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                            <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </textFieldCell>
                                                                         <connections>
                                                                             <action selector="fieldChanged:" target="-2" id="deE-By-S9L"/>
@@ -603,7 +604,7 @@
                                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="ou=employees,ou=users,dc=company,dc=com" drawsBackground="YES" id="ty0-2K-eMt">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                            <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </textFieldCell>
                                                                         <connections>
                                                                             <action selector="fieldChanged:" target="-2" id="9dP-DO-rgU"/>
@@ -688,7 +689,7 @@
                                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="http://yourcompany.com/photo/&lt;CN&gt;.jpg" drawsBackground="YES" id="7CB-pE-r8F">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                            <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </textFieldCell>
                                                                         <connections>
                                                                             <action selector="fieldChanged:" target="-2" id="t2i-rI-T4D"/>
@@ -729,7 +730,7 @@
                                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="http://yourcompany.com/photo/zoom/&lt;CN&gt;.jpg" drawsBackground="YES" id="WVS-KQ-JNd">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                            <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </textFieldCell>
                                                                         <connections>
                                                                             <action selector="fieldChanged:" target="-2" id="vSI-gU-Qgi"/>
@@ -1617,9 +1618,9 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oih-Cc-QLg">
-                                                                <rect key="frame" x="84" y="0.0" width="296" height="21"/>
+                                                                <rect key="frame" x="103" y="0.0" width="258" height="21"/>
                                                                 <subviews>
-                                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9mk-Jd-JhF">
+                                                                    <button toolTip="Empty all LDAP fields in current configuration" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9mk-Jd-JhF">
                                                                         <rect key="frame" x="-6" y="-7" width="118" height="32"/>
                                                                         <buttonCell key="cell" type="push" title="Clean Config" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cFe-qF-q59">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1630,9 +1631,9 @@
                                                                             <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="ZKM-rh-bUt"/>
                                                                         </connections>
                                                                     </button>
-                                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HLL-aF-Apq">
-                                                                        <rect key="frame" x="108" y="-7" width="194" height="32"/>
-                                                                        <buttonCell key="cell" type="push" title="Import Config from JSON" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NL0-Wy-SGl">
+                                                                    <button toolTip="Import configuration from JSON file" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HLL-aF-Apq">
+                                                                        <rect key="frame" x="108" y="-7" width="80" height="32"/>
+                                                                        <buttonCell key="cell" type="push" title="Import" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NL0-Wy-SGl">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                             <font key="font" metaFont="system"/>
                                                                         </buttonCell>
@@ -1641,12 +1642,25 @@
                                                                             <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="6XN-Nl-JQu"/>
                                                                         </connections>
                                                                     </button>
+                                                                    <button toolTip="Export current configuration to a JSON file" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rBu-Tm-AMA">
+                                                                        <rect key="frame" x="184" y="-7" width="80" height="32"/>
+                                                                        <buttonCell key="cell" type="push" title="Export" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8xq-k4-fg4">
+                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <action selector="exportFromJSON:" target="-2" id="k3y-Z0-JWN"/>
+                                                                            <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="jcs-MD-USj"/>
+                                                                        </connections>
+                                                                    </button>
                                                                 </subviews>
                                                                 <visibilityPriorities>
                                                                     <integer value="1000"/>
                                                                     <integer value="1000"/>
+                                                                    <integer value="1000"/>
                                                                 </visibilityPriorities>
                                                                 <customSpacing>
+                                                                    <real value="3.4028234663852886e+38"/>
                                                                     <real value="3.4028234663852886e+38"/>
                                                                     <real value="3.4028234663852886e+38"/>
                                                                 </customSpacing>
@@ -1698,9 +1712,9 @@
                                                         <integer key="value" value="1"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="roundedRadius">
-                                                        <integer key="value" value="8"/>
+                                                        <integer key="value" value="3"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedShape" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedBottom" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="globalMargin">
                                                         <integer key="value" value="0"/>
                                                     </userDefinedRuntimeAttribute>
@@ -1748,6 +1762,7 @@
                                                                 </buttonCell>
                                                                 <connections>
                                                                     <action selector="actionDisclosurePref:" target="-2" id="ETm-LQ-Vyw"/>
+                                                                    <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_DisclosureTriangle_AdditionalPreferences" id="cW1-my-JFr"/>
                                                                 </connections>
                                                             </button>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="j9G-xr-uxU">
@@ -1794,9 +1809,9 @@
                                                         <integer key="value" value="1"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="roundedRadius">
-                                                        <integer key="value" value="8"/>
+                                                        <integer key="value" value="3"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedShape" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedTop" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="globalMargin">
                                                         <integer key="value" value="0"/>
                                                     </userDefinedRuntimeAttribute>
@@ -1965,9 +1980,9 @@
                                                         <integer key="value" value="1"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="roundedRadius">
-                                                        <integer key="value" value="8"/>
+                                                        <integer key="value" value="3"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedShape" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedBottom" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="globalMargin">
                                                         <integer key="value" value="0"/>
                                                     </userDefinedRuntimeAttribute>
@@ -2057,9 +2072,9 @@
                                                         <integer key="value" value="1"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="roundedRadius">
-                                                        <integer key="value" value="8"/>
+                                                        <integer key="value" value="3"/>
                                                     </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedShape" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="roundedTop" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="globalMargin">
                                                         <integer key="value" value="0"/>
                                                     </userDefinedRuntimeAttribute>
@@ -2116,7 +2131,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="-1465" y="-274.5"/>
+            <point key="canvasLocation" x="-1686" y="-494.5"/>
         </window>
         <userDefaultsController id="KaX-9D-HyX"/>
         <userDefaultsController representsSharedInstance="YES" id="1ne-3g-Fyf"/>

@@ -86,6 +86,11 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         // can use it to render cells,
         if let nib = NSNib(nibNamed: Constants.SearchCtrl.SearchCellViewID, bundle: NSBundle.mainBundle()) {
             
+            
+            // Change searchField UX
+//            searchField.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+            self.searchField.appearance = NSAppearance(named: NSAppearanceNameAqua)
+            
             // Register the Cell
             self.ldapResultTableView.registerNib(nib, forIdentifier: Constants.SearchCtrl.SearchCellViewID)
             

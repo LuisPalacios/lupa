@@ -102,7 +102,7 @@ class LPStatusItemBackgroundView: NSView {
         windowPath.appendBezierPath(backgroundPath)
         
         NSColor.windowBackgroundColor().setFill()
-        //self.windowConfig.backgroundColor.setFill()
+//        NSColor.lightGrayColor().setFill()
         windowPath.fill()
         
     }

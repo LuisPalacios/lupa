@@ -320,6 +320,69 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         }
     }
     
+    
+    @IBAction func exportFromJSON(sender: AnyObject) {
+        
+        let savePanel = NSSavePanel()
+        savePanel.canCreateDirectories = false
+        savePanel.prompt = "Save to JSON file"
+        savePanel.allowedFileTypes = ["json", "JSON"]
+        savePanel.beginWithCompletionHandler { (result) -> Void in
+            if result == NSFileHandlingPanelOKButton {
+                //Do what you will
+                //If there's only one URL, surely 'openPanel.URL'
+                //but otherwise a for loop works
+                if let fileURL = savePanel.URL {
+                    do {
+                        let json : [String:String] = [
+                            LUPADefaults.lupa_URLPrefix : self.LUPADefaultsValueForKey(LUPADefaults.lupa_URLPrefix),
+                            LUPADefaults.lupa_BIND_UserStore : self.LUPADefaultsValueForKey(LUPADefaults.lupa_BIND_UserStore),
+                            LUPADefaults.lupa_LDAP_Command : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Command),
+                            LUPADefaults.lupa_LDAP_BaseDN : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_BaseDN),
+                            LUPADefaults.lupa_LDAP_Host : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Host),
+                            LUPADefaults.lupa_LDAP_Port : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Port),
+                            LUPADefaults.lupa_LDAP_Timeout : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Timeout),
+                            LUPADefaults.lupa_LDAP_Limit_Results : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Limit_Results),
+                            LUPADefaults.lupa_LDAP_Attr_CN : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Attr_CN),
+                            LUPADefaults.lupa_LDAP_Attr_Desc : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Attr_Desc),
+                            LUPADefaults.lupa_LDAP_Attr_Country : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Attr_Country),
+                            LUPADefaults.lupa_LDAP_Attr_City : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Attr_City),
+                            LUPADefaults.lupa_LDAP_Attr_VoiceLin : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Attr_VoiceLin),
+                            LUPADefaults.lupa_LDAP_Attr_VoiceInt : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Attr_VoiceInt),
+                            LUPADefaults.lupa_LDAP_Attr_VoiceMob : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Attr_VoiceMob),
+                            LUPADefaults.lupa_LDAP_Attr_Title : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Attr_Title),
+                            LUPADefaults.lupa_LDAP_PictureURLMini : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_PictureURLMini),
+                            LUPADefaults.lupa_LDAP_PictureURLZoom : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_PictureURLZoom),
+                            LUPADefaults.lupa_LDAP_Search_CN : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Search_CN),
+                            LUPADefaults.lupa_LDAP_Search_Desc : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Search_Desc),
+                            LUPADefaults.lupa_LDAP_Search_VoiceLin : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Search_VoiceLin),
+                            LUPADefaults.lupa_LDAP_Search_VoiceInt : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Search_VoiceInt),
+                            LUPADefaults.lupa_LDAP_Search_VoiceMob : self.LUPADefaultsValueForKey(LUPADefaults.lupa_LDAP_Search_VoiceMob)
+                        ]
+
+                        let jsonData = try NSJSONSerialization.dataWithJSONObject(json, options: NSJSONWritingOptions.PrettyPrinted)
+                        let success = jsonData.writeToURL(fileURL, atomically: true)
+                        guard success == true else {
+                            throw JSONError.ConversionToDictionaryFailed
+                        }
+                    } catch let error as JSONError {
+                        print("ERROR: \(error.rawValue)")
+                    } catch let error as NSError {
+                        print("ERROR: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
+    }
+    func LUPADefaultsValueForKey(key: String) -> String {
+        var value = ""
+        let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        if let hasValue = userDefaults.objectForKey(key) as? String {
+            value = hasValue
+        }
+        return value
+    }
+    
     // --------------------------------------------------------------------------------
     // MARK: Password
     // --------------------------------------------------------------------------------
