@@ -1,6 +1,6 @@
 ## Introduction
 
-Project 'lupa' (spanish word for magnifying glass), created during the summer of 2015 as an exercise to practice Swift during Xcode 7 and El Capitan betas. Something I was playing with in the past but wanted to do again using Swift: status bar application.
+Project 'lupa' (spanish word for magnifying glass), created during the summer of 2015 as an exercise to practice Swift with Xcode 7 and El Capitan Betas. Something I was playing with in the past but wanted to do again using Swift: status bar application.
 
 <div align="center">
 ![Lupa](resources/Icon-128.png?raw=true "My lupa")
@@ -59,12 +59,13 @@ Under the **Preferences window** you can alter the App behaviour and everything 
    - Example 1: https://www.google.com/search?q=
    - Example 2: http://www.yourcompany.com/query.cgi?user=
 - LDAP Support: Activate it and fill all the fields as you may need in order to connect into your company or personal LDAP Directory. 
-   -  Pic Mini and Zoom: Program expect to find the small and large version of the user pictures on those url's. Notice that the name of the file must be the 'cn' ldap attribute followed by ".jpg"
-   
+   -  Pic Mini and Zoom: Program expect to find the small and large version of the user pictures on those url's. Notice that the name of the file must be the 'cn' ldap attribute followed by the graphic extension. For each user found while typing the program will substitute the **<CN>** syntax with the cn attribute and try to download from the url. Don't remove the **<CN>***
+
+    
 
 #### Import/Export JSON
 
-You'll be able to create a JSON file with the preferences for easy distribution or simply backup purposes. The format of the file is as follows: 
+You'll have the option to import/export to JSON file storing or loading the preferences for easy distribution or simply backup purposes. The format of the file is as follows: 
 
 
 <div align="center">
@@ -76,7 +77,7 @@ You'll be able to create a JSON file with the preferences for easy distribution 
 
 ### Search
 
-One your Preferences are set, **click on the status bar icon** or **press your custom shortcut**. Once you see the search box, type the words you want to use and press Enter to trigger the OSX default browser. If you press **ESC**cape it will cancel and dismiss the search window. 
+One your Preferences are set, **click on the status bar icon** or **press your custom shortcut**. Once you see the search box, type the words you want to use and press Enter to trigger the OSX default browser, or simply wait few miliseconds for an LDAP search to kickoff. If you press **ESC**cape the search window will dismiss. 
 
 
 <div align="center">
