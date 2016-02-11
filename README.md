@@ -27,7 +27,7 @@ I even added a secret feature, something you might be find useful, an **silent L
 
 You can clone the project and open/compile with Xcode (tested Xcode 7).
 
-Alternatively, download a copy of the binary [lupa-1.0.0.zip](https://github.com/LuisPalacios/lupa/raw/master/download/lupa-1.0.0.zip), unzip it and place the executable into your PATH (or better /Applications). Double click to execute. I suggest to add it to the startup items, under Users and Groups in System Preferences so you have it always ready.
+Alternatively, download a copy of the binary [lupa-1.2.0.zip](https://github.com/LuisPalacios/lupa/raw/master/download/lupa-1.2.0.zip), unzip it and place the executable into your PATH (or better /Applications). Double click to execute. I suggest to add it to the startup items, under Users and Groups in System Preferences so you have it always ready.
 
 
 
