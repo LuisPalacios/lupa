@@ -7,11 +7,10 @@ Project 'lupa' (spanish word for magnifying glass), created during the summer of
 
 <div align="left">
 
-The original objective of the App was extremely simple: Being able to launch your default browser with a URL formed by the concatenation of "Prefix" + "Search Field". The "Prefix" is a preset stored under the OSX User Defaults and the "Search Field" is what the user types in the text field.
+The original objective of the App was extremely simple: Being able to **launch your default browser** with a URL formed by the concatenation of "Prefix" + "Search Field". The "Prefix" is a preset stored under the OSX User Defaults and the "Search Field" is what the user types in the text field.
 
-You can find probably dozen of use cases, some examples could be: Search in Google, search people in an enterprise Directory, etc. My personal use case is searching in my company's Directory, reducing significantly the number of keystrokes and mouse movements :-)
+Later on I gave it a feature you might find useful, the **silent LDAP search while typing** feature will help you use it as an LDAP client for Directory searching. 
 
-I even added a secret feature, something you might be find useful, an **silent LDAP search while typing**, so while you are typing in the search field the engine will start looking for it in an LDAP directory. 
 
 <div align="center">
 ![LDAP silent engine](resources/scr_ldap.png?raw=true "This is the search engine")
