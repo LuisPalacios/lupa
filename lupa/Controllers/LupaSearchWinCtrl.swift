@@ -550,21 +550,30 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         }
         commandString = letLDAP_Command
         
-        // Host and port URL (-H ldaps://myhost.domain.com:636)
+        // Host and port URL (-H ldap[s]://myhost.domain.com:636)
         //
         guard let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String else {
             self.showMessage("ERROR: Missing Host")
             return
         }
-        var letLDAP_Port = "636" // Default
+
+        // Get the default LDAP Port and SSL status
+        var letLDAP_URI  = "ldap"
+        if let active = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_SSL) as? Bool {
+            if active == true {
+                letLDAP_URI = "ldaps"
+            }
+        }
+
+        var letLDAP_Port = "389"
+        var intLDAP_Port = 389
         if let letLDAP_Bind_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
             letLDAP_Port = letLDAP_Bind_Port
         }
-        var intLDAP_Port = 0
         if let num = Int(letLDAP_Port) {
             intLDAP_Port = num
         }
-        commandString = commandString + " -H ldaps://" + letLDAP_Host + ":" + letLDAP_Port
+        commandString = commandString + " -H " + letLDAP_URI  + "://" + letLDAP_Host + ":" + letLDAP_Port
 
         // Limit search (-z 'n')
         //

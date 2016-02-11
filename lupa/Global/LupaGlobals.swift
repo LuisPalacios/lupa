@@ -47,10 +47,11 @@ struct LUPADefaults {
     static let lupa_BIND_UserStore          = "lupa_BIND_UserStore"                 // ldapsearch -D  CN=<lupa_BIND_User>, <lupa_BIND_UserStore>
     static let lupa_LDAP_Command            = "lupa_LDAP_Command"                   // ldapsearch -x
     static let lupa_LDAP_BaseDN             = "lupa_LDAP_BaseDN"                    // -b ou=employees,o=company.com
-    static let lupa_LDAP_Host               = "lupa_LDAP_Host"                      // -H ldaps://ldap.company.com
+    static let lupa_LDAP_Host               = "lupa_LDAP_Host"                      // -H ldap[s]://ldap.company.com
     static let lupa_LDAP_Port               = "lupa_LDAP_Port"                      // port
+    static let lupa_LDAP_SSL                = "lupa_LDAP_SSL"                       // true=ldaps://  false=ldap://
 
-    // LDAP attributes that will be retrieved. 
+    // LDAP attributes that will be retrieved.
     static let lupa_LDAP_Attr_DN            = "lupa_LDAP_Attr_DN"                   // Attribute for the distinguished name (fixed to "dn:")
     static let lupa_LDAP_Attr_CN            = "lupa_LDAP_Attr_CN"                   // Attribute for the common name (fixed to "cn:")
     static let lupa_LDAP_Attr_UID           = "lupa_LDAP_Attr_UID"                  // Attribute for the user id (fixed to "uid:")

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15E39c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15E39d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
@@ -16,6 +16,7 @@
                 <outlet property="okButton" destination="trd-l3-efK" id="A2B-WW-3ZE"/>
                 <outlet property="passwdTextField" destination="6CF-cB-QOA" id="QR9-Oc-tfb"/>
                 <outlet property="searchSeparator" destination="rlg-bO-s6p" id="umA-IV-AHv"/>
+                <outlet property="sslButton" destination="ZtK-rM-25c" id="XtY-LX-skb"/>
                 <outlet property="stackViewLDAP" destination="vzM-sl-Ukb" id="y68-bm-EJX"/>
                 <outlet property="stackViewPref" destination="fjE-tc-XIQ" id="czZ-Jb-u3M"/>
                 <outlet property="version" destination="3ad-vt-O06" id="wTe-Vw-xLa"/>
@@ -265,10 +266,10 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="504" height="400"/>
                                                 <subviews>
                                                     <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hwq-0x-EHd">
-                                                        <rect key="frame" x="20" y="18" width="464" height="365"/>
+                                                        <rect key="frame" x="29" y="18" width="446" height="365"/>
                                                         <subviews>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0GY-Mr-EhZ">
-                                                                <rect key="frame" x="109" y="343" width="246" height="22"/>
+                                                                <rect key="frame" x="100" y="343" width="246" height="22"/>
                                                                 <subviews>
                                                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bQp-ZZ-oPK">
                                                                         <rect key="frame" x="0.0" y="2" width="119" height="19"/>
@@ -328,7 +329,7 @@
                                                                                     <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="82z-Zd-LVk"/>
                                                                                 </connections>
                                                                             </textField>
-                                                                            <secureTextField toolTip="Directory password" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6CF-cB-QOA">
+                                                                            <secureTextField toolTip="LDAP password (it's stored in keychain)" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6CF-cB-QOA">
                                                                                 <rect key="frame" x="33" y="0.0" width="86" height="22"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="86" id="V04-X2-9lV"/>
@@ -367,10 +368,10 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="grh-WO-dig">
-                                                                <rect key="frame" x="0.0" y="316" width="464" height="19"/>
+                                                                <rect key="frame" x="2" y="316" width="443" height="19"/>
                                                                 <subviews>
                                                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7fH-Ng-7hx">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="225" height="19"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="244" height="19"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z5N-0x-rBw">
                                                                                 <rect key="frame" x="-2" y="3" width="27" height="14"/>
@@ -384,9 +385,9 @@
                                                                                 </connections>
                                                                             </textField>
                                                                             <textField toolTip="DNS name or IP Address of your ldap server" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mcr-OV-hqQ">
-                                                                                <rect key="frame" x="31" y="0.0" width="124" height="19"/>
+                                                                                <rect key="frame" x="31" y="0.0" width="100" height="19"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="width" constant="124" id="imW-te-x10"/>
+                                                                                    <constraint firstAttribute="width" constant="100" id="imW-te-x10"/>
                                                                                 </constraints>
                                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="ldap.firm.com" drawsBackground="YES" id="bBo-kh-3qO">
                                                                                     <font key="font" metaFont="smallSystem"/>
@@ -404,7 +405,7 @@
                                                                                 </connections>
                                                                             </textField>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M97-VB-V9f">
-                                                                                <rect key="frame" x="161" y="3" width="8" height="14"/>
+                                                                                <rect key="frame" x="137" y="3" width="8" height="14"/>
                                                                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title=":" id="rKL-LX-VOK">
                                                                                     <font key="font" metaFont="smallSystem"/>
                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -415,7 +416,7 @@
                                                                                 </connections>
                                                                             </textField>
                                                                             <textField toolTip="LDAP SSL Port" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ThO-lL-95a">
-                                                                                <rect key="frame" x="175" y="0.0" width="50" height="19"/>
+                                                                                <rect key="frame" x="151" y="0.0" width="50" height="19"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="50" id="JRp-zm-Om9"/>
                                                                                 </constraints>
@@ -434,8 +435,20 @@
                                                                                     <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="UN9-XE-4cV"/>
                                                                                 </connections>
                                                                             </textField>
+                                                                            <button toolTip="Use &quot;ldaps&quot; or &quot;ldap&quot; in the full URL" translatesAutoresizingMaskIntoConstraints="NO" id="ZtK-rM-25c">
+                                                                                <rect key="frame" x="207" y="1" width="39" height="18"/>
+                                                                                <buttonCell key="cell" type="check" title="ssl" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="onq-bt-57v">
+                                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                                    <font key="font" metaFont="system"/>
+                                                                                </buttonCell>
+                                                                                <connections>
+                                                                                    <action selector="actionSSLOnOff:" target="-2" id="zK5-6H-QuF"/>
+                                                                                    <binding destination="1ne-3g-Fyf" name="value" keyPath="values.lupa_LDAP_SSL" id="8VM-1p-tSO"/>
+                                                                                </connections>
+                                                                            </button>
                                                                         </subviews>
                                                                         <visibilityPriorities>
+                                                                            <integer value="1000"/>
                                                                             <integer value="1000"/>
                                                                             <integer value="1000"/>
                                                                             <integer value="1000"/>
@@ -446,10 +459,11 @@
                                                                             <real value="3.4028234663852886e+38"/>
                                                                             <real value="3.4028234663852886e+38"/>
                                                                             <real value="3.4028234663852886e+38"/>
+                                                                            <real value="3.4028234663852886e+38"/>
                                                                         </customSpacing>
                                                                     </stackView>
                                                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rHr-bo-pTf">
-                                                                        <rect key="frame" x="233" y="0.0" width="101" height="19"/>
+                                                                        <rect key="frame" x="252" y="0.0" width="81" height="19"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oq3-Wq-DN6">
                                                                                 <rect key="frame" x="-2" y="3" width="47" height="14"/>
@@ -462,10 +476,10 @@
                                                                                     <binding destination="1ne-3g-Fyf" name="enabled" keyPath="values.lupa_LDAP_Support" id="NdY-nT-xsc"/>
                                                                                 </connections>
                                                                             </textField>
-                                                                            <textField toolTip="Timeout before terminating current ldapsearch command" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rzk-Gi-V6Z">
-                                                                                <rect key="frame" x="51" y="0.0" width="50" height="19"/>
+                                                                            <textField toolTip="Timeout before terminating &quot;ldapsearch&quot; command" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rzk-Gi-V6Z">
+                                                                                <rect key="frame" x="51" y="0.0" width="30" height="19"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="width" constant="50" id="ob8-ju-Pew"/>
+                                                                                    <constraint firstAttribute="width" constant="30" id="ob8-ju-Pew"/>
                                                                                 </constraints>
                                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="6" drawsBackground="YES" id="2OK-iA-SZU">
                                                                                     <font key="font" metaFont="smallSystem"/>
@@ -489,7 +503,7 @@
                                                                         </customSpacing>
                                                                     </stackView>
                                                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RR9-Ke-geG">
-                                                                        <rect key="frame" x="342" y="0.0" width="122" height="19"/>
+                                                                        <rect key="frame" x="341" y="0.0" width="102" height="19"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NG8-N4-1JJ">
                                                                                 <rect key="frame" x="-2" y="3" width="68" height="14"/>
@@ -503,9 +517,9 @@
                                                                                 </connections>
                                                                             </textField>
                                                                             <textField toolTip="Maximum numeber of results returned by ldapsearch" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dq1-Ui-EdE">
-                                                                                <rect key="frame" x="72" y="0.0" width="50" height="19"/>
+                                                                                <rect key="frame" x="72" y="0.0" width="30" height="19"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="width" constant="50" id="Lei-Hm-dkU"/>
+                                                                                    <constraint firstAttribute="width" constant="30" id="Lei-Hm-dkU"/>
                                                                                 </constraints>
                                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="20" drawsBackground="YES" id="7eU-nM-tZ5">
                                                                                     <font key="font" metaFont="smallSystem"/>
@@ -545,7 +559,7 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6mJ-af-c5L">
-                                                                <rect key="frame" x="0.0" y="289" width="464" height="19"/>
+                                                                <rect key="frame" x="0.0" y="289" width="446" height="19"/>
                                                                 <subviews>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gjN-yk-vNp">
                                                                         <rect key="frame" x="-2" y="3" width="59" height="14"/>
@@ -559,7 +573,7 @@
                                                                         </connections>
                                                                     </textField>
                                                                     <textField toolTip="User Store added to 'User' field to build &quot;Bind User&quot; (-D)" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rql-Mt-W3C">
-                                                                        <rect key="frame" x="63" y="0.0" width="401" height="19"/>
+                                                                        <rect key="frame" x="63" y="0.0" width="383" height="19"/>
                                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="ou=employees,ou=users,dc=company,dc=com" drawsBackground="YES" id="qqb-7w-rSJ">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -586,7 +600,7 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XjJ-T0-l7G">
-                                                                <rect key="frame" x="0.0" y="262" width="464" height="19"/>
+                                                                <rect key="frame" x="0.0" y="262" width="446" height="19"/>
                                                                 <subviews>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yfn-WR-bzY">
                                                                         <rect key="frame" x="-2" y="3" width="46" height="14"/>
@@ -600,7 +614,7 @@
                                                                         </connections>
                                                                     </textField>
                                                                     <textField toolTip="Base DN where I should start looking for Users (-b)" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="j35-Pr-Rhw">
-                                                                        <rect key="frame" x="50" y="0.0" width="414" height="19"/>
+                                                                        <rect key="frame" x="50" y="0.0" width="396" height="19"/>
                                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="ou=employees,ou=users,dc=company,dc=com" drawsBackground="YES" id="ty0-2K-eMt">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -627,7 +641,7 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KzL-aA-sh5">
-                                                                <rect key="frame" x="199" y="240" width="66" height="14"/>
+                                                                <rect key="frame" x="190" y="240" width="66" height="14"/>
                                                                 <subviews>
                                                                     <textField toolTip="What will be use to BIND into ldap (-D)" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-Gr-jBo">
                                                                         <rect key="frame" x="-2" y="0.0" width="70" height="14"/>
@@ -649,7 +663,7 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gMA-bQ-UNV">
-                                                                <rect key="frame" x="210" y="218" width="44" height="14"/>
+                                                                <rect key="frame" x="201" y="218" width="44" height="14"/>
                                                                 <subviews>
                                                                     <textField toolTip="What will be use to BIND into ldap (-D)" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3SQ-Rz-XFw">
                                                                         <rect key="frame" x="-2" y="0.0" width="48" height="14"/>
@@ -671,7 +685,7 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3f9-bt-1JJ">
-                                                                <rect key="frame" x="0.0" y="191" width="464" height="19"/>
+                                                                <rect key="frame" x="0.0" y="191" width="446" height="19"/>
                                                                 <subviews>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LZS-QP-CQ7">
                                                                         <rect key="frame" x="-2" y="3" width="45" height="14"/>
@@ -685,7 +699,7 @@
                                                                         </connections>
                                                                     </textField>
                                                                     <textField toolTip="URL to retrieve user picture in small form factor, completes with ldap attribute 'cn'" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GZg-8M-KyO">
-                                                                        <rect key="frame" x="49" y="0.0" width="415" height="19"/>
+                                                                        <rect key="frame" x="49" y="0.0" width="397" height="19"/>
                                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="http://yourcompany.com/photo/&lt;CN&gt;.jpg" drawsBackground="YES" id="7CB-pE-r8F">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -712,7 +726,7 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Clr-SE-bJY">
-                                                                <rect key="frame" x="0.0" y="164" width="464" height="19"/>
+                                                                <rect key="frame" x="0.0" y="164" width="446" height="19"/>
                                                                 <subviews>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aFl-hV-dLw">
                                                                         <rect key="frame" x="-2" y="3" width="54" height="14"/>
@@ -726,7 +740,7 @@
                                                                         </connections>
                                                                     </textField>
                                                                     <textField toolTip="URL to retrieve user picture in zoom form factor, completes with ldap attribute 'cn'" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dpU-O6-wDx">
-                                                                        <rect key="frame" x="58" y="0.0" width="406" height="19"/>
+                                                                        <rect key="frame" x="58" y="0.0" width="388" height="19"/>
                                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="http://yourcompany.com/photo/zoom/&lt;CN&gt;.jpg" drawsBackground="YES" id="WVS-KQ-JNd">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -753,7 +767,7 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wug-F9-HTR">
-                                                                <rect key="frame" x="0.0" y="137" width="464" height="19"/>
+                                                                <rect key="frame" x="0.0" y="137" width="446" height="19"/>
                                                                 <subviews>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CSm-V7-ItR">
                                                                         <rect key="frame" x="-2" y="3" width="29" height="14"/>
@@ -767,7 +781,7 @@
                                                                         </connections>
                                                                     </textField>
                                                                     <textField toolTip="Command to execute OSX ldapsearch" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EDU-FR-IkO">
-                                                                        <rect key="frame" x="33" y="0.0" width="431" height="19"/>
+                                                                        <rect key="frame" x="33" y="0.0" width="413" height="19"/>
                                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="LDAPTLS_REQCERT=allow /usr/bin/ldapsearch" drawsBackground="YES" id="ilW-du-dZY">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -794,7 +808,7 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3R7-XE-cAX">
-                                                                <rect key="frame" x="9" y="29" width="446" height="100"/>
+                                                                <rect key="frame" x="0.0" y="29" width="446" height="100"/>
                                                                 <subviews>
                                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W3j-fE-OpT">
                                                                         <rect key="frame" x="0.0" y="0.0" width="219" height="100"/>
@@ -1618,7 +1632,7 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oih-Cc-QLg">
-                                                                <rect key="frame" x="103" y="0.0" width="258" height="21"/>
+                                                                <rect key="frame" x="94" y="0.0" width="258" height="21"/>
                                                                 <subviews>
                                                                     <button toolTip="Empty all LDAP fields in current configuration" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9mk-Jd-JhF">
                                                                         <rect key="frame" x="-6" y="-7" width="118" height="32"/>
@@ -1920,7 +1934,7 @@
                                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <textField toolTip="Substitute search string's white spaces with this content " focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rlg-bO-s6p">
+                                                            <textField toolTip="Substitute white spaces with this content when building the web search URL." focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rlg-bO-s6p">
                                                                 <rect key="frame" x="430" y="2" width="34" height="22"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="34" id="EjW-3V-sZJ"/>
@@ -2131,7 +2145,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="-1686" y="-494.5"/>
+            <point key="canvasLocation" x="-1678" y="-456.5"/>
         </window>
         <userDefaultsController id="KaX-9D-HyX"/>
         <userDefaultsController representsSharedInstance="YES" id="1ne-3g-Fyf"/>
