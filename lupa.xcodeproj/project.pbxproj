@@ -452,7 +452,7 @@
 				INFOPLIST_FILE = lupa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = parchis.org.lupa;
+				PRODUCT_BUNDLE_IDENTIFIER = org.parchis.lupa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "lupa/Global/lupa-Bridging-Header.h";
 			};
@@ -472,7 +472,7 @@
 				INFOPLIST_FILE = lupa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = parchis.org.lupa;
+				PRODUCT_BUNDLE_IDENTIFIER = org.parchis.lupa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "lupa/Global/lupa-Bridging-Header.h";
 			};
