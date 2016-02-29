@@ -87,7 +87,7 @@
 		A01ACCF21C59230300B97FD3 /* LPLdapUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LPLdapUser.swift; sourceTree = "<group>"; };
 		A03A13511C5AA6DD00298112 /* LupaDefaultsWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LupaDefaultsWindow.swift; path = Views/LupaDefaultsWindow.swift; sourceTree = "<group>"; };
 		A03A13531C5AA75C00298112 /* LupaDefaultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LupaDefaultsView.swift; path = Views/LupaDefaultsView.swift; sourceTree = "<group>"; };
-		A05EDAC41B7A4466001B3F3C /* lupa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lupa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A05EDAC41B7A4466001B3F3C /* Lupa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lupa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A05EDAC91B7A4466001B3F3C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0603A981B7BD2CE0059578E /* LupaOn_18x18.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LupaOn_18x18.png; path = resources/LupaOn_18x18.png; sourceTree = "<group>"; };
 		A0603A991B7BD2CE0059578E /* LupaOn_18x18@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LupaOn_18x18@2x.png"; path = "resources/LupaOn_18x18@2x.png"; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 		A05EDAC51B7A4466001B3F3C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A05EDAC41B7A4466001B3F3C /* lupa.app */,
+				A05EDAC41B7A4466001B3F3C /* Lupa.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -236,9 +236,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A05EDAC31B7A4466001B3F3C /* lupa */ = {
+		A05EDAC31B7A4466001B3F3C /* Lupa */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A05EDAD11B7A4466001B3F3C /* Build configuration list for PBXNativeTarget "lupa" */;
+			buildConfigurationList = A05EDAD11B7A4466001B3F3C /* Build configuration list for PBXNativeTarget "Lupa" */;
 			buildPhases = (
 				A03390C81B80F67000BEC7CF /* Luis - Update version information */,
 				A05EDAC01B7A4466001B3F3C /* Sources */,
@@ -250,9 +250,9 @@
 			);
 			dependencies = (
 			);
-			name = lupa;
+			name = Lupa;
 			productName = lupa;
-			productReference = A05EDAC41B7A4466001B3F3C /* lupa.app */;
+			productReference = A05EDAC41B7A4466001B3F3C /* Lupa.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -270,7 +270,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A05EDABF1B7A4466001B3F3C /* Build configuration list for PBXProject "lupa" */;
+			buildConfigurationList = A05EDABF1B7A4466001B3F3C /* Build configuration list for PBXProject "Lupa" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -283,7 +283,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A05EDAC31B7A4466001B3F3C /* lupa */,
+				A05EDAC31B7A4466001B3F3C /* Lupa */,
 			);
 		};
 /* End PBXProject section */
@@ -394,7 +394,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -432,7 +432,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -454,6 +454,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = org.parchis.lupa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "lupa/Global/lupa-Bridging-Header.h";
 			};
 			name = Debug;
@@ -474,6 +475,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = org.parchis.lupa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "lupa/Global/lupa-Bridging-Header.h";
 			};
 			name = Release;
@@ -481,7 +483,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A05EDABF1B7A4466001B3F3C /* Build configuration list for PBXProject "lupa" */ = {
+		A05EDABF1B7A4466001B3F3C /* Build configuration list for PBXProject "Lupa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A05EDACF1B7A4466001B3F3C /* Debug */,
@@ -490,7 +492,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A05EDAD11B7A4466001B3F3C /* Build configuration list for PBXNativeTarget "lupa" */ = {
+		A05EDAD11B7A4466001B3F3C /* Build configuration list for PBXNativeTarget "Lupa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A05EDAD21B7A4466001B3F3C /* Debug */,

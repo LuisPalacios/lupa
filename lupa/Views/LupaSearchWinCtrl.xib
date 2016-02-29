@@ -5,7 +5,7 @@
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="LupaSearchWinCtrl" customModule="lupa" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="LupaSearchWinCtrl" customModule="Lupa" customModuleProvider="target">
             <connections>
                 <outlet property="ldapResultStackView" destination="q3n-rK-xfn" id="NIx-qp-U2q"/>
                 <outlet property="ldapResultTableView" destination="LMX-1P-cwF" id="QEH-Vi-VMa"/>
@@ -23,13 +23,13 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="lupa" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="none" id="F0z-JX-Cv5" customClass="LupaPanel" customModule="lupa" customModuleProvider="target">
+        <window title="lupa" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="none" id="F0z-JX-Cv5" customClass="LupaPanel" customModule="Lupa" customModuleProvider="target">
             <windowStyleMask key="styleMask" resizable="YES" utility="YES" nonactivatingPanel="YES"/>
             <windowCollectionBehavior key="collectionBehavior" moveToActiveSpace="YES" stationary="YES" ignoresCycle="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="980" y="790" width="292" height="244"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <view key="contentView" id="se5-gp-TjO" customClass="LPStatusItemBackgroundView" customModule="lupa" customModuleProvider="target">
+            <view key="contentView" id="se5-gp-TjO" customClass="LPStatusItemBackgroundView" customModule="Lupa" customModuleProvider="target">
                 <rect key="frame" x="0.0" y="0.0" width="292" height="244"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
@@ -42,7 +42,7 @@
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vha-9z-dva">
                                         <rect key="frame" x="0.0" y="43" width="252" height="22"/>
                                         <subviews>
-                                            <searchField wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mzq-eI-59F" customClass="LupaSearchField" customModule="lupa" customModuleProvider="target">
+                                            <searchField wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mzq-eI-59F" customClass="LupaSearchField" customModule="Lupa" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="252" height="22"/>
                                                 <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="dCh-xu-EgJ">
                                                     <font key="font" metaFont="system"/>
@@ -142,7 +142,7 @@
                                             <rect key="frame" x="1" y="1" width="250" height="119"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="LMX-1P-cwF" customClass="LupaSearchTableview" customModule="lupa" customModuleProvider="target">
+                                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="LMX-1P-cwF" customClass="LupaSearchTableview" customModule="Lupa" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="250" height="0.0"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -228,7 +228,7 @@
             </connections>
             <point key="canvasLocation" x="-1349" y="-2411"/>
         </window>
-        <customView id="2xY-wu-fMG" userLabel="viewPopoverDetail" customClass="LupaPopoverDetailView" customModule="lupa" customModuleProvider="target">
+        <customView id="2xY-wu-fMG" userLabel="viewPopoverDetail" customClass="LupaPopoverDetailView" customModule="Lupa" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="434" height="243"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
