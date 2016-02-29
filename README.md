@@ -9,7 +9,7 @@ Project 'lupa' (spanish word for magnifying glass), created during the summer of
 
 The original objective of the App was extremely simple: Being able to **launch your default browser** with a URL formed by the concatenation of "Prefix" + "Search Field". The "Prefix" is a preset stored under the OSX User Defaults and the "Search Field" is what the user types in the text field.
 
-Later on I gave it a feature you might find useful, the **silent LDAP search while typing** feature will help you use it as an LDAP client for Directory searching. 
+Later on I gave it a feature you might find useful, the **silent LDAP search while typing** feature will help you use it as an LDAP client for Directory searching.
 
 
 <div align="center">
@@ -26,11 +26,11 @@ Later on I gave it a feature you might find useful, the **silent LDAP search whi
 
 You can clone the project and open/compile with Xcode (tested Xcode 7).
 
-Alternatively, download a copy of the binary [lupa-1.2.0.zip](https://github.com/LuisPalacios/lupa/raw/master/download/lupa-1.2.0.zip), unzip it and place the executable into your PATH (or better /Applications). Double click to execute. I suggest to add it to the startup items, under Users and Groups in System Preferences so you have it always ready.
+Alternatively, download a copy of the binary [Lupa-1.2.2.zip](https://github.com/LuisPalacios/lupa/raw/master/download/Lupa-1.2.2.zip), unzip it and place the executable into your PATH (or better /Applications). Double click to execute. I suggest to add it to the startup items, under Users and Groups in System Preferences so you have it always ready.
 
 
 
-### Configuration 
+### Configuration
 
 Configure the program by right clicking into the status bar icon and selecting preferences under the menu.
 
@@ -58,14 +58,14 @@ Under the **Preferences window** you can alter the App behaviour and everything 
 - URL search prefix: this is the "Prefix", the left part of the URL used when calling your default browser, a pair of examples:
    - Example 1: https://www.google.com/search?q=
    - Example 2: http://www.yourcompany.com/query.cgi?user=
-- LDAP Support: Activate it and fill all the fields as you may need in order to connect into your company or personal LDAP Directory. 
+- LDAP Support: Activate it and fill all the fields as you may need in order to connect into your company or personal LDAP Directory.
    -  Pic Mini and Zoom: Program expect to find the small and large version of the user pictures on those url's. Notice that the name of the file must be the 'cn' ldap attribute followed by the graphic extension. For each user found while typing the program will substitute the **<CN>** syntax with the cn attribute and try to download from the url. Don't remove the **<CN>***
 
-    
+
 
 #### Import/Export JSON
 
-You'll have the option to import/export to JSON file storing or loading the preferences for easy distribution or simply backup purposes. The format of the file is as follows: 
+You'll have the option to import/export to JSON file storing or loading the preferences for easy distribution or simply backup purposes. The format of the file is as follows:
 
 
 <div align="center">
@@ -77,7 +77,7 @@ You'll have the option to import/export to JSON file storing or loading the pref
 
 ### Search
 
-One your Preferences are set, **click on the status bar icon** or **press your custom shortcut**. Once you see the search box, type the words you want to use and press Enter to trigger the OSX default browser, or simply wait few miliseconds for an LDAP search to kickoff. If you press **ESC**cape the search window will dismiss. 
+One your Preferences are set, **click on the status bar icon** or **press your custom shortcut**. Once you see the search box, type the words you want to use and press Enter to trigger the OSX default browser, or simply wait few miliseconds for an LDAP search to kickoff. If you press **ESC**cape the search window will dismiss.
 
 
 <div align="center">
