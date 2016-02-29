@@ -87,6 +87,10 @@
 		A01ACCF21C59230300B97FD3 /* LPLdapUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LPLdapUser.swift; sourceTree = "<group>"; };
 		A03A13511C5AA6DD00298112 /* LupaDefaultsWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LupaDefaultsWindow.swift; path = Views/LupaDefaultsWindow.swift; sourceTree = "<group>"; };
 		A03A13531C5AA75C00298112 /* LupaDefaultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LupaDefaultsView.swift; path = Views/LupaDefaultsView.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
+=======
+		A055D2FE1C75F35F0069F5B0 /* lupa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = lupa.entitlements; sourceTree = "<group>"; };
+>>>>>>> a1f2c5c0802db5178cf44530254a416ca26a7f45
 		A05EDAC41B7A4466001B3F3C /* Lupa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lupa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A05EDAC91B7A4466001B3F3C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0603A981B7BD2CE0059578E /* LupaOn_18x18.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LupaOn_18x18.png; path = resources/LupaOn_18x18.png; sourceTree = "<group>"; };
@@ -201,6 +205,7 @@
 		A05EDAC61B7A4466001B3F3C /* lupa */ = {
 			isa = PBXGroup;
 			children = (
+				A055D2FE1C75F35F0069F5B0 /* lupa.entitlements */,
 				A01ACCF11C59230300B97FD3 /* Model */,
 				A01ACCA61C591B9C00B97FD3 /* Views */,
 				A01ACCBB1C591CE100B97FD3 /* Controllers */,
@@ -267,6 +272,11 @@
 					A05EDAC31B7A4466001B3F3C = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = 2J7A9EZT9X;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -442,6 +452,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = lupa/lupa.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -463,6 +474,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = lupa/lupa.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
