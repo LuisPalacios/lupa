@@ -17,10 +17,17 @@ public struct LPQueue {
     public typealias TimeInterval = Foundation.TimeInterval
     
     public static let Main = LPQueue(queue: DispatchQueue.main);
-    public static let Default = LPQueue(queue: DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default))
-    public static let Background = LPQueue(queue: DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background))
-    public static let BackgroundGroup = LPQueue(group: DispatchGroup(), queue: DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background))
+//    public static let Default = LPQueue(queue: DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default))
+//    public static let Background = LPQueue(queue: DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background))
+//    public static let BackgroundGroup = LPQueue(group: DispatchGroup(), queue: DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background))
 
+    public static let Default = LPQueue(queue: DispatchQueue.global(qos: .default))
+    public static let Background = LPQueue(queue: DispatchQueue.global(qos: .background))
+    public static let BackgroundGroup = LPQueue(group: DispatchGroup(), queue: DispatchQueue.global(qos: .background))
+    
+//    try qos: DispatchQoS.QoSClass.default instead of priority: DispatchQueue.GlobalQueuePriority.default
+//
+    
     public fileprivate(set) var queue: DispatchQueue!
     public fileprivate(set) var group: DispatchGroup!
     

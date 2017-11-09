@@ -779,22 +779,24 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
                     let regex = try! NSRegularExpression(pattern: "<CN>",
                         options: [.caseInsensitive])
                     regex.replaceMatches(in: mutableString, options: NSRegularExpression.MatchingOptions.reportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.cn)
-                    if let mySwiftString : String = mutableString as String {
-                        if let letURL = URL(string: mySwiftString) {
-                            user.picturlMini = letURL
-                        }
+                        let mySwiftString = mutableString as String
+//                    if let mySwiftString : String = mutableString as String {
+                    if let letURL = URL(string: mySwiftString) {
+                        user.picturlMini = letURL
                     }
+//                    }
                 }
                 if let pict = self.userDefaults.object(forKey: LUPADefaults.lupa_LDAP_PictureURLZoom) as? String {
                     let mutableString = NSMutableString(string: pict)
                     let regex = try! NSRegularExpression(pattern: "<CN>",
                         options: [.caseInsensitive])
                     regex.replaceMatches(in: mutableString, options: NSRegularExpression.MatchingOptions.reportProgress, range: NSMakeRange(0, mutableString.length), withTemplate: user.cn)
-                    if let mySwiftString : String = mutableString as String {
-                        if let letURL = URL(string: mySwiftString) {
-                            user.picturlZoom = letURL
-                        }
+                    let mySwiftString = mutableString as String
+//                    if let mySwiftString : String = mutableString as String {
+                    if let letURL = URL(string: mySwiftString) {
+                        user.picturlZoom = letURL
                     }
+//                    }
                 }
             }
             
@@ -909,13 +911,15 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         var logString = ""
         if let rangeBeforePassword = commandString.range(of: "-w", options: .backwards) {
             let index = rangeBeforePassword.lowerBound
-            let stringBeforePassword = commandString.substring(to: index)
+            // let stringBeforePassword = commandString.substring(to: index)  // swift 3
+            let stringBeforePassword = String(commandString[..<index])  // swift 4
             logString = stringBeforePassword
         }
         logString = logString + "-w \"PASSWORD_HIDDEN\" "
         if let rangeAfterPassword = commandString.range(of: "-x", options: .backwards) {
             let index = rangeAfterPassword.lowerBound
-            let stringAfterPassword = commandString.substring(from: index)
+            // let stringAfterPassword = commandString.substring(from: index) // swift 3
+            let stringAfterPassword = String(commandString[index...])  // swift 4
             logString = logString + stringAfterPassword
         }
         print("Command: \(logString)")
