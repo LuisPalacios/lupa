@@ -88,9 +88,9 @@ class LPStatusItemWindowCtrl: NSWindowController {
         self.window = windowOrNil
     
         // Subscribe myself so I'll receive(Get) Notifications
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "handleWindowDidResignKeyNotification:",
-            name: NSWindowDidResignKeyNotification,
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(LPStatusItemWindowCtrl.handleWindowDidResignKeyNotification(_:)),
+            name: NSWindow.didResignKeyNotification,
             object: nil)
      }
     
@@ -102,10 +102,10 @@ class LPStatusItemWindowCtrl: NSWindowController {
 
     //  Hide the Window when loosing focus
     //
-    func handleWindowDidResignKeyNotification (note : NSNotification) {
+    @objc func handleWindowDidResignKeyNotification (_ note : Notification) {
         //print("handleWindowDidResignKeyNotification")
         var noteWindow : NSWindow
-        if let letNoteWindow : AnyObject = note.object {
+        if let letNoteWindow : AnyObject = note.object as AnyObject {
             noteWindow = letNoteWindow as! NSWindow
             
             if ( noteWindow != self.window ) {
@@ -163,7 +163,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
                         window.frame.size.width,
                         window.frame.size.height)
                     window.setFrame(windowFrame, display: true)
-                    window.appearance = NSAppearance.currentAppearance()
+                    window.appearance = NSAppearance.current
                 }
             }
         }
@@ -176,7 +176,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
     
     // Start the animnation
     //
-    func animateWindow ( window: NSWindow, fadeDirection: eFadeDirection ) {
+    func animateWindow ( _ window: NSWindow, fadeDirection: eFadeDirection ) {
         switch self.windowConfig.presentationTransition {
         
         case .transitionNone, .transitionFade:
@@ -192,10 +192,10 @@ class LPStatusItemWindowCtrl: NSWindowController {
 
     // Start the animation
     //
-    func animateWindow ( window: NSWindow, fadeTransitionUsingfadeDirection: eFadeDirection ) {
+    func animateWindow ( _ window: NSWindow, fadeTransitionUsingfadeDirection: eFadeDirection ) {
         
         let notificationName : String = ( fadeTransitionUsingfadeDirection == eFadeDirection.fadeIn ? skStatusItemWindowWillShowNotification : skStatusItemWindowWillDismissNotification)
-        NSNotificationCenter.defaultCenter().postNotificationName(notificationName, object: window)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: notificationName), object: window)
         
         NSAnimationContext.runAnimationGroup(
             { (context) -> Void in
@@ -213,7 +213,7 @@ class LPStatusItemWindowCtrl: NSWindowController {
     // Start the animnation
     //
     // func animateWindow ( window: LPStatusItemWindow, slideAndFadeTransitionUsingfadeDirection: eFadeDirection ) {
-    func animateWindow ( window: NSWindow, slideAndFadeTransitionUsingfadeDirection: eFadeDirection ) {
+    func animateWindow ( _ window: NSWindow, slideAndFadeTransitionUsingfadeDirection: eFadeDirection ) {
         // ToDO
         // print("Animate using slideAndFadeTransitionUsingfadeDirection")
     }
@@ -222,12 +222,12 @@ class LPStatusItemWindowCtrl: NSWindowController {
     // End the animantion
     //
     // func animationCompletionForWindow ( window: LPStatusItemWindow, fadeDirection: eFadeDirection ) {
-    func animationCompletionForWindow ( window: NSWindow, fadeDirection: eFadeDirection ) {
+    func animationCompletionForWindow ( _ window: NSWindow, fadeDirection: eFadeDirection ) {
         if ( fadeDirection == eFadeDirection.fadeIn ) {
             if ( isWindowOpen == false ) {
-                window.makeMainWindow()
-                window.makeKeyWindow()
-                window.level = Int(CGWindowLevelForKey(CGWindowLevelKey.ModalPanelWindowLevelKey))
+                window.makeMain()
+                window.makeKey()
+                window.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(CGWindowLevelKey.modalPanelWindow)))
                 isWindowOpen=true
             }
         } else {

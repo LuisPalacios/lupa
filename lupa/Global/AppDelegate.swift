@@ -10,7 +10,7 @@ import Cocoa
 
 // ErroType's
 //
-enum skControllerNotReady: ErrorType {
+enum skControllerNotReady: Error {
     case cannotActivate
     case cannotCreate
     case cannotAccessIconImage
@@ -18,9 +18,9 @@ enum skControllerNotReady: ErrorType {
 extension skControllerNotReady: CustomStringConvertible {
     var description: String {
         switch self {
-        case cannotActivate: return "Attention! can't activate the custom NSViewController"
-        case cannotCreate: return "Attention! can't create the custom NSViewController"
-        case cannotAccessIconImage : return "Attention! can't access the Icon Image"
+        case .cannotActivate: return "Attention! can't activate the custom NSViewController"
+        case .cannotCreate: return "Attention! can't create the custom NSViewController"
+        case .cannotAccessIconImage : return "Attention! can't access the Icon Image"
         }
     }
 }
@@ -50,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //  In order to work with the user defaults, stored under:
     //  /Users/<your_user>/Library/Preferences/parchis.org.lupa.plist
     //  $ defaults read parchis.org.lupa.plist
-    let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults : UserDefaults = UserDefaults.standard
 
     // To prepare the program name with GIT numbers
     var programName : String    = ""
@@ -60,12 +60,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //  MARK: Main
     /// --------------------------------------------------------------------------------
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
 
         
         // Ask to visualize the mutually exclusive constraints
-        let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setBool(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
+        let userDefaults : UserDefaults = UserDefaults.standard
+        userDefaults.set(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
         
         // NOTE: In order for the Icon disapear from the Dock and also disapear 
         //       from the CMD-ALT list I also modified the Info.plist and added:
@@ -76,7 +76,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         /// Prepare windows
         // I deleted the default main window from MainMenu.xib but just in 
         // case double check and hide it.
-        defaultWindow = NSApplication.sharedApplication().windows.first
+        defaultWindow = NSApplication.shared.windows.first
         if defaultWindow != nil {
             defaultWindow.close()
         }
@@ -88,13 +88,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         /// HotKey
         // Register default values to be used when app start for the first time
         // I ship with some already predefined values for some keys.
-        self.userDefaults.registerDefaults( [ LUPADefaults.lupa_HotkeyEnabled:true ] )
+        self.userDefaults.register( defaults: [ LUPADefaults.lupa_HotkeyEnabled:true ] )
 
         // Start observing changes in the user Defaults hotkey properties...
         self.loadKVO()
 
         // Initialize the defaults Preferences Window
-        self.lupaDefaultsController = LupaDefaults(windowNibName: "LupaDefaults")
+        self.lupaDefaultsController = LupaDefaults(windowNibName: NSNib.Name(rawValue: "LupaDefaults"))
         
         /// Create my custom View Controller
         //  Based on LPStatusItem framework singleton
@@ -127,7 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Deactivate the KVO - Key Value Observing
         self.unloadKVO()
     }
@@ -145,16 +145,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // 
     // Connect MainMenu.xib->Program->Preferences with FirstResponder->"showPreferences:"
     //
-    @IBAction func showPreferences(sender : AnyObject) {
+    @IBAction func showPreferences(_ sender : AnyObject) {
 
         // Open the preferences (Defaults) window
         //
         if let window = self.lupaDefaultsController.window {
-            NSApplication.sharedApplication().activateIgnoringOtherApps(true)
+            NSApplication.shared.activate(ignoringOtherApps: true)
             window.makeKeyAndOrderFront(self)
             window.center()
-            if let h = NSScreen.mainScreen()?.visibleFrame.size.height {
-                let newOrigin = CGPointMake(window.frame.origin.x, h-window.frame.size.height)
+            if let h = NSScreen.main?.visibleFrame.size.height {
+                let newOrigin = CGPoint(x: window.frame.origin.x, y: h-window.frame.size.height)
                 window.setFrameOrigin(newOrigin)
             }
         }
@@ -165,7 +165,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //
     // Connect with FirstResponder->"showSearchBox:"
     //
-    @IBAction func showSearchBox(sender : AnyObject) {
+    @IBAction func showSearchBox(_ sender : AnyObject) {
         
         // Ask the LPStatusItem to manifest
         lpStatusItem.showStatusItemWindow()
@@ -184,10 +184,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         /// CREATE LupaSearchWinCtrl   !!!
         //
         // Prepare the name of the NIB (from the name of the class)
-        let searchWinNibName = NSStringFromClass(LupaSearchWinCtrl).componentsSeparatedByString(".").last!
+        let searchWinNibName = NSStringFromClass(LupaSearchWinCtrl.self).components(separatedBy: ".").last!
         
         // ..and create custom Win Controller
-        lupaSearchCtrl = LupaSearchWinCtrl(windowNibName: searchWinNibName)
+        lupaSearchCtrl = LupaSearchWinCtrl(windowNibName: NSNib.Name(rawValue: searchWinNibName))
 
     }
     
@@ -204,7 +204,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //
         if ( lupaSearchCtrl != nil ) {
             
-            if let letItemImage = NSImage(named: "LupaOn_18x18") {
+            if let letItemImage = NSImage(named: NSImage.Name(rawValue: "LupaOn_18x18")) {
                 let itemImage = letItemImage
 
                 lpStatusItem.activateStatusItemWithMenuImageWindow(self.statusMenu, itemImage: itemImage, winController: lupaSearchCtrl)
@@ -224,7 +224,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// --------------------------------------------------------------------------------
 
     // Context (up=unsafe pointer)
-    private var upLUPA_AppDelegate_KVOContext_HotKey = 0
+    fileprivate var upLUPA_AppDelegate_KVOContext_HotKey = 0
     
     // Load and activate the Key Value Observing
     //
@@ -239,7 +239,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //  I'm setting .Initial so a notification should be sent to the observer immediately, 
         //  before the observer registration method even returns. Nice trick to perform initial setup...
         //
-        let options = NSKeyValueObservingOptions([.Initial, .New])
+        let options = NSKeyValueObservingOptions([.initial, .new])
         
         for item in self.observableKeys_HotKey {
             // print("\(self.userDefaults).addObserver(\(self), item: \(item), options: \(options), context: &upLUPA_AppDelegate_KVOContext_HotKey)")
@@ -269,7 +269,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // Actions when a change comes...
     //
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         // Act on the appropiate context
         if context == &upLUPA_AppDelegate_KVOContext_HotKey {
@@ -282,23 +282,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             //  Identify the kind of change
             //
-            if let rv = change[NSKeyValueChangeKindKey] as? UInt,
-                kind = NSKeyValueChange(rawValue: rv) {
+            if let rv = change[NSKeyValueChangeKey.kindKey] as? UInt,
+                let kind = NSKeyValueChange(rawValue: rv) {
                     switch kind {
-                    case .Setting:
+                    case .setting:
                         if ( keyPath == LUPADefaults.lupa_HotkeyEnabled ) {
-                            if let letNewValue : Bool = change[NSKeyValueChangeNewKey]?.boolValue {
+                            if let letNewValue : Bool = (change[NSKeyValueChangeKey.newKey] as AnyObject).boolValue {
                                 let newValue = letNewValue
                                 self.activateHotKey(newValue)
                             }
                         }
-                    case .Insertion:
+                    case .insertion:
                         // print(".Insertion -> \(change[NSKeyValueChangeNewKey]) ")
                         break
-                    case .Removal:
+                    case .removal:
                         // print(".Removal -> \(change[NSKeyValueChangeOldKey]) ")
                         break
-                    case .Replacement:
+                    case .replacement:
                         // print(".Replacement -> \(change[NSKeyValueChangeOldKey]) ")
                         break
                     }
@@ -311,7 +311,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
         } else {
             // Defaults...
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
     
@@ -322,13 +322,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // Activate or deactivate the Shortcut HotKey
     //
-    func activateHotKey (newValue: Bool) {
+    func activateHotKey (_ newValue: Bool) {
         if newValue == true {
-            MASShortcutBinder.sharedBinder().bindShortcutWithDefaultsKey(LUPADefaults.lupa_Hotkey, toAction: {
+            MASShortcutBinder.shared().bindShortcut(withDefaultsKey: LUPADefaults.lupa_Hotkey, toAction: {
                 self.actionHotKey()
             })
         } else {
-            MASShortcutBinder.sharedBinder().breakBindingWithDefaultsKey(LUPADefaults.lupa_Hotkey)
+            MASShortcutBinder.shared().breakBinding(withDefaultsKey: LUPADefaults.lupa_Hotkey)
         }
     }
 
@@ -336,7 +336,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //
     func actionHotKey() {
         // Send a message to firstResponder
-        NSApplication.sharedApplication().sendAction("showSearchBox:", to: nil, from: self)
+        NSApplication.shared.sendAction(#selector(AppDelegate.showSearchBox(_:)), to: nil, from: self)
     }
 }
 

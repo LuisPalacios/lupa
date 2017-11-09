@@ -38,7 +38,7 @@ import Cocoa
     var statusMenu                  : NSMenu!
 
     // Vars that I need to be initialized
-    var leftButtomInterval          : NSTimeInterval = 0.0
+    var leftButtomInterval          : TimeInterval = 0.0
     
 
     //  Singleton accessible from IB and Obj-C if needed
@@ -83,7 +83,7 @@ import Cocoa
     
     /// Activate my status item and present it in the bar
     ///
-    func activateStatusItemWithMenuImageWindow (statusMenu: NSMenu, itemImage : NSImage, winController: NSWindowController) {
+    func activateStatusItemWithMenuImageWindow (_ statusMenu: NSMenu, itemImage : NSImage, winController: NSWindowController) {
         
         // Log
         //print("LPStatusItem - Activate my status item and present it in the bar")
@@ -130,13 +130,13 @@ import Cocoa
 
     // Create Status Bar Item with an NSImage
     //
-    func  createStatusBarItemWithImage (statusMenu: NSMenu, itemImage : NSImage) {
+    func  createStatusBarItemWithImage (_ statusMenu: NSMenu, itemImage : NSImage) {
         
         // 1. Identify the icon image as a template
-        itemImage.template = true
+        itemImage.isTemplate = true
         
         // 2. Create an statusItem inside the status bar
-        self.statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSVariableStatusItemLength)
+        self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         // 3. Get the NSStatusBarButton (*new* in 10.10) and prepare it
         self.button = self.statusItem.button
@@ -146,11 +146,11 @@ import Cocoa
         
         // 5. Setup myself as actions target for Mouse events
         button.target = self;
-        button.action = "clickActions:"
-        button.sendActionOn( Int(NSEventMask.LeftMouseDownMask.rawValue) |
-            Int(NSEventMask.RightMouseDownMask.rawValue) |
-            Int(NSEventMask.LeftMouseUpMask.rawValue) |
-            Int(NSEventMask.RightMouseUpMask.rawValue) )
+        button.action = #selector(LPStatusItem.clickActions(_:))
+        button.sendAction( on: NSEvent.EventTypeMask(rawValue: UInt64(Int(NSEvent.EventTypeMask.leftMouseDown.rawValue) |
+            Int(NSEvent.EventTypeMask.rightMouseDown.rawValue) |
+            Int(NSEvent.EventTypeMask.leftMouseUp.rawValue) |
+            Int(NSEvent.EventTypeMask.rightMouseUp.rawValue))) )
 
         // 6. Store the Menu I should show when right-clicked
         self.statusItemMenu = statusMenu
@@ -159,29 +159,29 @@ import Cocoa
     
     //  StatusBar button handling
     //
-    func clickActions(sender : AnyObject) {
+    @objc func clickActions(_ sender : AnyObject) {
         
         if let letCurrentEvent = NSApp.currentEvent {
             let currentEvent = letCurrentEvent
 
             switch currentEvent.type {
-            case NSEventType.LeftMouseDown:
+            case NSEvent.EventType.leftMouseDown:
                 // Show status item window
                 leftButtomInterval = currentEvent.timestamp
                 self.showStatusItemWindow()
 
-            case NSEventType.LeftMouseUp:
+            case NSEvent.EventType.leftMouseUp:
                 // Dismiss status item window if user click was slow
                 leftButtomInterval = currentEvent.timestamp - leftButtomInterval
                 if ( leftButtomInterval > 0.5 ) {
                     self.dismissStatusItemWindow()
                 }
                 
-            case NSEventType.RightMouseDown:
+            case NSEvent.EventType.rightMouseDown:
                 // Ignore it...
                 return
                 
-            case NSEventType.RightMouseUp:
+            case NSEvent.EventType.rightMouseUp:
                 // Start the menu
                 self.showStatusItemMenu()
                 
@@ -224,7 +224,7 @@ import Cocoa
     // Show the menu
     //
     func showStatusItemMenu() {
-        self.statusMenu.popUpMenuPositioningItem(nil, atLocation: self.getPositioningPoint(), inView: nil)
+        self.statusMenu.popUp(positioning: nil, at: self.getPositioningPoint(), in: nil)
     }
     
     
@@ -236,12 +236,12 @@ import Cocoa
         var point = NSMakePoint(100.0, 100.0)
 
         // Find Screen Coordinates of the NSStatusItem Frame
-        let rectInWindow : NSRect = self.button.convertRect(self.button.bounds, toView: nil)
+        let rectInWindow : NSRect = self.button.convert(self.button.bounds, to: nil)
         
         // Position the menu in the right place in screen
         if let letButtonWindow = self.button.window {
             let buttonWindow = letButtonWindow
-            let screenRect : NSRect = buttonWindow.convertRectToScreen(rectInWindow)
+            let screenRect : NSRect = buttonWindow.convertToScreen(rectInWindow)
             point = NSMakePoint(screenRect.origin.x, screenRect.origin.y - 3.0)
         }
         

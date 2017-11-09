@@ -14,63 +14,63 @@ import Foundation
 ///
 public struct LPQueue {
     
-    public typealias TimeInterval = NSTimeInterval
+    public typealias TimeInterval = Foundation.TimeInterval
     
-    public static let Main = LPQueue(queue: dispatch_get_main_queue());
-    public static let Default = LPQueue(queue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0))
-    public static let Background = LPQueue(queue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0))
-    public static let BackgroundGroup = LPQueue(group: dispatch_group_create(), queue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0))
+    public static let Main = LPQueue(queue: DispatchQueue.main);
+    public static let Default = LPQueue(queue: DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default))
+    public static let Background = LPQueue(queue: DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background))
+    public static let BackgroundGroup = LPQueue(group: DispatchGroup(), queue: DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background))
 
-    public private(set) var queue: dispatch_queue_t!
-    public private(set) var group: dispatch_group_t!
+    public fileprivate(set) var queue: DispatchQueue!
+    public fileprivate(set) var group: DispatchGroup!
     
-    public init(queue: dispatch_queue_t = dispatch_queue_create("org.parchis.LPQueue", DISPATCH_QUEUE_SERIAL)) {
+    public init(queue: DispatchQueue = DispatchQueue(label: "org.parchis.LPQueue", attributes: [])) {
         self.queue = queue
     }
 
-    public init(group: dispatch_group_t, queue: dispatch_queue_t = dispatch_queue_create("org.parchis.LPQueue", DISPATCH_QUEUE_SERIAL) ) {
+    public init(group: DispatchGroup, queue: DispatchQueue = DispatchQueue(label: "org.parchis.LPQueue", attributes: []) ) {
         self.queue = queue
         self.group = group
     }
     
-    public func after(interval: NSTimeInterval, block: () -> ()) {
-        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(interval * NSTimeInterval(NSEC_PER_SEC)))
-        dispatch_after(dispatchTime, queue, block)
+    public func after(_ interval: Foundation.TimeInterval, block: @escaping () -> ()) {
+        let dispatchTime = DispatchTime.now() + Double(Int64(interval * Foundation.TimeInterval(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        queue.asyncAfter(deadline: dispatchTime, execute: block)
     }
 
-    public func async(block: () -> ()) {
-        dispatch_async(queue, block)
+    public func async(_ block: @escaping () -> ()) {
+        queue.async(execute: block)
     }
     
-    public func async(block: () -> (), completion: () -> ()) {
-        dispatch_async(queue) {
+    public func async(_ block: @escaping () -> (), completion: @escaping () -> ()) {
+        queue.async {
             block()
             completion()
         }
     }
 
-    public func sync(block: () -> ()) {
-        dispatch_sync(queue, block)
+    public func sync(_ block: () -> ()) {
+        queue.sync(execute: block)
     }
     
-    public func sync(block: () -> (), completion: () -> ()) {
-        dispatch_sync(queue) {
+    public func sync(_ block: () -> (), completion: () -> ()) {
+        queue.sync {
             block()
             completion()
         }
     }
 
-    public func group_async(block: () -> (), completion: () -> ()) {
-        dispatch_group_enter(group)
+    public func group_async(_ block: @escaping () -> (), completion: () -> ()) {
+        group.enter()
         let background = LPQueue.Background
         background.async(block, completion: {
-            dispatch_group_leave(self.group); // Leave the group
+            self.group.leave(); // Leave the group
         })
         completion()
     }
 
-    public func group_notify(block: () -> ()) {
-        dispatch_group_notify(group, queue) {
+    public func group_notify(_ block: @escaping () -> ()) {
+        group.notify(queue: queue) {
             block()
         }
     }

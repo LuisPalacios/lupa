@@ -25,7 +25,7 @@ let lpStatusItem : LPStatusItem = LPStatusItem()
 
 /// ErrorType's 
 ///
-enum skStatusItemWindowCtrlNotReady: ErrorType {
+enum skStatusItemWindowCtrlNotReady: Error {
     case statusItemIsNil
     case contentViewControllerIsNil
     case windowOrNil
@@ -36,12 +36,12 @@ enum skStatusItemWindowCtrlNotReady: ErrorType {
 extension skStatusItemWindowCtrlNotReady: CustomStringConvertible {
     var description: String {
         switch self {
-        case statusItemIsNil: return "Error: The statusItem is nil"
-        case contentViewControllerIsNil: return "Error: The contentViewController is nil"
-        case windowOrNil: return "Error: The window is nil"
-        case windowConfigOrNil: return "Error: The windowConfigOrNil is nil"
-        case customViewControllerIncorrectSize: return "Error: contentSize of the custom NSViewController is wrong (zero)"
-        case cantCreateCustomWindow: return "Error: Cannot create the custom NSWindow"
+        case .statusItemIsNil: return "Error: The statusItem is nil"
+        case .contentViewControllerIsNil: return "Error: The contentViewController is nil"
+        case .windowOrNil: return "Error: The window is nil"
+        case .windowConfigOrNil: return "Error: The windowConfigOrNil is nil"
+        case .customViewControllerIncorrectSize: return "Error: contentSize of the custom NSViewController is wrong (zero)"
+        case .cantCreateCustomWindow: return "Error: Cannot create the custom NSWindow"
         }
     }
 }
@@ -51,7 +51,7 @@ let LPStatusItem_DefaultArrowHeight         : CGFloat        = 11.0
 let LPStatusItem_DefaultArrowWidth          : CGFloat        = 42.0
 let LPStatusItem_DefaultCornerRadius        : CGFloat        = 5.0
 let LPStatusItem_DefaultStatusItemMargin    : CGFloat        = 2.0
-let LPStatusItem_DefaultAnimationDuration   : NSTimeInterval = 0.21;
+let LPStatusItem_DefaultAnimationDuration   : TimeInterval = 0.21;
 
 // Window Fade direction
 let LPStatusItem_DefaultTransitionDistance : CGFloat = 8.0

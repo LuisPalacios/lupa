@@ -11,7 +11,7 @@ import Cocoa
 
 // Protocol that allows me to call my own delegate
 protocol LupaSearchTableviewDelegate {
-    func tableView(tableview:NSTableView, clickedRow:NSInteger, clickedColumn:NSInteger, clickedPoint:NSPoint, clickedRect:NSRect)
+    func tableView(_ tableview:NSTableView, clickedRow:NSInteger, clickedColumn:NSInteger, clickedPoint:NSPoint, clickedRect:NSRect)
 //    func tableView(tableview:NSTableView, doubleClickedRow:NSInteger, clickedColumn:NSInteger)
 }
 
@@ -71,16 +71,16 @@ class LupaSearchTableview: NSTableView {
     
     // Right Mouse
     //
-    override func  rightMouseDown(theEvent: NSEvent) {
+    override func  rightMouseDown(with theEvent: NSEvent) {
         
         // Super's rightMouse
-        super.rightMouseDown(theEvent)
+        super.rightMouseDown(with: theEvent)
         
         let globalLocation  : NSPoint   = theEvent.locationInWindow
-        let clickedPoint    : NSPoint   = self.convertPoint(globalLocation, fromView: nil)
-        let clickedRow      : NSInteger = self.rowAtPoint(clickedPoint)
-        let clickedCol      : NSInteger = self.columnAtPoint(clickedPoint)
-        let clickedRect     : NSRect    = self.frameOfCellAtColumn(clickedCol, row: clickedRow)
+        let clickedPoint    : NSPoint   = self.convert(globalLocation, from: nil)
+        let clickedRow      : NSInteger = self.row(at: clickedPoint)
+        let clickedCol      : NSInteger = self.column(at: clickedPoint)
+        let clickedRect     : NSRect    = self.frameOfCell(atColumn: clickedCol, row: clickedRow)
         
         // Call the delegate
         if ( clickedRow != -1 ) {

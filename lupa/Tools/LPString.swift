@@ -10,8 +10,8 @@ import Foundation
 
 extension String {
     
-    public func replace (oldString: String, _ newString: String) -> String {
-        return self.stringByReplacingOccurrencesOfString(oldString, withString: newString)
+    public func replace (_ oldString: String, _ newString: String) -> String {
+        return self.replacingOccurrences(of: oldString, with: newString)
     }
     
 //    /** Replace the first `limit` occurrences of oldString with newString. */
@@ -23,43 +23,43 @@ extension String {
 //                range: ranges.first!.startIndex ..< ranges.last!.endIndex)
 //    }
     
-    public func split (sep: String) -> [String] {
-        return self.componentsSeparatedByString(sep)
+    public func split (_ sep: String) -> [String] {
+        return self.components(separatedBy: sep)
     }
     
     public func trim () -> String {
-        return self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
     
 //    public func countOccurrencesOf (substring: String) -> Int {
 //        return (self.findAll(substring) |> toArray).count
 //    }
     
-    /** A lazy sequence of the ranges of `findstring` in this string. */
-    public func findAll (findstring: String) -> AnySequence<Range<String.Index>> {
-        var rangeofremainder: Range = self.startIndex..<self.endIndex
-        return AnySequence (anyGenerator {
-            if let foundrange = self.rangeOfString(findstring, range:rangeofremainder) {
-                rangeofremainder = foundrange.endIndex..<self.endIndex
-                return foundrange
-            } else {
-                return nil
-            }
-            })
-    }
+//    /** A lazy sequence of the ranges of `findstring` in this string. */
+//    public func findAll (_ findstring: String) -> AnySequence<Range<String.Index>> {
+//        var rangeofremainder: Range = self.characters.indices
+//        return AnySequence (AnyIterator {
+//            if let foundrange = self.range(of: findstring, range:rangeofremainder) {
+//                rangeofremainder = foundrange.upperBound..<self.endIndex
+//                return foundrange
+//            } else {
+//                return nil
+//            }
+//            })
+//    }
     
     /**
     Split the string at the first occurrence of separator, and return a 3-tuple containing the part
     before the separator, the separator itself, and the part after the separator. If the separator is
     not found, return a 3-tuple containing the string itself, followed by two empty strings.
     */
-    public func partition (separator: String) -> (String, String, String) {
-        if let separatorRange = self.rangeOfString(separator) {
+    public func partition (_ separator: String) -> (String, String, String) {
+        if let separatorRange = self.range(of: separator) {
             if !separatorRange.isEmpty {
-                let firstpart = self[self.startIndex ..< separatorRange.startIndex]
-                let secondpart = self[separatorRange.endIndex ..< self.endIndex]
+                let firstpart = self[self.startIndex ..< separatorRange.lowerBound]
+                let secondpart = self[separatorRange.upperBound ..< self.endIndex]
                 
-                return (firstpart, separator, secondpart)
+                return (String(firstpart), separator, String(secondpart))
             }
         }
         return (self,"","")
@@ -72,7 +72,7 @@ extension String {
             return true
         }
         
-        return (self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "")
+        return (self.trimmingCharacters(in: CharacterSet.whitespaces) == "")
     }
     
 

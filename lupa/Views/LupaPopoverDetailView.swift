@@ -23,10 +23,10 @@ class LupaPopoverDetailView: NSView {
 
     // Left mouse
     //
-    override func mouseDown(theEvent: NSEvent) {
+    override func mouseDown(with theEvent: NSEvent) {
 
         // Super's
-        super.mouseDown(theEvent)
+        super.mouseDown(with: theEvent)
 
         // Tell the delegate mouse was clicked
         if let delegate = lupaPopoverDetailViewDelegate {
@@ -39,10 +39,10 @@ class LupaPopoverDetailView: NSView {
     
     // Right Mouse
     //
-    override func  rightMouseDown(theEvent: NSEvent) {
+    override func  rightMouseDown(with theEvent: NSEvent) {
         
         // Super's rightMouse
-        super.rightMouseDown(theEvent)
+        super.rightMouseDown(with: theEvent)
         
         
         // Tell the delegate mouse was right clicked

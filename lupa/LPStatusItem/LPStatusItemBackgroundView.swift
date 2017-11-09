@@ -66,13 +66,13 @@ class LPStatusItemBackgroundView: NSView {
     
     // Common attribute initialization
     //
-    private func initAttributes() {
+    fileprivate func initAttributes() {
         // 
     }
     
     // Draw
     //
-    override func drawRect(dirtyRect: NSRect) {
+    override func draw(_ dirtyRect: NSRect) {
 
         // Own drawing code...
         
@@ -88,20 +88,20 @@ class LPStatusItemBackgroundView: NSView {
         let topPoint            = NSPoint(x: (NSWidth(backgroundRect)/2), y: NSMaxY(backgroundRect) + arrowHeight)
         let rightPoint          = NSPoint(x: (NSWidth(backgroundRect)/2) + arrowWidth, y: NSMaxY(backgroundRect))
         
-        arrowPath.moveToPoint(leftPoint)
-        arrowPath.curveToPoint(topPoint,
+        arrowPath.move(to: leftPoint)
+        arrowPath.curve(to: topPoint,
             controlPoint1: NSMakePoint(NSWidth(backgroundRect)/2 - arrowWidth/4, NSMaxY(backgroundRect)),
             controlPoint2: NSMakePoint(NSWidth(backgroundRect)/2 - arrowWidth/7, NSMaxY(backgroundRect) + arrowHeight))
-        arrowPath.curveToPoint(rightPoint,
+        arrowPath.curve(to: rightPoint,
             controlPoint1: NSMakePoint(NSWidth(backgroundRect)/2 + arrowWidth/7, NSMaxY(backgroundRect) + arrowHeight),
             controlPoint2: NSMakePoint(NSWidth(backgroundRect)/2 + arrowWidth/4, NSMaxY(backgroundRect)))
-        arrowPath.moveToPoint(leftPoint)
-        arrowPath.closePath()
+        arrowPath.move(to: leftPoint)
+        arrowPath.close()
         
-        windowPath.appendBezierPath(arrowPath)
-        windowPath.appendBezierPath(backgroundPath)
+        windowPath.append(arrowPath)
+        windowPath.append(backgroundPath)
         
-        NSColor.windowBackgroundColor().setFill()
+        NSColor.windowBackgroundColor.setFill()
 //        NSColor.lightGrayColor().setFill()
         windowPath.fill()
         

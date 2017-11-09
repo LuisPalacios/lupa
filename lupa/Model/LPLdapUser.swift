@@ -26,8 +26,8 @@ class LPLdapUser: NSObject {
     var voicemob:       String = ""
     var voiceint:       String = ""
     var title:          String = ""
-    var picturlMini:    NSURL!
-    var picturlZoom:    NSURL!
+    var picturlMini:    URL!
+    var picturlZoom:    URL!
     
     /// --------------------------------------------------------------------------------
     //  MARK: Main

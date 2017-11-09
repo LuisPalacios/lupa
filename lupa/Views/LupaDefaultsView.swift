@@ -11,11 +11,11 @@ import Cocoa
 class LupaDefaultsView: NSView {
 
     /// Overridden to draw a custom Rect
-    override func drawRect ( dirtyRect: NSRect ) {
+    override func draw ( _ dirtyRect: NSRect ) {
         
         // Clear the drawing rect.
-        NSColor.clearColor().set()
-        NSRectFill(self.frame)
+        NSColor.clear.set()
+        self.frame.fill()
     }
 }
 

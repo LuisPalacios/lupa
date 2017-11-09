@@ -95,14 +95,14 @@ extension NSView {
     var backgroundColor: NSColor? {
         get {
             if let colorRef = self.layer?.backgroundColor {
-                return NSColor(CGColor: colorRef)
+                return NSColor(cgColor: colorRef)
             } else {
                 return nil
             }
         }
         set {
             self.wantsLayer = true
-            self.layer?.backgroundColor = newValue?.CGColor
+            self.layer?.backgroundColor = newValue?.cgColor
         }
     }
 }
@@ -124,34 +124,34 @@ private let AttributeAccount = String(kSecAttrAccount)
 
 // Save the Password
 //
-func setInternetPassword(password: String, forServer server: String, account: String, port: Int, secProtocol: SecProtocolType ) {
-    let password_ns: NSString = password
-    let server_ns: NSString = server
-    let account_ns: NSString = account
+func setInternetPassword(_ password: String, forServer server: String, account: String, port: Int, secProtocol: SecProtocolType ) {
+    let password_ns: NSString = password as NSString
+    let server_ns: NSString = server as NSString
+    let account_ns: NSString = account as NSString
     
     // Attributes to store the oldPassword, if any
     //
     var oldPasswordPtrLength: UInt32 = 0
-    var oldPasswordPtr: UnsafeMutablePointer<Void> = nil
-    var itemRef : SecKeychainItemRef? = nil
+    var oldPasswordPtr: UnsafeMutableRawPointer? = nil
+    var itemRef : SecKeychainItem? = nil
     
     // First check whether there is already one in the keychain
     //
     let err : OSStatus = SecKeychainFindInternetPassword(
         nil,
-        UInt32(server_ns.length), server_ns.UTF8String,
+        UInt32(server_ns.length), server_ns.utf8String,
         0, nil, /* security domain */
-        UInt32(account_ns.length), account_ns.UTF8String,
+        UInt32(account_ns.length), account_ns.utf8String,
         0, nil, /* path */
         UInt16(port), /* port */
         secProtocol,
-        SecAuthenticationType.Default,
+        SecAuthenticationType.default,
         &oldPasswordPtrLength, &oldPasswordPtr,
         &itemRef) /* itemRef */
     
     //
     //
-    let passwordLength = password.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+    let passwordLength = password.lengthOfBytes(using: String.Encoding.utf8)
     if ( passwordLength > 0 ) {
         
         // Create the new password
@@ -159,14 +159,14 @@ func setInternetPassword(password: String, forServer server: String, account: St
         if ( err != 0 ) {
             let addStatus = SecKeychainAddInternetPassword(
                 nil, /* default keychain */
-                UInt32(server_ns.length), server_ns.UTF8String,
+                UInt32(server_ns.length), server_ns.utf8String,
                 0, nil, /* security domain */
-                UInt32(account_ns.length), account_ns.UTF8String,
+                UInt32(account_ns.length), account_ns.utf8String,
                 0, nil, /* path */
                 UInt16(port), /* port */
                 secProtocol,
-                SecAuthenticationType.Default,
-                UInt32(password_ns.length), password_ns.UTF8String,
+                SecAuthenticationType.default,
+                UInt32(password_ns.length), password_ns.utf8String!,
                 nil)
             
             if addStatus != errSecSuccess {
@@ -181,12 +181,12 @@ func setInternetPassword(password: String, forServer server: String, account: St
             // Otherwise, modify existing, if different
             //
             var oldPassword = ""
-            if let str = NSString(bytes: oldPasswordPtr, length: Int(oldPasswordPtrLength), encoding: NSUTF8StringEncoding) as? String {
+            if let str = NSString(bytes: oldPasswordPtr!, length: Int(oldPasswordPtrLength), encoding: String.Encoding.utf8.rawValue) as? String {
                 oldPassword = str
             }
             if ( password != oldPassword ) {
                 if let passRef = itemRef  {
-                    SecKeychainItemModifyContent(passRef, nil, UInt32(password_ns.length), password_ns.UTF8String)
+                    SecKeychainItemModifyContent(passRef, nil, UInt32(password_ns.length), password_ns.utf8String)
                     // print("Changed Password, old: \(oldPassword)  new: \(password)")
                 }
             }
@@ -209,22 +209,22 @@ func setInternetPassword(password: String, forServer server: String, account: St
 
 // Read the Password
 //
-func internetPasswordForServer(server: String, account: String, port: Int, secProtocol: SecProtocolType) -> String? {
+func internetPasswordForServer(_ server: String, account: String, port: Int, secProtocol: SecProtocolType) -> String? {
     
     var passwordLength: UInt32 = 0
-    var passwordData: UnsafeMutablePointer<Void> = nil
+    var passwordData: UnsafeMutableRawPointer? = nil
     
-    let server_ns: NSString = server
-    let account_ns: NSString = account
+    let server_ns: NSString = server as NSString
+    let account_ns: NSString = account as NSString
     
     let status = SecKeychainFindInternetPassword(nil,
-        UInt32(server_ns.length), server_ns.UTF8String,
+        UInt32(server_ns.length), server_ns.utf8String,
         0, nil, /* security domain */
-        UInt32(account_ns.length), account_ns.UTF8String,
+        UInt32(account_ns.length), account_ns.utf8String,
         0, nil, /* path */
         UInt16(port), /* port */
         secProtocol,
-        SecAuthenticationType.Default,
+        SecAuthenticationType.default,
         &passwordLength, &passwordData,
         nil) /* itemRef */
     
@@ -234,7 +234,7 @@ func internetPasswordForServer(server: String, account: String, port: Int, secPr
     }
     
     var password = ""
-    if let str = NSString(bytes: passwordData, length: Int(passwordLength), encoding: NSUTF8StringEncoding) as? String {
+    if let str = NSString(bytes: passwordData!, length: Int(passwordLength), encoding: String.Encoding.utf8.rawValue) as? String {
         SecKeychainItemFreeContent(nil, passwordData);
         password = str
     }

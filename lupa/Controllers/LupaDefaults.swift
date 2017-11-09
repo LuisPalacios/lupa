@@ -35,7 +35,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     
     
     //  In order to work with the user defaults, stored under:
-    let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults : UserDefaults = UserDefaults.standard
 
     
     /// --------------------------------------------------------------------------------
@@ -53,16 +53,16 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         
         
         // Bind the shortcut hotkey to user defaults.
-        customShortcutView.setAssociatedUserDefaultsKey(LUPADefaults.lupa_Hotkey, withTransformerName: NSKeyedUnarchiveFromDataTransformerName)
+        customShortcutView.setAssociatedUserDefaultsKey(LUPADefaults.lupa_Hotkey, withTransformerName: NSValueTransformerName.keyedUnarchiveFromDataTransformerName.rawValue)
         
         // Enable or disable the view according to checkbox state
-        customShortcutView.bind("enabled", toObject: userDefaults, withKeyPath: LUPADefaults.lupa_HotkeyEnabled, options: nil)
+        customShortcutView.bind(NSBindingName(rawValue: "enabled"), to: userDefaults, withKeyPath: LUPADefaults.lupa_HotkeyEnabled, options: nil)
  
         // Change ssl Button color to white
         let pstyle = NSMutableParagraphStyle()
-        pstyle.alignment = .Center
+        pstyle.alignment = .center
         
-        sslButton.attributedTitle = NSAttributedString(string: "SSL", attributes: [ NSForegroundColorAttributeName : NSColor.whiteColor() ])
+        sslButton.attributedTitle = NSAttributedString(string: "SSL", attributes: [ NSAttributedStringKey.foregroundColor : NSColor.white ])
         
         // Settle down ui
         self.updateUI()
@@ -83,7 +83,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     
     // Update UI when any field ends editing
     //
-    @IBAction func fieldChanged(sender: AnyObject) {
+    @IBAction func fieldChanged(_ sender: AnyObject) {
         
         // Deprecated: Remove focus ring from any textfield
         // if let window = self.window {
@@ -96,7 +96,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     
     // *NEW* Version will save into Keychain. NOTICE: Still not fully implemented (21/1/16@)
     //
-    @IBAction func passwordChanged(sender: AnyObject) {
+    @IBAction func passwordChanged(_ sender: AnyObject) {
 
         
         // Password special case:
@@ -105,8 +105,8 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         // Get the default LDAP Port
         var intLDAP_Port = 0
         var sslOption = false
-        let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        if let active = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_SSL) as? Bool {
+        let userDefaults : UserDefaults = UserDefaults.standard
+        if let active = userDefaults.object(forKey: LUPADefaults.lupa_LDAP_SSL) as? Bool {
             if active == true {
                 sslOption = true
             }
@@ -117,7 +117,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
             intLDAP_Port = 389
         }
         // Set the LDAP Port from user defaults, or previous numbers otherwise
-        if let letLDAP_Bind_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
+        if let letLDAP_Bind_Port = self.userDefaults.object(forKey: LUPADefaults.lupa_LDAP_Port) as? String {
             if let num = Int(letLDAP_Bind_Port) {
                 intLDAP_Port = num
             }
@@ -126,10 +126,10 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         }
 
         
-        if let server = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
+        if let server = self.userDefaults.object(forKey: LUPADefaults.lupa_LDAP_Host) as? String {
             if ( !server.isEmpty ) {
         
-                if let user = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
+                if let user = self.userDefaults.object(forKey: LUPADefaults.lupa_BIND_User) as? String {
                     if ( !user.isEmpty ) {
                 
                         setInternetPassword(pass, forServer: server, account: user, port: intLDAP_Port, secProtocol: SecProtocolType.LDAPS)
@@ -169,10 +169,10 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
             
             // FULL BIND USER
             var bindUser = ""
-            if let letLDAP_Bind_User = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
+            if let letLDAP_Bind_User = self.userDefaults.object(forKey: LUPADefaults.lupa_BIND_User) as? String {
                 bindUser = letLDAP_Bind_User
                 if ( !bindUser.isEmpty ) {
-                    if let letLDAP_Bind_UserStore = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_UserStore) as? String {
+                    if let letLDAP_Bind_UserStore = self.userDefaults.object(forKey: LUPADefaults.lupa_BIND_UserStore) as? String {
                         bindUser = "CN=" + bindUser + "," + letLDAP_Bind_UserStore
                     }
                 }
@@ -181,18 +181,18 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
             
             // FULL URL
             var fullURL = ""
-            if let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
+            if let letLDAP_Host = self.userDefaults.object(forKey: LUPADefaults.lupa_LDAP_Host) as? String {
                 if ( !letLDAP_Host.isEmpty ) {
                     
                     var ldapURI = "ldap"
-                    if let sslCheckboxState = userDefaults.objectForKey(LUPADefaults.lupa_LDAP_SSL) as? Bool {
+                    if let sslCheckboxState = userDefaults.object(forKey: LUPADefaults.lupa_LDAP_SSL) as? Bool {
                         if sslCheckboxState == true {
                             ldapURI = "ldaps"
                         }
                     }
                     
                     fullURL = ldapURI + "://" + letLDAP_Host
-                    if let letLDAP_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
+                    if let letLDAP_Port = self.userDefaults.object(forKey: LUPADefaults.lupa_LDAP_Port) as? String {
                         fullURL = fullURL + ":" + letLDAP_Port
                     }
                 }
@@ -214,7 +214,7 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     
     // OK Button
     //
-    @IBAction func ok(sender: AnyObject) {
+    @IBAction func ok(_ sender: AnyObject) {
         
         // Hide the window
         self.window?.orderOut(self)
@@ -223,18 +223,18 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     
     // Clean up the fields
     //
-    @IBAction func cleanDefaults(sender: AnyObject) {
+    @IBAction func cleanDefaults(_ sender: AnyObject) {
         
         
         // Clean the Password
-        if let server = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String {
+        if let server = self.userDefaults.object(forKey: LUPADefaults.lupa_LDAP_Host) as? String {
             if ( !server.isEmpty ) {
-                if let sPort = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
+                if let sPort = self.userDefaults.object(forKey: LUPADefaults.lupa_LDAP_Port) as? String {
                     var port = 389
                     if let num = Int(sPort) {
                         port = num
                     }
-                    if let user = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
+                    if let user = self.userDefaults.object(forKey: LUPADefaults.lupa_BIND_User) as? String {
                         if ( !user.isEmpty ) {
                             setInternetPassword("", forServer: server, account: user, port: port, secProtocol: SecProtocolType.LDAPS)
                         }
@@ -244,46 +244,46 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         }
 
         // Clean everything else...
-        let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_BIND_User)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_URLPrefix)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_BIND_UserStore)
-        userDefaults.setBool(false, forKey: LUPADefaults.lupa_LDAP_Support)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Command)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_BaseDN)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Host)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Port)
-        userDefaults.setBool(false, forKey: LUPADefaults.lupa_LDAP_Port)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Timeout)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Limit_Results)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_CN)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_Desc)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_Country)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_City)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_VoiceLin)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_VoiceInt)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_VoiceMob)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Attr_Title)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_PictureURLMini)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_PictureURLZoom)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Search_CN)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Search_Desc)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Search_VoiceLin)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Search_VoiceInt)
-        userDefaults.setObject("", forKey: LUPADefaults.lupa_LDAP_Search_VoiceMob)
+        let userDefaults : UserDefaults = UserDefaults.standard
+        userDefaults.set("", forKey: LUPADefaults.lupa_BIND_User)
+        userDefaults.set("", forKey: LUPADefaults.lupa_URLPrefix)
+        userDefaults.set("", forKey: LUPADefaults.lupa_BIND_UserStore)
+        userDefaults.set(false, forKey: LUPADefaults.lupa_LDAP_Support)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Command)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_BaseDN)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Host)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Port)
+        userDefaults.set(false, forKey: LUPADefaults.lupa_LDAP_Port)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Timeout)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Limit_Results)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Attr_CN)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Attr_Desc)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Attr_Country)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Attr_City)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Attr_VoiceLin)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Attr_VoiceInt)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Attr_VoiceMob)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Attr_Title)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_PictureURLMini)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_PictureURLZoom)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Search_CN)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Search_Desc)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Search_VoiceLin)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Search_VoiceInt)
+        userDefaults.set("", forKey: LUPADefaults.lupa_LDAP_Search_VoiceMob)
         
         // The following attribute has been *DEPRECATED*
-        userDefaults.removeObjectForKey(LUPADefaults.lupa_BIND_Password)
+        userDefaults.removeObject(forKey: LUPADefaults.lupa_BIND_Password)
 
         self.updateUI()
     }
 
     // Import from jSON
     //
-    enum JSONError: String, ErrorType {
+    enum JSONError: String, Error {
         case ConversionToDictionaryFailed = "JSONError: source is not a json with a Dictionary"
     }
-    @IBAction func importFromJSON(sender: AnyObject) {
+    @IBAction func importFromJSON(_ sender: AnyObject) {
         
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
@@ -293,43 +293,43 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         openPanel.prompt = "Open JSON file"
         openPanel.resolvesAliases = true
         openPanel.allowedFileTypes = ["json", "JSON"]
-        openPanel.beginWithCompletionHandler { (result) -> Void in
-            if result == NSFileHandlingPanelOKButton {
+        openPanel.begin { (result) -> Void in
+            if result.rawValue == NSFileHandlingPanelOKButton {
                 //Do what you will
                 //If there's only one URL, surely 'openPanel.URL'
                 //but otherwise a for loop works
-                if let fileURL = openPanel.URL {
+                if let fileURL = openPanel.url {
                     do {
-                        if let jsonData = NSData(contentsOfURL: fileURL) {
-                            guard let json = try NSJSONSerialization.JSONObjectWithData(jsonData, options: []) as? [NSObject:AnyObject] else {
+                        if let jsonData = try? Data(contentsOf: fileURL) {
+                            guard let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [AnyHashable: Any] else {
                                 throw JSONError.ConversionToDictionaryFailed
                             }
                             // Save defaults from data received from json file
-                            let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
-                            userDefaults.setObject(json[LUPADefaults.lupa_URLPrefix], forKey: LUPADefaults.lupa_URLPrefix)
-                            userDefaults.setObject(json[LUPADefaults.lupa_BIND_UserStore], forKey: LUPADefaults.lupa_BIND_UserStore)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Command], forKey: LUPADefaults.lupa_LDAP_Command)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_BaseDN], forKey: LUPADefaults.lupa_LDAP_BaseDN)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Host], forKey: LUPADefaults.lupa_LDAP_Host)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Port], forKey: LUPADefaults.lupa_LDAP_Port)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_SSL], forKey: LUPADefaults.lupa_LDAP_SSL)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Timeout], forKey: LUPADefaults.lupa_LDAP_Timeout)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Limit_Results], forKey: LUPADefaults.lupa_LDAP_Limit_Results)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Attr_CN], forKey: LUPADefaults.lupa_LDAP_Attr_CN)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Attr_Desc], forKey: LUPADefaults.lupa_LDAP_Attr_Desc)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Attr_Country], forKey: LUPADefaults.lupa_LDAP_Attr_Country)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Attr_City], forKey: LUPADefaults.lupa_LDAP_Attr_City)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Attr_VoiceLin], forKey: LUPADefaults.lupa_LDAP_Attr_VoiceLin)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Attr_VoiceInt], forKey: LUPADefaults.lupa_LDAP_Attr_VoiceInt)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Attr_VoiceMob], forKey: LUPADefaults.lupa_LDAP_Attr_VoiceMob)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Attr_Title], forKey: LUPADefaults.lupa_LDAP_Attr_Title)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_PictureURLMini], forKey: LUPADefaults.lupa_LDAP_PictureURLMini)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_PictureURLZoom], forKey: LUPADefaults.lupa_LDAP_PictureURLZoom)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Search_CN], forKey: LUPADefaults.lupa_LDAP_Search_CN)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Search_Desc], forKey: LUPADefaults.lupa_LDAP_Search_Desc)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Search_VoiceLin], forKey: LUPADefaults.lupa_LDAP_Search_VoiceLin)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Search_VoiceInt], forKey: LUPADefaults.lupa_LDAP_Search_VoiceInt)
-                            userDefaults.setObject(json[LUPADefaults.lupa_LDAP_Search_VoiceMob], forKey: LUPADefaults.lupa_LDAP_Search_VoiceMob)
+                            let userDefaults : UserDefaults = UserDefaults.standard
+                            userDefaults.set(json[LUPADefaults.lupa_URLPrefix], forKey: LUPADefaults.lupa_URLPrefix)
+                            userDefaults.set(json[LUPADefaults.lupa_BIND_UserStore], forKey: LUPADefaults.lupa_BIND_UserStore)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Command], forKey: LUPADefaults.lupa_LDAP_Command)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_BaseDN], forKey: LUPADefaults.lupa_LDAP_BaseDN)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Host], forKey: LUPADefaults.lupa_LDAP_Host)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Port], forKey: LUPADefaults.lupa_LDAP_Port)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_SSL], forKey: LUPADefaults.lupa_LDAP_SSL)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Timeout], forKey: LUPADefaults.lupa_LDAP_Timeout)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Limit_Results], forKey: LUPADefaults.lupa_LDAP_Limit_Results)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Attr_CN], forKey: LUPADefaults.lupa_LDAP_Attr_CN)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Attr_Desc], forKey: LUPADefaults.lupa_LDAP_Attr_Desc)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Attr_Country], forKey: LUPADefaults.lupa_LDAP_Attr_Country)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Attr_City], forKey: LUPADefaults.lupa_LDAP_Attr_City)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Attr_VoiceLin], forKey: LUPADefaults.lupa_LDAP_Attr_VoiceLin)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Attr_VoiceInt], forKey: LUPADefaults.lupa_LDAP_Attr_VoiceInt)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Attr_VoiceMob], forKey: LUPADefaults.lupa_LDAP_Attr_VoiceMob)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Attr_Title], forKey: LUPADefaults.lupa_LDAP_Attr_Title)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_PictureURLMini], forKey: LUPADefaults.lupa_LDAP_PictureURLMini)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_PictureURLZoom], forKey: LUPADefaults.lupa_LDAP_PictureURLZoom)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Search_CN], forKey: LUPADefaults.lupa_LDAP_Search_CN)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Search_Desc], forKey: LUPADefaults.lupa_LDAP_Search_Desc)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Search_VoiceLin], forKey: LUPADefaults.lupa_LDAP_Search_VoiceLin)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Search_VoiceInt], forKey: LUPADefaults.lupa_LDAP_Search_VoiceInt)
+                            userDefaults.set(json[LUPADefaults.lupa_LDAP_Search_VoiceMob], forKey: LUPADefaults.lupa_LDAP_Search_VoiceMob)
                             self.updateUI()
                         }
                     } catch let error as JSONError {
@@ -343,48 +343,48 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     }
     
     
-    @IBAction func exportFromJSON(sender: AnyObject) {
+    @IBAction func exportFromJSON(_ sender: AnyObject) {
         
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = false
         savePanel.prompt = "Save to JSON file"
         savePanel.allowedFileTypes = ["json", "JSON"]
-        savePanel.beginWithCompletionHandler { (result) -> Void in
-            if result == NSFileHandlingPanelOKButton {
+        savePanel.begin { (result) -> Void in
+            if result.rawValue == NSFileHandlingPanelOKButton {
                 //Do what you will
                 //If there's only one URL, surely 'openPanel.URL'
                 //but otherwise a for loop works
-                if let fileURL = savePanel.URL {
+                if let fileURL = savePanel.url {
                     do {
                         let json : [String:AnyObject] = [
-                            LUPADefaults.lupa_URLPrefix : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_URLPrefix),
-                            LUPADefaults.lupa_BIND_UserStore : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_BIND_UserStore),
-                            LUPADefaults.lupa_LDAP_Command : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Command),
-                            LUPADefaults.lupa_LDAP_BaseDN : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_BaseDN),
-                            LUPADefaults.lupa_LDAP_Host : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Host),
-                            LUPADefaults.lupa_LDAP_Port : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Port),
-                            LUPADefaults.lupa_LDAP_SSL : self.LUPADefaultsValueForKeyAsBool(LUPADefaults.lupa_LDAP_SSL),
-                            LUPADefaults.lupa_LDAP_Timeout : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Timeout),
-                            LUPADefaults.lupa_LDAP_Limit_Results : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Limit_Results),
-                            LUPADefaults.lupa_LDAP_Attr_CN : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_CN),
-                            LUPADefaults.lupa_LDAP_Attr_Desc : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_Desc),
-                            LUPADefaults.lupa_LDAP_Attr_Country : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_Country),
-                            LUPADefaults.lupa_LDAP_Attr_City : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_City),
-                            LUPADefaults.lupa_LDAP_Attr_VoiceLin : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_VoiceLin),
-                            LUPADefaults.lupa_LDAP_Attr_VoiceInt : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_VoiceInt),
-                            LUPADefaults.lupa_LDAP_Attr_VoiceMob : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_VoiceMob),
-                            LUPADefaults.lupa_LDAP_Attr_Title : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_Title),
-                            LUPADefaults.lupa_LDAP_PictureURLMini : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_PictureURLMini),
-                            LUPADefaults.lupa_LDAP_PictureURLZoom : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_PictureURLZoom),
-                            LUPADefaults.lupa_LDAP_Search_CN : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Search_CN),
-                            LUPADefaults.lupa_LDAP_Search_Desc : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Search_Desc),
-                            LUPADefaults.lupa_LDAP_Search_VoiceLin : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Search_VoiceLin),
-                            LUPADefaults.lupa_LDAP_Search_VoiceInt : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Search_VoiceInt),
-                            LUPADefaults.lupa_LDAP_Search_VoiceMob : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Search_VoiceMob)
+                            LUPADefaults.lupa_URLPrefix : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_URLPrefix) as AnyObject,
+                            LUPADefaults.lupa_BIND_UserStore : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_BIND_UserStore) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Command : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Command) as AnyObject,
+                            LUPADefaults.lupa_LDAP_BaseDN : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_BaseDN) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Host : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Host) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Port : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Port) as AnyObject,
+                            LUPADefaults.lupa_LDAP_SSL : self.LUPADefaultsValueForKeyAsBool(LUPADefaults.lupa_LDAP_SSL) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Timeout : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Timeout) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Limit_Results : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Limit_Results) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Attr_CN : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_CN) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Attr_Desc : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_Desc) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Attr_Country : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_Country) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Attr_City : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_City) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Attr_VoiceLin : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_VoiceLin) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Attr_VoiceInt : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_VoiceInt) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Attr_VoiceMob : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_VoiceMob) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Attr_Title : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Attr_Title) as AnyObject,
+                            LUPADefaults.lupa_LDAP_PictureURLMini : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_PictureURLMini) as AnyObject,
+                            LUPADefaults.lupa_LDAP_PictureURLZoom : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_PictureURLZoom) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Search_CN : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Search_CN) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Search_Desc : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Search_Desc) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Search_VoiceLin : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Search_VoiceLin) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Search_VoiceInt : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Search_VoiceInt) as AnyObject,
+                            LUPADefaults.lupa_LDAP_Search_VoiceMob : self.LUPADefaultsValueForKeyAsString(LUPADefaults.lupa_LDAP_Search_VoiceMob) as AnyObject
                         ]
 
-                        let jsonData = try NSJSONSerialization.dataWithJSONObject(json, options: NSJSONWritingOptions.PrettyPrinted)
-                        let success = jsonData.writeToURL(fileURL, atomically: true)
+                        let jsonData = try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted)
+                        let success = (try? jsonData.write(to: fileURL, options: [.atomic])) != nil
                         guard success == true else {
                             throw JSONError.ConversionToDictionaryFailed
                         }
@@ -397,18 +397,18 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
             }
         }
     }
-    func LUPADefaultsValueForKeyAsString(key: String) -> String {
+    func LUPADefaultsValueForKeyAsString(_ key: String) -> String {
         var value = ""
-        let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        if let hasValue = userDefaults.objectForKey(key) as? String {
+        let userDefaults : UserDefaults = UserDefaults.standard
+        if let hasValue = userDefaults.object(forKey: key) as? String {
             value = hasValue
         }
         return value
     }
-    func LUPADefaultsValueForKeyAsBool(key: String) -> Bool {
+    func LUPADefaultsValueForKeyAsBool(_ key: String) -> Bool {
         var value = false
-        let userDefaults : NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        if let hasValue = userDefaults.objectForKey(key) as? Bool {
+        let userDefaults : UserDefaults = UserDefaults.standard
+        if let hasValue = userDefaults.object(forKey: key) as? Bool {
             value = hasValue
         }
         return value
@@ -425,18 +425,18 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
         var password = ""
         // Get current password
         //
-        guard let letLDAP_Host = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Host) as? String else {
+        guard let letLDAP_Host = self.userDefaults.object(forKey: LUPADefaults.lupa_LDAP_Host) as? String else {
             return ""
         }
         var letLDAP_Port = ""
-        if let letLDAP_Bind_Port = self.userDefaults.objectForKey(LUPADefaults.lupa_LDAP_Port) as? String {
+        if let letLDAP_Bind_Port = self.userDefaults.object(forKey: LUPADefaults.lupa_LDAP_Port) as? String {
             letLDAP_Port = letLDAP_Bind_Port
         }
         var intLDAP_Port = 0
         if let num = Int(letLDAP_Port) {
             intLDAP_Port = num
         }
-        if let user = self.userDefaults.objectForKey(LUPADefaults.lupa_BIND_User) as? String {
+        if let user = self.userDefaults.object(forKey: LUPADefaults.lupa_BIND_User) as? String {
             if !user.isEmpty {
                 guard let pass = internetPasswordForServer(letLDAP_Host, account: user, port: intLDAP_Port, secProtocol: SecProtocolType.LDAPS) else {
                     return ""
@@ -452,32 +452,32 @@ class LupaDefaults: NSWindowController, NSTextViewDelegate {
     // MARK: Resizings
     // --------------------------------------------------------------------------------
     
-    @IBAction func actionDisclosureLDAP(sender: AnyObject) {
-        if self.disclosureLDAP.state == NSOnState {
+    @IBAction func actionDisclosureLDAP(_ sender: AnyObject) {
+        if self.disclosureLDAP.state == NSControl.StateValue.on {
             // ON
-            self.stackViewLDAP.hidden = false
+            self.stackViewLDAP.isHidden = false
         } else {
             // OFF
-            self.stackViewLDAP.hidden = true
+            self.stackViewLDAP.isHidden = true
         }
 
     }
 
-    @IBAction func actionDisclosurePref(sender: AnyObject) {
-        if self.disclosurePref.state == NSOnState {
+    @IBAction func actionDisclosurePref(_ sender: AnyObject) {
+        if self.disclosurePref.state == NSControl.StateValue.on {
             // ON
-            self.stackViewPref.hidden = false
+            self.stackViewPref.isHidden = false
         } else {
             // OFF
-            self.stackViewPref.hidden = true
+            self.stackViewPref.isHidden = true
         }
     }
     
-    @IBAction func actionSSLOnOff(sender: AnyObject) {
-        if self.sslButton.state == NSOnState {
-            userDefaults.setObject("636", forKey: LUPADefaults.lupa_LDAP_Port)
+    @IBAction func actionSSLOnOff(_ sender: AnyObject) {
+        if self.sslButton.state == NSControl.StateValue.on {
+            userDefaults.set("636", forKey: LUPADefaults.lupa_LDAP_Port)
         } else {
-            userDefaults.setObject("389", forKey: LUPADefaults.lupa_LDAP_Port)
+            userDefaults.set("389", forKey: LUPADefaults.lupa_LDAP_Port)
         }
         // Update the UI
         self.updateUI()

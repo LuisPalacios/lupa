@@ -12,18 +12,18 @@ class LupaSearchField: NSSearchField {
 
     // Send a doCancelSearch: command to firstResponder
     //
-    override func doCommandBySelector(aSelector: Selector) {
+    override func doCommand(by aSelector: Selector) {
         switch aSelector {
-        case "cancelOperation:":
+        case #selector(NSResponder.cancelOperation(_:)):
             // Send a message to firstResponder
             Swift.print("doCancelSearch:")
-            NSApplication.sharedApplication().sendAction("doCancelSearch:", to: nil, from: self)
+            NSApplication.shared.sendAction("doCancelSearch:", to: nil, from: self)
             return
             
         default:
             break
         }
-        super.doCommandBySelector(aSelector)
+        super.doCommand(by: aSelector)
     }
     
     

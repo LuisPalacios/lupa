@@ -28,7 +28,7 @@ class LPStatusItemWindowConfig: NSObject {
     }
     
     ///
-    var animationDuration : NSTimeInterval {
+    var animationDuration : TimeInterval {
         get {
             return LPStatusItem_DefaultAnimationDuration
         }
@@ -45,7 +45,7 @@ class LPStatusItemWindowConfig: NSObject {
         // Defaults
         self.isPinned = false
         self.presentationTransition = ePresentationTransition.transitionFade
-        self.backgroundColor = NSColor.windowBackgroundColor()
+        self.backgroundColor = NSColor.windowBackgroundColor
     }
     
     deinit {

@@ -14,7 +14,7 @@ class LPCommand : NSObject {
     // --------------------------------------------------------------------------------
     
     // Attributes
-    var task : NSTask!
+    var task : Process!
     var taskTerminateRequested = false
     // private var _nextinput_: ReadableStreamType?
     
@@ -24,8 +24,8 @@ class LPCommand : NSObject {
     
     // Create a new task
     //
-    private func newtask (shellcommand: String) -> NSTask {
-        let ntask = NSTask()
+    fileprivate func newtask (_ shellcommand: String) -> Process {
+        let ntask = Process()
         ntask.arguments = ["-c", shellcommand]
         ntask.launchPath = "/bin/bash"
         
@@ -40,8 +40,8 @@ class LPCommand : NSObject {
     
     /// Go ahead and execute the command...
     ///
-    func run( shellcommand: String,
-        completionHandler: ( exit: Int, stdout: [String], stderr: [String] ) -> Void ) {
+    func run( _ shellcommand: String,
+        completionHandler: @escaping ( _ exit: Int, _ stdout: [String], _ stderr: [String] ) -> Void ) {
     
             //
             var linesStandardOutput : [String]  = []
@@ -60,32 +60,32 @@ class LPCommand : NSObject {
                 self.taskTerminateRequested = false
                 
                 // Shortcut to notification center
-                let notifCenter = NSNotificationCenter.defaultCenter()
+                let notifCenter = NotificationCenter.default
                 
                 // ---- STANDARD OUTPUT -------
                 // Pipe the stdout (Standard Output) to an NSPipe, 
                 // and set it to notify us when it gets data
-                let pipeStandardOutput = NSPipe()
+                let pipeStandardOutput = Pipe()
                 task.standardOutput = pipeStandardOutput
                 let stdoutHandle = pipeStandardOutput.fileHandleForReading
                 stdoutHandle.waitForDataInBackgroundAndNotify()
                 
                 // Observe for DATA on the Standard Output
                 var obsrvStdoutData : NSObjectProtocol!
-                obsrvStdoutData = notifCenter.addObserverForName(NSFileHandleDataAvailableNotification,
+                obsrvStdoutData = notifCenter.addObserver(forName: NSNotification.Name.NSFileHandleDataAvailable,
                     object: stdoutHandle,
-                    queue: NSOperationQueue.mainQueue(),
-                    usingBlock: { ( notification ) -> Void in
+                    queue: OperationQueue.main,
+                    using: { ( notification ) -> Void in
                         
                         // print("----------------------------------------- pipeStandardOutput DATA")
                         let data = stdoutHandle.availableData
-                        if data.length > 0 {
-                            if let nsstr = NSString(data: data, encoding: NSUTF8StringEncoding) {
+                        if data.count > 0 {
+                            if let nsstr = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                                 // Store the new lines
                                 // print("<stdout>\(nsstr)</stdout>")
                                 let str : String = nsstr as String
                                 let newLines = str.characters.split { $0 == "\n" || $0 == "\r\n" }.map(String.init)
-                                linesStandardOutput.appendContentsOf(newLines)
+                                linesStandardOutput.append(contentsOf: newLines)
                                 //hasStandardOutput = true
                             }
                             stdoutHandle.waitForDataInBackgroundAndNotify()
@@ -99,7 +99,7 @@ class LPCommand : NSObject {
                                 terminationStatus = Int(self.task.terminationStatus)
                             }
                             // print("terminationStatus:\(terminationStatus)")
-                            completionHandler(exit: terminationStatus, stdout: linesStandardOutput, stderr: linesStandardError )
+                            completionHandler(terminationStatus, linesStandardOutput, linesStandardError )
                         }
                         
                 })
@@ -108,7 +108,7 @@ class LPCommand : NSObject {
                 // ---- STANDARD ERROR -------
                 // Pipe the stderr (Standard Error) to a different NSPipe,
                 // and set it to notify us when it gets data
-                let pipeStandardError = NSPipe()
+                let pipeStandardError = Pipe()
                 task.standardError = pipeStandardError
                 let stderrHandle = pipeStandardError.fileHandleForReading
                 stderrHandle.waitForDataInBackgroundAndNotify()
@@ -116,20 +116,20 @@ class LPCommand : NSObject {
                 
                 // Observe for DATA on the Standard Error
                 var obsrvStderrData : NSObjectProtocol!
-                obsrvStderrData = notifCenter.addObserverForName(NSFileHandleDataAvailableNotification,
+                obsrvStderrData = notifCenter.addObserver(forName: NSNotification.Name.NSFileHandleDataAvailable,
                     object: stderrHandle,
-                    queue: NSOperationQueue.mainQueue(),
-                    usingBlock: { ( notification ) -> Void in
+                    queue: OperationQueue.main,
+                    using: { ( notification ) -> Void in
                         
                         // print("----------------------------------------- pipeStandardError DATA")
                         let data = stderrHandle.availableData
-                        if data.length > 0 {
-                            if let nsstr = NSString(data: data, encoding: NSUTF8StringEncoding) {
+                        if data.count > 0 {
+                            if let nsstr = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
                                 // Store the new lines
                                 // print("<stderr>\(nsstr)</stderr>")
                                 let str : String = nsstr as String
                                 let newLines = str.characters.split { $0 == "\n" || $0 == "\r\n" }.map(String.init)
-                                linesStandardError.appendContentsOf(newLines)
+                                linesStandardError.append(contentsOf: newLines)
                                 //hasStandardError = true
                             }
                             stderrHandle.waitForDataInBackgroundAndNotify()
@@ -145,7 +145,7 @@ class LPCommand : NSObject {
                 // Observe for TASK TERMINATION
                 //
                 var obsrvTerm : NSObjectProtocol!
-                obsrvTerm = notifCenter.addObserverForName(NSTaskDidTerminateNotification,
+                obsrvTerm = notifCenter.addObserver(forName: Process.didTerminateNotification,
                     object: task, queue: nil) { notification -> Void in
                         // print("----------------------------------------- TASK TERMINATION (no status)")
                         notifCenter.removeObserver(obsrvTerm)
