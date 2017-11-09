@@ -32,8 +32,6 @@ class LPCommand : NSObject {
         return ntask
     }
     
- 
-    
     // --------------------------------------------------------------------------------
     // MARK: Execute command
     // --------------------------------------------------------------------------------
@@ -45,10 +43,7 @@ class LPCommand : NSObject {
     
             //
             var linesStandardOutput : [String]  = []
-            //var hasStandardOutput               = false
             var linesStandardError  : [String]  = []
-            //var hasStandardError                = false
-
             
             // Go for it
             if shellcommand != "" {
@@ -84,7 +79,7 @@ class LPCommand : NSObject {
                                 // Store the new lines
                                 // print("<stdout>\(nsstr)</stdout>")
                                 let str : String = nsstr as String
-                                let newLines = str.characters.split { $0 == "\n" || $0 == "\r\n" }.map(String.init)
+                                let newLines = str.split { $0 == "\n" || $0 == "\r\n" }.map(String.init)
                                 linesStandardOutput.append(contentsOf: newLines)
                                 //hasStandardOutput = true
                             }
@@ -128,7 +123,7 @@ class LPCommand : NSObject {
                                 // Store the new lines
                                 // print("<stderr>\(nsstr)</stderr>")
                                 let str : String = nsstr as String
-                                let newLines = str.characters.split { $0 == "\n" || $0 == "\r\n" }.map(String.init)
+                                let newLines = str.split { $0 == "\n" || $0 == "\r\n" }.map(String.init)
                                 linesStandardError.append(contentsOf: newLines)
                                 //hasStandardError = true
                             }

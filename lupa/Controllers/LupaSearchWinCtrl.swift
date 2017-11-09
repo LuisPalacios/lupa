@@ -82,8 +82,7 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         // Register the Cell View nib file so that the ldapResultTableView
         // can use it to render cells,
         if let nib = NSNib(nibNamed: NSNib.Name(rawValue: Constants.SearchCtrl.SearchCellViewID), bundle: Bundle.main) {
-            
-            
+
             // Change searchField UX
             self.searchField.appearance = NSAppearance(named: NSAppearance.Name.aqua)
             
@@ -91,20 +90,10 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
             self.ldapResultTableView.register(nib, forIdentifier: NSUserInterfaceItemIdentifier(rawValue: Constants.SearchCtrl.SearchCellViewID))
             
             // Find out TableView's cell height
-            //var optViewArray:NSArray?
-//            var optViewArray = NSArray()
             var optViewArray: NSArray? = nil
             if nib.instantiate(withOwner: self, topLevelObjects: &optViewArray) {
-//                for view in optViewArray {
-//                    if view is LupaSearchCellView {
-//                        if let frame = (view as AnyObject).frame {
-//                            self.ldapResultCellViewHeight = frame.height
-//                        }
-//                    }
-//                }
                 if let viewArray = optViewArray {
                     for view in viewArray {
-//                        if (view as AnyObject).isKind(of: LupaSearchCellView()) {
                         if view is LupaSearchCellView {
                             if let frame = (view as AnyObject).frame {
                                 self.ldapResultCellViewHeight = frame.height
@@ -163,12 +152,6 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     override func awakeFromNib() {
         // print("awakeFromNib()")
         
-        // Tell the searchField I'm his delegate
-        // self.searchField.delegate = self
-
-        // Follow search string modifications
-        // NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("doSearch:"), name: NSControlTextDidChangeNotification, object: self.searchField)
-
         // Remove the "cancel button" from the Search Field
         // so I keep the focus on the search field "always"
         self.searchFieldCell.cancelButtonCell = nil
@@ -211,8 +194,12 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         cell.itemMobile.stringValue = user.voicemob
         cell.itemJobTitle.stringValue = user.title
         cell.itemImage.image = nil
-        let q = LPQueue()
-        q.async { () -> () in
+        
+        // Reason for using main thread:
+        // Updating UI on a thread other than the main thread is a common mistake
+        // that can result in missed UI updates, visual defects, data corruptions, and crashes
+        let mainQueue = LPQueue.Main
+        mainQueue.async { () -> () in
             if let url = user.picturlMini {
                 cell.itemImage.image = NSImage(contentsOf: url)
             }
@@ -496,8 +483,8 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
     func tableView(_ tableview: NSTableView, clickedRow: NSInteger, clickedColumn: NSInteger, clickedPoint: NSPoint, clickedRect: NSRect) {
         self.popoverSelectedUser = nil
         self.popoverDetail.show(relativeTo: clickedRect, of: tableview, preferredEdge: NSRectEdge.minY)
-        let q = LPQueue()
-        q.async { () -> () in
+        let mainQueue = LPQueue.Main
+        mainQueue.async { () -> () in
             self.popoverSelectedUser = self.users[clickedRow]
         }
     }
@@ -933,18 +920,18 @@ class LupaSearchWinCtrl: NSWindowController, NSWindowDelegate, NSSearchFieldDele
         self.cmd.run(commandString) { (exit, stdout, stderr) -> Void in
 
             // Just for Logging
-            //            print("---------------------------------- STANDARD OUTPUT -------- STAR")
-            //            for line in stdout {
-            //                print(line)
-            //            }
-            //            print("---------------------------------- STANDARD OUTPUT -------- END")
-            //            print("---------------------------------- STANDARD ERROR  -------- START")
-            //            for line in stderr {
-            //                print(line)
-            //            }
-            //            print("---------------------------------- STANDARD ERROR  -------- END")
-            //            print("exit: \(exit)")
-            //            print("")
+//                        print("---------------------------------- STANDARD OUTPUT -------- STAR")
+//                        for line in stdout {
+//                            print(line)
+//                        }
+//                        print("---------------------------------- STANDARD OUTPUT -------- END")
+//                        print("---------------------------------- STANDARD ERROR  -------- START")
+//                        for line in stderr {
+//                            print(line)
+//                        }
+//                        print("---------------------------------- STANDARD ERROR  -------- END")
+//                        print("exit: \(exit)")
+//                        print("")
 
             // Clean up future buffers
             self.tmpErrors.removeAll()

@@ -172,7 +172,10 @@ func setInternetPassword(_ password: String, forServer server: String, account: 
             if addStatus != errSecSuccess {
                 // print("Could not save password.")
                 let msg = SecCopyErrorMessageString(addStatus, nil)
-                print("\(msg)")
+//                print("\(msg)")
+//
+                print("\(String(describing: msg))")
+
             } else {
                 // print("Added new Password: \(password)")
             }
@@ -181,7 +184,7 @@ func setInternetPassword(_ password: String, forServer server: String, account: 
             // Otherwise, modify existing, if different
             //
             var oldPassword = ""
-            if let str = NSString(bytes: oldPasswordPtr!, length: Int(oldPasswordPtrLength), encoding: String.Encoding.utf8.rawValue) as? String {
+            if let str = NSString(bytes: oldPasswordPtr!, length: Int(oldPasswordPtrLength), encoding: String.Encoding.utf8.rawValue) as String? {
                 oldPassword = str
             }
             if ( password != oldPassword ) {
@@ -234,7 +237,7 @@ func internetPasswordForServer(_ server: String, account: String, port: Int, sec
     }
     
     var password = ""
-    if let str = NSString(bytes: passwordData!, length: Int(passwordLength), encoding: String.Encoding.utf8.rawValue) as? String {
+    if let str = NSString(bytes: passwordData!, length: Int(passwordLength), encoding: String.Encoding.utf8.rawValue) as String? {
         SecKeychainItemFreeContent(nil, passwordData);
         password = str
     }

@@ -104,10 +104,8 @@ class LPStatusItemWindowCtrl: NSWindowController {
     //
     @objc func handleWindowDidResignKeyNotification (_ note : Notification) {
         //print("handleWindowDidResignKeyNotification")
-        var noteWindow : NSWindow
-        if let letNoteWindow : AnyObject = note.object as AnyObject {
-            noteWindow = letNoteWindow as! NSWindow
-            
+
+        if let noteWindow : NSWindow = note.object as? NSWindow {
             if ( noteWindow != self.window ) {
                 return
             }
