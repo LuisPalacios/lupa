@@ -14,6 +14,7 @@ Later on I gave it a feature you might find useful, the **silent LDAP search whi
 
 
 <div align="center">
+
 ![LDAP silent engine](resources/scr_ldap.png?raw=true "This is the search engine")
 
 <div align="left">
@@ -36,6 +37,7 @@ Alternatively, download a copy of the binary [Lupa-1.2.2.zip](https://github.com
 Configure the program by right clicking into the status bar icon and selecting preferences under the menu.
 
 <div align="center">
+
 ![Screenshot of the menu](resources/scr_menu.png?raw=true "This is menu")
 
 <div align="left">
