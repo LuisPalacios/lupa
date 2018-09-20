@@ -84,7 +84,9 @@ One your Preferences are set, **click on the status bar icon** or **press your c
 
 
 <div align="center">
+
 ![Screenshot of the search box](resources/scr_search.png?raw=true "This is the search box")
+
 <div align="left">
 
 
